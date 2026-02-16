@@ -2,14 +2,11 @@
 
 import * as React from "react";
 import {
-	Building2,
 	LayoutDashboardIcon,
-	Briefcase,
 	Box,
 	User,
 	ChartBar,
 	Settings,
-	Mail,
 	Megaphone,
 } from "lucide-react";
 import { NavMain } from "./nav-main";
@@ -91,7 +88,7 @@ export function DashboardSidebar({
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader className="px-4 pt-6 mb-4">
-				<h1 className="text-lg font-bold w-fit ">⚡ StoreLink</h1>
+				<h1 className="text-2xl font-bold w-fit ">⚡ ReelVee</h1>
 				{/* <Logo /> */}
 			</SidebarHeader>
 			<SidebarContent>

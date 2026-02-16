@@ -31,7 +31,7 @@ export function NavMain({
 	const pathname = usePathname();
 
 	return (
-		<SidebarGroup className="px-4 py-">
+		<SidebarGroup className="px-4">
 			<SidebarMenu className="gap-4">
 				{items.map(item => (
 					<SidebarMenuItem key={item.title}>

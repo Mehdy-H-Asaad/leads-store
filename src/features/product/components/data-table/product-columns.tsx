@@ -7,7 +7,6 @@ import { formatDate } from "date-fns";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import { ProductActionsCell } from "./actions/product-actions-cell";
-import { EyeIcon, HeartIcon } from "lucide-react";
 export const ProductColumns: ColumnDef<TProductDTO>[] = [
 	// {
 	//   accessorFn: (row) => row.name ?? "N/A",
@@ -35,7 +34,7 @@ export const ProductColumns: ColumnDef<TProductDTO>[] = [
 			return (
 				<div className="flex items-center gap-3">
 					<Image
-						src={row.original.image}
+						src={row.original.featuredImg}
 						alt={row.original.name}
 						width={40}
 						height={40}
@@ -82,7 +81,7 @@ export const ProductColumns: ColumnDef<TProductDTO>[] = [
 		cell: ({ row }) => {
 			return (
 				<Badge className="bg-blue-100 text-blue-500">
-					{row.original.impressions}
+					{row.original.impressions ?? 0}
 				</Badge>
 			);
 		},
@@ -93,7 +92,7 @@ export const ProductColumns: ColumnDef<TProductDTO>[] = [
 		cell: ({ row }) => {
 			return (
 				<Badge className="bg-green-100 text-green-500">
-					{row.original.leads}
+					{row.original.leads ?? 0}
 				</Badge>
 			);
 		},
@@ -129,8 +128,6 @@ export const ProductColumns: ColumnDef<TProductDTO>[] = [
 							? "bg-red-100 text-red-500"
 							: row.original.status === PRODUCT_STATUS.LOW_STOCK
 							? "bg-yellow-100 text-yellow-500"
-							: row.original.status === PRODUCT_STATUS.DISCONTINUED
-							? "bg-gray-100 text-gray-500"
 							: "bg-red-100 text-red-500"
 					}`}
 				>

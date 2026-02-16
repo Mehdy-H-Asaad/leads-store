@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { DataTable } from "@/components/common/data-table";
 import { LeadColumns } from "./lead-columns";
 import { LEAD_STATUS, TLeadDTO } from "../../schema/lead.schema";
@@ -7,8 +8,10 @@ import { PlusIcon } from "lucide-react";
 import { useFilterParams } from "@/hooks/use-filter-params";
 import { TLeadFilters } from "../../types/lead.types";
 import { LeadFilters } from "../filters/lead-filters";
+import { LeadForm } from "../forms/lead-form";
 
 export const LeadDataTable = () => {
+	const [isFormOpen, setIsFormOpen] = useState(false);
 	const { updateFiltersParams, clearFilers, searchParams } =
 		useFilterParams<TLeadFilters>();
 
@@ -58,30 +61,34 @@ export const LeadDataTable = () => {
 	];
 
 	return (
-		<DataTable
-			columns={LeadColumns}
-			data={data}
-			searchablePlaceholder="Search leads"
-			setSearchableField={() => {}}
-			isLoading={false}
-			pageCount={1}
-			totalCount={data.length}
-			manualPagination={false}
-			children={
-				<>
-					<div className="mr-auto w-fit">
-						<LeadFilters
-							filters={filters}
-							onFilterChange={updateFilters}
-							onClearAllFilters={clearFilers}
-							searchParams={searchParams}
-						/>
-					</div>
-					<MainButton>
-						<PlusIcon /> Add Lead
-					</MainButton>
-				</>
-			}
-		/>
+		<>
+			<DataTable
+				columns={LeadColumns}
+				data={data}
+				searchablePlaceholder="Search leads"
+				setSearchableField={() => {}}
+				isLoading={false}
+				pageCount={1}
+				totalCount={data.length}
+				manualPagination={false}
+				children={
+					<>
+						<div className="mr-auto w-fit">
+							<LeadFilters
+								filters={filters}
+								onFilterChange={updateFilters}
+								onClearAllFilters={clearFilers}
+								searchParams={searchParams}
+							/>
+						</div>
+						<MainButton onClick={() => setIsFormOpen(true)}>
+							<PlusIcon /> Add Lead
+						</MainButton>
+					</>
+				}
+			/>
+
+			<LeadForm open={isFormOpen} onOpenChange={setIsFormOpen} />
+		</>
 	);
 };
