@@ -2,10 +2,15 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Lock, User, Eye, EyeOff, Mail } from "lucide-react";
+import { Lock, Eye, EyeOff, Mail } from "lucide-react";
 import Link from "next/link";
 import { useSignup } from "../hooks/use-signup";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+	Field,
+	FieldError,
+	FieldGroup,
+	FieldLabel,
+} from "@/components/ui/field";
 import { Controller } from "react-hook-form";
 import { MainButton } from "@/components/common/main-button";
 import { AuthSplitLayout } from "./auth-split-layout";
@@ -29,59 +34,26 @@ export const SignupForm = () => {
 			<div className="rounded-xl border bg-card p-8 shadow-sm">
 				<form onSubmit={SignupForm.handleSubmit(onSignup)}>
 					<FieldGroup className="gap-4">
-						<div className="grid grid-cols-2 gap-4">
-							<Controller
-								control={SignupForm.control}
-								name="firstName"
-								render={({ field }) => (
-									<Field>
-										<FieldLabel htmlFor="firstName">First Name</FieldLabel>
-										<div className="relative">
-											<User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
-											<Input
-												{...field}
-												placeholder="First Name"
-												className="pl-10"
-											/>
-										</div>
-									</Field>
-								)}
-							/>
-							<Controller
-								control={SignupForm.control}
-								name="lastName"
-								render={({ field }) => (
-									<Field>
-										<FieldLabel htmlFor="lastName">Last Name</FieldLabel>
-										<div className="relative">
-											<User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
-											<Input
-												{...field}
-												placeholder="Last Name"
-												className="pl-10"
-											/>
-										</div>
-									</Field>
-								)}
-							/>
-						</div>
-
 						<Controller
 							control={SignupForm.control}
 							name="email"
-							render={({ field }) => (
+							render={({ field, fieldState }) => (
 								<Field>
 									<FieldLabel htmlFor="email">Email</FieldLabel>
 									<div className="relative">
 										<Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
 										<Input
 											type="email"
+											aria-invalid={fieldState.invalid}
 											placeholder="Email"
 											{...field}
 											className="pl-10 pr-10"
 											minLength={8}
 										/>
 									</div>
+									{fieldState.invalid && (
+										<FieldError errors={[fieldState.error]} />
+									)}
 								</Field>
 							)}
 						/>
@@ -89,7 +61,7 @@ export const SignupForm = () => {
 						<Controller
 							control={SignupForm.control}
 							name="password"
-							render={({ field }) => (
+							render={({ field, fieldState }) => (
 								<Field>
 									<FieldLabel htmlFor="password">Password</FieldLabel>
 									<div className="relative">
@@ -113,6 +85,34 @@ export const SignupForm = () => {
 											)}
 										</button>
 									</div>
+									{fieldState.invalid && (
+										<FieldError errors={[fieldState.error]} />
+									)}
+								</Field>
+							)}
+						/>
+
+						<Controller
+							control={SignupForm.control}
+							name="confirmPassword"
+							render={({ field, fieldState }) => (
+								<Field>
+									<FieldLabel htmlFor="confirmPassword">
+										Confirm Password
+									</FieldLabel>
+									<div className="relative">
+										<Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
+										<Input
+											type={showPassword ? "text" : "password"}
+											placeholder="Confirm Password"
+											{...field}
+											className="pl-10 pr-10"
+											minLength={8}
+										/>
+									</div>
+									{fieldState.invalid && (
+										<FieldError errors={[fieldState.error]} />
+									)}
 								</Field>
 							)}
 						/>
@@ -130,14 +130,14 @@ export const SignupForm = () => {
 								By signing up, you agree to our{" "}
 								<Link
 									href="/terms"
-									className="text-[#15803d] hover:text-[#166534] hover:underline"
+									className="text-main-green hover:text-[#166534] hover:underline"
 								>
 									Terms of Service
 								</Link>{" "}
 								and{" "}
 								<Link
 									href="/privacy"
-									className="text-[#15803d] hover:text-[#166534] hover:underline"
+									className="text-main-green hover:text-[#166534] hover:underline"
 								>
 									Privacy Policy
 								</Link>

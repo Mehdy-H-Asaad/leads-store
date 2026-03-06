@@ -1,25 +1,25 @@
 "use client";
 import { useApiMutation } from "@/hooks/use-api-mutation";
-import { LoginSchema, TLoginDTO } from "../schema/auth.schema";
-import { TUserDTO } from "@/features/user/schema/user.schema";
+import { LoginSchema, TLoginSchema } from "../schema/auth.schema";
+import { TUserDTO } from "@/entities/user/api/user.dto";
+import { authService } from "@/services/auth/auth.service";
+import { authMapper } from "../lib/auth-mapper.lib";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AUTH_KEYS } from "../constants/auth.keys";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/features/user/store/user.store";
+import { useUserStore } from "@/entities/user/model/user.store";
+import { USER_KEYS } from "@/entities/user/api/user.key";
 
 export const useLogin = () => {
 	const router = useRouter();
 	const { setUser } = useUserStore();
-	const { mutate, isPending } = useApiMutation<TUserDTO, TLoginDTO>({
-		endpointURL: "/auth/login",
-		method: "post",
-		showSuccessToast: true,
+	const { mutate, isPending } = useApiMutation<TUserDTO, TLoginSchema>({
+		mutationFn: data => authService.login(authMapper.toLoginDto(data)),
 		successMsg: "Logged in successfully",
-		invalidatedKeys: [AUTH_KEYS.USER, ["user", "me"]],
+		invalidatedKeys: [USER_KEYS.ME()],
 		invalidateExact: false,
 		onSuccess: data => {
-			if (!data.data.verified) {
+			if (!data.data.isEmailVerified) {
 				router.push("/verify-email");
 			} else {
 				// Refresh server components to fetch new user data
@@ -30,7 +30,7 @@ export const useLogin = () => {
 		},
 	});
 
-	const LoginForm = useForm<TLoginDTO>({
+	const LoginForm = useForm<TLoginSchema>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: {
 			email: "",
@@ -38,7 +38,7 @@ export const useLogin = () => {
 		},
 	});
 
-	const onLogin = (values: TLoginDTO) => {
+	const onLogin = (values: TLoginSchema) => {
 		mutate(values);
 	};
 

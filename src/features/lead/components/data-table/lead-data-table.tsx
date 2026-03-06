@@ -2,13 +2,19 @@
 import { useState } from "react";
 import { DataTable } from "@/components/common/data-table";
 import { LeadColumns } from "./lead-columns";
-import { LEAD_STATUS, TLeadDTO } from "../../schema/lead.schema";
+import {
+	LEAD_PRIORITY,
+	LEAD_SOURCE,
+	LEAD_STATUS,
+} from "@/contracts/lead/lead.contract";
+import { TLeadDTO } from "@/entities/lead/api/lead.dto";
 import { MainButton } from "@/components/common/main-button";
 import { PlusIcon } from "lucide-react";
 import { useFilterParams } from "@/hooks/use-filter-params";
 import { TLeadFilters } from "../../types/lead.types";
 import { LeadFilters } from "../filters/lead-filters";
 import { LeadForm } from "../forms/lead-form";
+import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
 
 export const LeadDataTable = () => {
 	const [isFormOpen, setIsFormOpen] = useState(false);
@@ -27,36 +33,37 @@ export const LeadDataTable = () => {
 
 	const data: TLeadDTO[] = [
 		{
-			id: 1,
+			_id: "1",
 			name: "John Doe",
 			email: "john@example.com",
 			phone: "+1 234 567 890",
-			source: "Website",
+			source: LEAD_SOURCE.WEBSITE,
 			status: LEAD_STATUS.NEW,
-			productName: "Apple iPhone 15 Pro Max",
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString(),
-		},
-		{
-			id: 2,
-			name: "Jane Smith",
-			email: "jane@example.com",
-			phone: "+1 987 654 321",
-			source: "Referral",
-			status: LEAD_STATUS.CONTACTED,
-			productName: "Samsung Galaxy S24 Ultra",
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString(),
-		},
-		{
-			id: 3,
-			name: "Bob Wilson",
-			email: "bob@example.com",
-			source: "Social Media",
-			status: LEAD_STATUS.QUALIFIED,
-			productName: "Google Pixel 8 Pro",
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString(),
+			product: {
+				_id: "1",
+				name: "Apple iPhone 15 Pro Max",
+				description: "Apple iPhone 15 Pro Max description",
+				price: 1000,
+				cost: 800,
+				featuredImg: "https://via.placeholder.com/150",
+				impressions: 1000,
+				productGallery: [],
+				attributes: [],
+				tags: [],
+				visibility: true,
+				slug: "apple-iphone-15-pro-max",
+				category: "Smartphones",
+				status: PRODUCT_STATUS.IN_STOCK,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			},
+			budgetFrom: 1000,
+			budgetTo: 2000,
+			note: "This is a note",
+			priority: LEAD_PRIORITY.HIGH,
+			country: "United States",
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		},
 	];
 

@@ -19,9 +19,9 @@ import {
 	SidebarHeader,
 	SidebarRail,
 } from "@/components/ui/sidebar";
-import { TUserDTO } from "@/features/user/schema/user.schema";
-import { useUserStore } from "@/features/user/store/user.store";
+import { useUserStore } from "@/entities/user/model/user.store";
 import { useLogout } from "@/features/auth/hooks/use-logout";
+import { TUser } from "@/entities/user/model/user.model";
 
 type TSidebarData = {
 	items: {
@@ -35,7 +35,7 @@ type TSidebarData = {
 			icon?: React.ReactNode;
 		}[];
 	}[];
-	user: TUserDTO;
+	user: TUser;
 };
 
 export function DashboardSidebar({
@@ -44,7 +44,7 @@ export function DashboardSidebar({
 	const { user } = useUserStore();
 	const { onLogout } = useLogout();
 	const sidebarData: TSidebarData = {
-		user: user ?? ({} as TUserDTO),
+		user: user ?? ({} as TUser),
 
 		items: [
 			{
@@ -95,7 +95,7 @@ export function DashboardSidebar({
 				<NavMain items={sidebarData.items} user={sidebarData.user} />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser user={user ?? ({} as TUserDTO)} onLogout={onLogout} />
+				<NavUser user={user ?? ({} as TUser)} onLogout={onLogout} />
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>

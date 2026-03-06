@@ -2,7 +2,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
-import { PRODUCT_STATUS, TProductDTO } from "../../schema/product.schema";
+import { TProductDTO } from "@/entities/product/api/product.dto";
+import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
 import { formatDate } from "date-fns";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
@@ -32,16 +33,20 @@ export const ProductColumns: ColumnDef<TProductDTO>[] = [
 		header: "Product",
 		cell: ({ row }) => {
 			return (
-				<div className="flex items-center gap-3">
-					<Image
-						src={row.original.featuredImg}
-						alt={row.original.name}
-						width={40}
-						height={40}
-						className="rounded-md object-cover"
-					/>
-					<div className="font-medium">{row.original.name}</div>
-				</div>
+				<>
+					{row.original.featuredImg && (
+						<div className="flex items-center gap-3">
+							<Image
+								src={row.original.featuredImg}
+								alt={row.original.name}
+								width={40}
+								height={40}
+								className="rounded-md object-cover"
+							/>
+							<div className="font-medium">{row.original.name}</div>
+						</div>
+					)}
+				</>
 			);
 		},
 	},

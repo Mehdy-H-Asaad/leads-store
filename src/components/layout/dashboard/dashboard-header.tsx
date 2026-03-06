@@ -2,7 +2,7 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
-import { useUserStore } from "@/features/user/store/user.store";
+import { useUserStore } from "@/entities/user/model/user.store";
 import { usePathname } from "next/navigation";
 import { Calendar, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";

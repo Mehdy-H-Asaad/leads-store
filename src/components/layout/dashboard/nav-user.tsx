@@ -27,7 +27,7 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { TUserDTO } from "@/features/user/schema/user.schema";
+import { TUserDTO } from "@/entities/user/api/user.dto";
 // import { UserRole } from "@/shared/types/types";
 // import { UpdateBasicAgencyInfo } from "@/features/agency/components/dashboard/update-basic-agency-info/update-basic-agency-info";
 
@@ -50,7 +50,7 @@ export function NavUser({
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
-								<AvatarImage className="object-cover" src={user.avatar || ""} />
+								<AvatarImage className="object-cover" src={user.logo || ""} />
 								<AvatarFallback className="rounded-lg">
 									MA
 									{/* {user.firstName

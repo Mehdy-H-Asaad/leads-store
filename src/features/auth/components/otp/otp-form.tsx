@@ -53,7 +53,7 @@ export const OTPForm = ({
     }, [timeLeft]);
 
     const handleResendOtp = () => {
-        onSubmit({ email: form.getValues("email"), otp: form.getValues("otp") });
+        onSubmit({ email: form.getValues("email"), code: form.getValues("code") });
         setTimeLeft(5 * 60);
     };
 
@@ -81,10 +81,10 @@ export const OTPForm = ({
                         <FieldGroup className="grid place-content-center gap-6">
                             <Controller
                                 control={form.control}
-                                name="otp"
+                                name="code"
                                 render={({ field }) => (
                                     <Field>
-                                        <FieldLabel htmlFor="otp">OTP</FieldLabel>
+                                        <FieldLabel htmlFor="code">OTP</FieldLabel>
                                         <InputOTP {...field} maxLength={6}>
                                             <InputOTPGroup>
                                                 <InputOTPSlot index={0} />

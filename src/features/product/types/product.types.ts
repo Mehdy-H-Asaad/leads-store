@@ -1,4 +1,4 @@
-import { PRODUCT_STATUS } from "../schema/product.schema";
+import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
 
 export type TProductFilters = {
 	status?: PRODUCT_STATUS;

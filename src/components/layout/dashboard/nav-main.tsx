@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 // import { UserRole } from "@/shared/types/types";
 // import { useAuthUserStore } from "@/features/auth/store/auth.store";
-import { TUserDTO } from "@/features/user/schema/user.schema";
+import { TUserDTO } from "@/entities/user/api/user.dto";
 
 export function NavMain({
 	items,

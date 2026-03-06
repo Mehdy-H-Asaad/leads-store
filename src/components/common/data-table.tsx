@@ -24,7 +24,10 @@ import {
 } from "@/components/ui/table";
 import React, { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usePaginationStore } from "@/store/pagination.store";
+import {
+	DEFAULT_PAGE_SIZE,
+	usePaginationParams,
+} from "@/hooks/use-pagination-params";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Search, ChevronLeft, ChevronRight, FileX } from "lucide-react";
 
@@ -57,9 +60,11 @@ export function DataTable<TData, TValue>({
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = useState({});
-	const { pagination, setPagination } = usePaginationStore();
+	const { pagination, setPagination } = usePaginationParams({
+		defaultLimit: DEFAULT_PAGE_SIZE,
+	});
 
-	// Create a debounced search function
+	// DEBOUNCED SEARCH FUNCTION
 	const debouncedSearch = useDebounce({
 		callback: setSearchableField,
 		delay: 500,

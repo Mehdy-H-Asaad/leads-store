@@ -3,11 +3,11 @@ import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { DropdownMenuContent } from "@/components/ui/dropdown-menu";
 import { Row } from "@tanstack/react-table";
-import { TProductDTO } from "../../../schema/product.schema";
+import { TProductDTO } from "@/entities/product/api/product.dto";
 import { DeleteDialog } from "@/components/common/delete-dialog";
 import { Button } from "@/components/ui/button";
 
-export const ProductActionsCell = ({ row }: { row: Row<TProductDTO> }) => {
+export const ProductActionsCell = ({}: { row: Row<TProductDTO> }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>

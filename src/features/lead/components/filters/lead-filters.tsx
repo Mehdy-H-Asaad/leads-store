@@ -1,7 +1,7 @@
 "use client";
 
 import { ComboboxSelect } from "@/components/common/select/combobox-select";
-import { LEAD_STATUS } from "@/features/lead/schema/lead.schema";
+import { LEAD_STATUS } from "@/contracts/lead/lead.contract";
 import { LEAD_SOURCES } from "@/features/lead/constants/lead.constants";
 import { Button } from "@/components/ui/button";
 import { TLeadFilters } from "@/features/lead/types/lead.types";

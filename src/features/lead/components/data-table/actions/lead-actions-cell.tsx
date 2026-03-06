@@ -3,11 +3,11 @@ import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { DropdownMenuContent } from "@/components/ui/dropdown-menu";
 import { Row } from "@tanstack/react-table";
-import { TLeadDTO } from "../../../schema/lead.schema";
 import { DeleteDialog } from "@/components/common/delete-dialog";
 import { Button } from "@/components/ui/button";
+import { TLeadDTO } from "@/entities/lead/api/lead.dto";
 
-export const LeadActionsCell = ({ row }: { row: Row<TLeadDTO> }) => {
+export const LeadActionsCell = ({}: { row: Row<TLeadDTO> }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>

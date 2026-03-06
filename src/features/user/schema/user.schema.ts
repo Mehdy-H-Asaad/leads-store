@@ -1,14 +1,5 @@
+import { USER_STATUS, USER_PLAN } from "@/contracts/user/user.contract";
 import { z } from "zod";
-
-export enum USER_STATUS {
-	ACTIVE = "active",
-	SUSPENDED = "suspended",
-}
-
-export enum USER_PLAN {
-	FREE = "free",
-	PRO = "pro",
-}
 
 export const UserSchema = z.object({
 	_id: z.string(),
@@ -35,5 +26,3 @@ export const UserSchema = z.object({
 		})
 	),
 });
-
-export type TUserDTO = z.infer<typeof UserSchema>;

@@ -2,7 +2,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
-import { LEAD_STATUS, TLeadDTO } from "../../schema/lead.schema";
+import { LEAD_STATUS } from "@/contracts/lead/lead.contract";
+import { TLeadDTO } from "@/entities/lead/api/lead.dto";
 import { formatDate } from "date-fns";
 import { LeadActionsCell } from "./actions/lead-actions-cell";
 
@@ -18,9 +19,7 @@ export const LeadColumns: ColumnDef<TLeadDTO>[] = [
 		accessorKey: "email",
 		header: "Email",
 		cell: ({ row }) => {
-			return (
-				<div className="text-muted-foreground">{row.original.email}</div>
-			);
+			return <div className="text-muted-foreground">{row.original.email}</div>;
 		},
 	},
 	{
@@ -28,9 +27,7 @@ export const LeadColumns: ColumnDef<TLeadDTO>[] = [
 		header: "Phone",
 		cell: ({ row }) => {
 			return (
-				<div className="text-muted-foreground">
-					{row.original.phone ?? "—"}
-				</div>
+				<div className="text-muted-foreground">{row.original.phone ?? "—"}</div>
 			);
 		},
 	},
@@ -51,7 +48,9 @@ export const LeadColumns: ColumnDef<TLeadDTO>[] = [
 		cell: ({ row }) => {
 			return (
 				<div className="text-muted-foreground">
-					{row.original.productName ?? "—"}
+					{row.original.product && row.original.product.name
+						? row.original.product.name
+						: "—"}
 				</div>
 			);
 		},
@@ -75,14 +74,12 @@ export const LeadColumns: ColumnDef<TLeadDTO>[] = [
 						row.original.status === LEAD_STATUS.NEW
 							? "bg-blue-100 text-blue-500"
 							: row.original.status === LEAD_STATUS.CONTACTED
-								? "bg-amber-100 text-amber-500"
-								: row.original.status === LEAD_STATUS.QUALIFIED
-									? "bg-purple-100 text-purple-500"
-									: row.original.status === LEAD_STATUS.CONVERTED
-										? "bg-green-100 text-green-500"
-										: row.original.status === LEAD_STATUS.LOST
-											? "bg-gray-100 text-gray-500"
-											: "bg-muted text-muted-foreground"
+							? "bg-amber-100 text-amber-500"
+							: row.original.status === LEAD_STATUS.CONVERTED
+							? "bg-purple-100 text-purple-500"
+							: row.original.status === LEAD_STATUS.LOST
+							? "bg-red-100 text-red-500"
+							: "bg-muted text-muted-foreground"
 					}`}
 				>
 					{row.original.status}

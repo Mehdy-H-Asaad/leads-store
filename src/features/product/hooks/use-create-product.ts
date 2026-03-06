@@ -1,19 +1,23 @@
 import { useApiMutation } from "@/hooks/use-api-mutation";
-import {
-	CreateProductSchema,
-	PRODUCT_STATUS,
+import type {
 	TCreateProductDTO,
 	TProductDTO,
-} from "../schema/product.schema";
-import { PRODUCT_KEYS } from "../constants/product.keys";
+} from "@/entities/product/api/product.dto";
+import { productService } from "@/entities/product/api/product.service";
+import { PRODUCT_KEYS } from "../../../entities/product/api/product.keys";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
+import {
+	TCreateProductFormValues,
+	createProductFormSchema,
+} from "../schema/product-form.schema";
+import { productFormAdapter } from "../lib/product-form.adapter";
 
 export const useCreateProduct = () => {
 	const { mutate, isPending } = useApiMutation<TProductDTO, TCreateProductDTO>({
-		endpointURL: "/products",
-		method: "post",
-		showSuccessToast: true,
+		mutationFn: data =>
+			productService.createProduct(productFormAdapter.toCreateDTO(data)),
 		successMsg: "Product created successfully",
 		invalidatedKeys: [PRODUCT_KEYS.ALL],
 		invalidateExact: true,
@@ -21,8 +25,8 @@ export const useCreateProduct = () => {
 			CreateProductForm.reset();
 		},
 	});
-	const CreateProductForm = useForm<TCreateProductDTO>({
-		resolver: zodResolver(CreateProductSchema),
+	const CreateProductForm = useForm<TCreateProductFormValues>({
+		resolver: zodResolver(createProductFormSchema),
 		defaultValues: {
 			name: "",
 			description: "",
@@ -38,7 +42,7 @@ export const useCreateProduct = () => {
 		},
 	});
 
-	const onCreateProduct = (data: TCreateProductDTO) => {
+	const onCreateProduct = (data: TCreateProductFormValues) => {
 		mutate(data);
 	};
 

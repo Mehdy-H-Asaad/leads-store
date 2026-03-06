@@ -18,9 +18,8 @@ import {
 	LEAD_STATUS,
 	LEAD_SOURCE,
 	LEAD_PRIORITY,
-} from "../../schema/lead.schema";
+} from "@/contracts/lead/lead.contract";
 import { useCreateLead } from "../../hooks/use-create-lead";
-
 type TLeadFormProps = {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;

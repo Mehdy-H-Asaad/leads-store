@@ -1,40 +1,35 @@
 "use client";
-import { UseQueryOptions, useQuery, QueryKey } from "@tanstack/react-query";
-import { TServerResponse } from "@/types/types";
-import { fetcher } from "../utils/fetcher";
+import {
+	useQuery,
+	QueryKey,
+	QueryFunction,
+	UseQueryOptions,
+} from "@tanstack/react-query";
+import { TServerResponse } from "@/lib/fetcher";
 
-type TUseApiQueryOptions<TResponse> = {
-  queryKey: QueryKey;
-  requestURL: string;
-  options?: RequestInit;
-  enabled?: boolean;
-} & Omit<UseQueryOptions<TResponse>, "queryKey" | "queryFn">;
+type TUseApiQueryProps<TData = unknown> = {
+	queryKey: QueryKey;
+	queryFn: QueryFunction<TServerResponse<TData>>;
+	enabled?: boolean;
+} & Omit<
+	UseQueryOptions<TServerResponse<TData>, Error>,
+	"queryKey" | "queryFn" | "enabled"
+>;
 
-export const useApiQuery = <TResponse>({
-  queryKey,
-  requestURL,
-  options,
-  enabled = true,
-  ...queryOptions
-}: TUseApiQueryOptions<TServerResponse<TResponse>>) => {
-  const query = useQuery<TServerResponse<TResponse>>({
-    queryKey,
-    queryFn: ({ signal }) =>
-      fetcher<TResponse>({
-        endpointURL: requestURL,
-        options: {
-          ...options,
-          signal: signal as AbortSignal,
-          headers: options?.headers as Record<string, string>,
-        },
-      }),
+export const useApiQuery = <TData = unknown>({
+	queryKey,
+	queryFn,
+	enabled = true,
+	...queryOptions
+}: TUseApiQueryProps<TData>) => {
+	const query = useQuery({
+		queryKey,
+		queryFn,
+		enabled,
+		...queryOptions,
+	});
 
-    enabled,
-    ...queryOptions,
-  });
-
-  return {
-    ...query,
-    meta: query.data?.meta,
-  };
+	return {
+		...query,
+	};
 };

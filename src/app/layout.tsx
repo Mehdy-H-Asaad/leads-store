@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/providers/auth-provider";
-import { TanstackProvider } from "@/providers/tanstack-provider";
+import { AuthProvider } from "@/app/providers/auth-provider";
+import { TanstackProvider } from "@/app/providers/tanstack-provider";
 import { Toaster } from "sonner";
 import { cookies } from "next/headers";
 

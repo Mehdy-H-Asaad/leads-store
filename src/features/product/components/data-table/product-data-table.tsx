@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { DataTable } from "@/components/common/data-table";
 import { ProductColumns } from "./product-columns";
-import { PRODUCT_STATUS, TProductDTO } from "../../schema/product.schema";
+import { TProductDTO } from "@/entities/product/api/product.dto";
 import { MainButton } from "@/components/common/main-button";
 import { PlusIcon } from "lucide-react";
 import { useFilterParams } from "@/hooks/use-filter-params";
@@ -10,6 +10,7 @@ import { TProductFilters } from "../../types/product.types";
 import { ProductFilters } from "../filters/product-filters";
 import { ProductForm } from "../forms/product-form";
 import vercel from "@/app/favicon.ico";
+import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
 
 export const ProductDataTable = () => {
 	const [isFormOpen, setIsFormOpen] = useState(false);
@@ -36,47 +37,57 @@ export const ProductDataTable = () => {
 			name: "Apple iPhone 15 Pro Max",
 			description: "Apple iPhone 15 Pro Max description",
 			price: 1000,
+			cost: null,
 			featuredImg: vercel.src,
 			category: "Smartphones",
 			status: PRODUCT_STATUS.OUT_OF_STOCK,
 			productGallery: [{ fileUrl: vercel.src, fileKey: "vercel.src" }],
-			attributes: [],
+			attributes: null,
+			tags: null,
+			impressions: null,
+			leads: 24,
 			visibility: true,
 			slug: "apple-iphone-15-pro-max",
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString(),
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		},
 		{
 			_id: "2",
 			name: "Samsung Galaxy S24 Ultra",
 			description: "Samsung Galaxy S24 Ultra description",
 			price: 1200,
+			cost: null,
 			featuredImg: vercel.src,
 			category: "Smartphones",
 			status: PRODUCT_STATUS.LOW_STOCK,
 			productGallery: [{ fileUrl: vercel.src, fileKey: "vercel.src" }],
-			attributes: [],
+			attributes: null,
+			tags: null,
+			impressions: null,
+			leads: 24,
 			visibility: true,
 			slug: "samsung-galaxy-s24-ultra",
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString(),
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		},
 		{
 			_id: "3",
 			name: "Google Pixel 8 Pro",
 			description: "Google Pixel 8 Pro description",
 			price: 1300,
+			cost: null,
 			featuredImg: vercel.src,
 			category: "Smartphones",
 			status: PRODUCT_STATUS.OUT_OF_STOCK,
 			productGallery: [{ fileUrl: vercel.src, fileKey: "vercel.src" }],
-			attributes: [],
-			visibility: false,
+			attributes: null,
+			tags: null,
 			impressions: 300,
-			leads: 15,
+			leads: 322,
+			visibility: false,
 			slug: "google-pixel-8-pro",
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString(),
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		},
 	];
 

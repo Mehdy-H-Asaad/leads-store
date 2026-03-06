@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { MainButton } from "@/components/common/main-button";
 import { SelectFormField } from "@/components/common/select/select-form-field";
-import { PRODUCT_STATUS } from "../../schema/product.schema";
+import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
 import { PRODUCT_CATEGORIES } from "../../constants/product.constants";
 import { ImagePlus, X, Upload, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -172,6 +172,7 @@ export const ProductForm = ({ open, onOpenChange }: TProductFormProps) => {
 										{...field}
 										placeholder="Description"
 										rows={4}
+										value={field.value ?? ""}
 										aria-invalid={fieldState.invalid}
 									/>
 									<div className="text-xs text-muted-foreground">

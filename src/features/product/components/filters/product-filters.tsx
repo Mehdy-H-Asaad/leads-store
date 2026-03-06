@@ -1,7 +1,7 @@
 "use client";
 
 import { ComboboxSelect } from "@/components/common/select/combobox-select";
-import { PRODUCT_STATUS } from "@/features/product/schema/product.schema";
+import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
 import { PRODUCT_CATEGORIES } from "@/features/product/constants/product.constants";
 import { Button } from "@/components/ui/button";
 import { TProductFilters } from "@/features/product/types/product.types";

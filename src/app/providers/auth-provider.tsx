@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetMe } from "@/features/user/hooks/use-get-me";
+import { useGetMe } from "@/entities/user/api/user.query";
 
 export const AuthProvider = ({
 	hasSession,
