@@ -1,14 +1,14 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { Badge } from "@/components/ui/badge";
-import { TProductDTO } from "@/entities/product/api/product.dto";
-import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
+import { Badge } from "@/shared/components/ui/badge";
+import { TProduct } from "@/entities/product/model/product.model";
+import { PRODUCT_STATUS } from "@/shared/contracts/product/product.contract";
 import { formatDate } from "date-fns";
 import Image from "next/image";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/shared/components/ui/switch";
 import { ProductActionsCell } from "./actions/product-actions-cell";
-export const ProductColumns: ColumnDef<TProductDTO>[] = [
+export const ProductColumns: ColumnDef<TProduct>[] = [
 	// {
 	//   accessorFn: (row) => row.name ?? "N/A",
 	//   header: "Agency",

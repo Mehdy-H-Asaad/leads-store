@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/common/page-header";
+import { PageHeader } from "@/shared/components/common/page-header";
 import { AnalyticsContent } from "@/features/analytics/components/analytics-content";
 
 const page = () => {

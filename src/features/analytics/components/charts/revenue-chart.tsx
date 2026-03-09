@@ -1,19 +1,13 @@
 "use client";
 
-import {
-	LineChart,
-	Line,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import {
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
 	ChartLegend,
 	ChartLegendContent,
-} from "@/components/ui/chart";
+} from "@/shared/components/ui/chart";
 import { revenueChartConfig } from "../../constants/analytics.constants";
 import type { TRevenueDataPoint } from "../../schema/analytics.schema";
 

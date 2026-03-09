@@ -1,7 +1,7 @@
-import { DashboardSidebar } from "@/components/layout/dashboard/dashboard-sidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { DashboardSidebar } from "@/shared/components/layout/dashboard/dashboard-sidebar";
+import { SidebarInset, SidebarProvider } from "@/shared/components/ui/sidebar";
 import React from "react";
-import { DashboardHeader } from "@/components/layout/dashboard/dashboard-header";
+import { DashboardHeader } from "@/shared/components/layout/dashboard/dashboard-header";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
 	return (

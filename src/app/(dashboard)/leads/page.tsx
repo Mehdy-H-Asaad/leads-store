@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/common/page-header";
+import { PageHeader } from "@/shared/components/common/page-header";
 import { LeadDataTable } from "@/features/lead/components/data-table/lead-data-table";
 
 const page = () => {

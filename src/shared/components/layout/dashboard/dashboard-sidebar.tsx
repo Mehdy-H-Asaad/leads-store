@@ -1,0 +1,104 @@
+"use client";
+
+import * as React from "react";
+import {
+	LayoutDashboardIcon,
+	Box,
+	User,
+	ChartBar,
+	Settings,
+	Megaphone,
+} from "lucide-react";
+import { NavMain } from "./nav-main";
+import { NavUser } from "./nav-user";
+
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarHeader,
+	SidebarRail,
+} from "@/shared/components/ui/sidebar";
+import { useUserStore } from "@/entities/user/model/user.store";
+import { useLogout } from "@/features/auth/hooks/use-logout";
+import { TUser } from "@/entities/user/model/user.model";
+import { TUserContractRef } from "@/shared/contracts/user/user.contract";
+
+type TSidebarData = {
+	items: {
+		title: string;
+		url: string;
+		icon?: React.ReactNode;
+		isActive?: boolean;
+		items?: {
+			title: string;
+			url: string;
+			icon?: React.ReactNode;
+		}[];
+	}[];
+	user: TUserContractRef;
+};
+
+export function DashboardSidebar({
+	...props
+}: React.ComponentProps<typeof Sidebar>) {
+	const { user } = useUserStore();
+	const { onLogout } = useLogout();
+	const sidebarData: TSidebarData = {
+		user: user ?? ({} as TUserContractRef),
+
+		items: [
+			{
+				title: "Dashboard",
+				url: "/",
+				icon: <LayoutDashboardIcon className="size-5" />,
+				isActive: false,
+			},
+			{
+				title: "Products",
+				url: "/products",
+				icon: <Box className="size-5" />,
+				isActive: false,
+			},
+			{
+				title: "Leads",
+				url: "/leads",
+				icon: <User className="size-5" />,
+				isActive: false,
+			},
+			{
+				title: "Marketing",
+				url: "/marketing",
+				icon: <Megaphone className="size-5" />,
+				isActive: false,
+			},
+			{
+				title: "Analytics",
+				url: "/analytics",
+				icon: <ChartBar className="size-5" />,
+				isActive: false,
+			},
+			{
+				title: "Settings",
+				url: "/settings",
+				icon: <Settings className="size-5" />,
+				isActive: false,
+			},
+		],
+	};
+	return (
+		<Sidebar collapsible="icon" {...props}>
+			<SidebarHeader className="px-4 pt-6 mb-4">
+				<h1 className="text-2xl font-bold w-fit ">⚡ ReelVee</h1>
+				{/* <Logo /> */}
+			</SidebarHeader>
+			<SidebarContent>
+				<NavMain items={sidebarData.items} user={sidebarData.user} />
+			</SidebarContent>
+			<SidebarFooter>
+				<NavUser user={user ?? ({} as TUser)} onLogout={onLogout} />
+			</SidebarFooter>
+			<SidebarRail />
+		</Sidebar>
+	);
+}

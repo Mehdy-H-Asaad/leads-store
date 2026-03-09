@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { productContractRefSchema } from "@/contracts/product/product.contract";
+import { productContractRefSchema } from "@/shared/contracts/product/product.contract";
 import {
 	LEAD_PRIORITY,
 	LEAD_SOURCE,
 	LEAD_STATUS,
-} from "@/contracts/lead/lead.contract";
+} from "@/shared/contracts/lead/lead.contract";
 
 export const LeadSchema = z.object({
 	_id: z.string(),

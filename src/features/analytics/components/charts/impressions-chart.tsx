@@ -1,19 +1,13 @@
 "use client";
 
-import {
-	AreaChart,
-	Area,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-} from "recharts";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid } from "recharts";
 import {
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
 	ChartLegend,
 	ChartLegendContent,
-} from "@/components/ui/chart";
+} from "@/shared/components/ui/chart";
 import { impressionsChartConfig } from "../../constants/analytics.constants";
 import type { TImpressionsDataPoint } from "../../schema/analytics.schema";
 

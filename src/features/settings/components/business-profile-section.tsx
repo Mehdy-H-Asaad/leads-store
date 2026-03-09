@@ -7,16 +7,16 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from "@/shared/components/ui/card";
 import {
 	Field,
 	FieldDescription,
 	FieldGroup,
 	FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { MainButton } from "@/components/common/main-button";
+} from "@/shared/components/ui/field";
+import { Input } from "@/shared/components/ui/input";
+import { Textarea } from "@/shared/components/ui/textarea";
+import { MainButton } from "@/shared/components/common/main-button";
 import { STORE_URL_PREFIX } from "../constants/settings.constants";
 import type { UseFormReturn } from "react-hook-form";
 import type { TBusinessProfileDTO } from "../schema/settings.schema";
@@ -133,7 +133,9 @@ export const BusinessProfileSection = ({
 											{...field}
 											onChange={e =>
 												field.onChange(
-													e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")
+													e.target.value
+														.toLowerCase()
+														.replace(/[^a-z0-9-]/g, "")
 												)
 											}
 											className="border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"

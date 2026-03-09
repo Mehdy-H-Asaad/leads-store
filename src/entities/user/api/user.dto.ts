@@ -1,30 +1,51 @@
-import { USER_PLAN, USER_STATUS } from "@/contracts/user/user.contract";
+import { USER_PLAN, USER_STATUS } from "@/shared/contracts/user/user.contract";
 import z from "zod";
 
 export const userSchemaDto = z.object({
 	_id: z.string(),
-	firstName: z.string(),
-	lastName: z.string(),
-	countryCode: z.string(),
+	first_name: z.string(),
+	last_name: z.string(),
+	country_code: z.string(),
 	email: z.email(),
-	whatsappNumber: z.string(),
+	whatsapp_number: z.string(),
 	address: z.string().nullable(),
-	isEmailVerified: z.boolean(),
+	is_email_verified: z.boolean(),
 	status: z.enum(USER_STATUS),
 	plan: z.enum(USER_PLAN),
 	logo: z.string().nullable(),
-	BusinessName: z.string().nullable(),
-	businessDescription: z.string().nullable(),
-	storeURL: z.string(),
-	QRCode: z.string(),
-	createdAt: z.coerce.date(),
-	updatedAt: z.coerce.date(),
+	business_name: z.string().nullable(),
+	business_description: z.string().nullable(),
+	store_url: z.string(),
+	qr_code: z.string(),
+	created_at: z.coerce.date(),
+	updated_at: z.coerce.date(),
 	links: z.array(
 		z.object({
-			label: z.string(),
+			name: z.string(),
 			url: z.string(),
 		})
 	),
 });
 
+export const onboardingSchemaDto = userSchemaDto.pick({
+	first_name: true,
+	last_name: true,
+	country_code: true,
+	whatsapp_number: true,
+	address: true,
+	logo: true,
+	business_name: true,
+	business_description: true,
+	store_url: true,
+	links: true,
+});
+
 export type TUserDTO = z.infer<typeof userSchemaDto>;
+export type TOnboardingDTO = z.infer<typeof onboardingSchemaDto>;
+
+export type TLoginResponseDTO = {
+	user: TUserDTO;
+};
+export type TMeDTO = {
+	user: TUserDTO;
+};

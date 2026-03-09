@@ -1,4 +1,4 @@
-import { USER_PLAN, USER_STATUS } from "@/contracts/user/user.contract";
+import { USER_PLAN, USER_STATUS } from "@/shared/contracts/user/user.contract";
 import z from "zod";
 
 export const userModel = z.object({
@@ -21,7 +21,7 @@ export const userModel = z.object({
 	updatedAt: z.coerce.date(),
 	links: z.array(
 		z.object({
-			label: z.string(),
+			name: z.string(),
 			url: z.string(),
 		})
 	),

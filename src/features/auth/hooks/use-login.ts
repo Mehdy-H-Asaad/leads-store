@@ -1,8 +1,8 @@
 "use client";
-import { useApiMutation } from "@/hooks/use-api-mutation";
+import { useApiMutation } from "@/shared/hooks/use-api-mutation";
 import { LoginSchema, TLoginSchema } from "../schema/auth.schema";
-import { TUserDTO } from "@/entities/user/api/user.dto";
-import { authService } from "@/services/auth/auth.service";
+import { TUser } from "@/entities/user/model/user.model";
+import { authService } from "../api/auth.service";
 import { authMapper } from "../lib/auth-mapper.lib";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +13,7 @@ import { USER_KEYS } from "@/entities/user/api/user.key";
 export const useLogin = () => {
 	const router = useRouter();
 	const { setUser } = useUserStore();
-	const { mutate, isPending } = useApiMutation<TUserDTO, TLoginSchema>({
+	const { mutate, isPending } = useApiMutation<TUser, TLoginSchema>({
 		mutationFn: data => authService.login(authMapper.toLoginDto(data)),
 		successMsg: "Logged in successfully",
 		invalidatedKeys: [USER_KEYS.ME()],

@@ -1,8 +1,8 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { Badge } from "@/components/ui/badge";
-import { LEAD_STATUS } from "@/contracts/lead/lead.contract";
+import { Badge } from "@/shared/components/ui/badge";
+import { LEAD_STATUS } from "@/shared/contracts/lead/lead.contract";
 import { TLeadDTO } from "@/entities/lead/api/lead.dto";
 import { formatDate } from "date-fns";
 import { LeadActionsCell } from "./actions/lead-actions-cell";

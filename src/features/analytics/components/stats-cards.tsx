@@ -5,7 +5,7 @@ import {
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from "@/shared/components/ui/card";
 import { DollarSign, Users, TrendingUp, Target } from "lucide-react";
 
 const stats = [

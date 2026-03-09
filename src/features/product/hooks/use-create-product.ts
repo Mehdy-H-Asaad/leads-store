@@ -1,23 +1,23 @@
-import { useApiMutation } from "@/hooks/use-api-mutation";
-import type {
-	TCreateProductDTO,
-	TProductDTO,
-} from "@/entities/product/api/product.dto";
+import { useApiMutation } from "@/shared/hooks/use-api-mutation";
 import { productService } from "@/entities/product/api/product.service";
 import { PRODUCT_KEYS } from "../../../entities/product/api/product.keys";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
+import { PRODUCT_STATUS } from "@/shared/contracts/product/product.contract";
 import {
 	TCreateProductFormValues,
 	createProductFormSchema,
 } from "../schema/product-form.schema";
-import { productFormAdapter } from "../lib/product-form.adapter";
+import { productFormMapper } from "../lib/product-form.mapper";
+import { TProduct } from "@/entities/product/model/product.model";
 
 export const useCreateProduct = () => {
-	const { mutate, isPending } = useApiMutation<TProductDTO, TCreateProductDTO>({
+	const { mutate, isPending } = useApiMutation<
+		TProduct,
+		TCreateProductFormValues
+	>({
 		mutationFn: data =>
-			productService.createProduct(productFormAdapter.toCreateDTO(data)),
+			productService.createProduct(productFormMapper.toCreateDTO(data)),
 		successMsg: "Product created successfully",
 		invalidatedKeys: [PRODUCT_KEYS.ALL],
 		invalidateExact: true,

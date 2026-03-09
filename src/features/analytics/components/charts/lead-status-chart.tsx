@@ -7,7 +7,7 @@ import {
 	ChartTooltipContent,
 	ChartLegend,
 	ChartLegendContent,
-} from "@/components/ui/chart";
+} from "@/shared/components/ui/chart";
 import { leadStatusChartConfig } from "../../constants/analytics.constants";
 import type { TLeadStatusDataPoint } from "../../schema/analytics.schema";
 

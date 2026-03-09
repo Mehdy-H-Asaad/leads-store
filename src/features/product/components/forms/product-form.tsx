@@ -8,21 +8,21 @@ import {
 	SheetHeader,
 	SheetTitle,
 	SheetDescription,
-} from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { MainButton } from "@/components/common/main-button";
-import { SelectFormField } from "@/components/common/select/select-form-field";
-import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
+} from "@/shared/components/ui/sheet";
+import { ScrollArea } from "@/shared/components/ui/scroll-area";
+import { Field, FieldLabel, FieldError } from "@/shared/components/ui/field";
+import { Input } from "@/shared/components/ui/input";
+import { Textarea } from "@/shared/components/ui/textarea";
+import { Switch } from "@/shared/components/ui/switch";
+import { MainButton } from "@/shared/components/common/main-button";
+import { SelectFormField } from "@/shared/components/common/select/select-form-field";
+import { PRODUCT_STATUS } from "@/shared/contracts/product/product.contract";
 import { PRODUCT_CATEGORIES } from "../../constants/product.constants";
 import { ImagePlus, X, Upload, PlusIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/shared/components/ui/button";
+import { cn } from "@/shared/lib/utils";
 import { toast } from "sonner";
-import { Label } from "@/components/ui/label";
+import { Label } from "@/shared/components/ui/label";
 import { useCreateProduct } from "../../hooks/use-create-product";
 
 type TProductFormProps = {

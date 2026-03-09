@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
+import { Button } from "@/shared/components/ui/button";
 import { Lock, Eye, EyeOff, Mail } from "lucide-react";
 import Link from "next/link";
 import { useSignup } from "../hooks/use-signup";
@@ -10,9 +10,9 @@ import {
 	FieldError,
 	FieldGroup,
 	FieldLabel,
-} from "@/components/ui/field";
+} from "@/shared/components/ui/field";
 import { Controller } from "react-hook-form";
-import { MainButton } from "@/components/common/main-button";
+import { MainButton } from "@/shared/components/common/main-button";
 import { AuthSplitLayout } from "./auth-split-layout";
 
 export const SignupForm = () => {

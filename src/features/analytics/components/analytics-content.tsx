@@ -6,7 +6,7 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from "@/shared/components/ui/card";
 import { StatsCards } from "./stats-cards";
 import { RevenueChart } from "./charts/revenue-chart";
 import { ImpressionsChart } from "./charts/impressions-chart";

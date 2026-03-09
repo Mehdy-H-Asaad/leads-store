@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { TUserDTO } from "../api/user.dto";
+import { TUser } from "./user.model";
 
 type TUserStore = {
-	user: TUserDTO | null;
-	setUser: (user: TUserDTO | null) => void;
+	user: TUser | null;
+	setUser: (user: TUser | null) => void;
 	clearUser: () => void;
 	status: "idle" | "loading" | "authenticated" | "unauthenticated";
 	setStatus: (

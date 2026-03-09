@@ -1,11 +1,11 @@
 "use client";
 
-import { useApiMutation } from "@/hooks/use-api-mutation";
+import { useApiMutation } from "@/shared/hooks/use-api-mutation";
 import {
 	requestEmailChangeSchema,
 	TRequestEmailChangeSchema,
 } from "../schema/auth.schema";
-import { authService } from "@/services/auth/auth.service";
+import { authService } from "../api/auth.service";
 import { authMapper } from "../lib/auth-mapper.lib";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +15,8 @@ export const useRequestEmailChange = () => {
 		{ message: string },
 		TRequestEmailChangeSchema
 	>({
-		mutationFn: data => authService.requestEmailChange(authMapper.toRequestEmailChangeDto(data)),
+		mutationFn: data =>
+			authService.requestEmailChange(authMapper.toRequestEmailChangeDto(data)),
 		successMsg: "Verification link sent to your new email",
 	});
 

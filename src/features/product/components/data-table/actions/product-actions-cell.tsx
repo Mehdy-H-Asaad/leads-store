@@ -1,13 +1,13 @@
 import { MoreHorizontal } from "lucide-react";
-import { DropdownMenu } from "@/components/ui/dropdown-menu";
-import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { DropdownMenuContent } from "@/components/ui/dropdown-menu";
+import { DropdownMenu } from "@/shared/components/ui/dropdown-menu";
+import { DropdownMenuTrigger } from "@/shared/components/ui/dropdown-menu";
+import { DropdownMenuContent } from "@/shared/components/ui/dropdown-menu";
 import { Row } from "@tanstack/react-table";
-import { TProductDTO } from "@/entities/product/api/product.dto";
-import { DeleteDialog } from "@/components/common/delete-dialog";
-import { Button } from "@/components/ui/button";
+import { TProduct } from "@/entities/product/model/product.model";
+import { DeleteDialog } from "@/shared/components/common/delete-dialog";
+import { Button } from "@/shared/components/ui/button";
 
-export const ProductActionsCell = ({}: { row: Row<TProductDTO> }) => {
+export const ProductActionsCell = ({}: { row: Row<TProduct> }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>

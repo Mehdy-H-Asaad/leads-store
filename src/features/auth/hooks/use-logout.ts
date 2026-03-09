@@ -1,7 +1,7 @@
 "use client";
-import { useApiMutation } from "@/hooks/use-api-mutation";
-import { TUserDTO } from "@/entities/user/api/user.dto";
-import { authService } from "@/services/auth/auth.service";
+import { useApiMutation } from "@/shared/hooks/use-api-mutation";
+import { TUser } from "@/entities/user/model/user.model";
+import { authService } from "../api/auth.service";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/entities/user/model/user.store";
@@ -12,7 +12,7 @@ export const useLogout = () => {
 	const queryClient = useQueryClient();
 	const clearUser = useUserStore(state => state.clearUser);
 
-	const { mutate, isPending } = useApiMutation<TUserDTO, void>({
+	const { mutate, isPending } = useApiMutation<TUser, void>({
 		mutationFn: () => authService.logout(),
 		successMsg: "Logged out successfully",
 		invalidatedKeys: [USER_KEYS.ME()],

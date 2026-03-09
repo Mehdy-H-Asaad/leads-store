@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useUserStore } from "../model/user.store";
-import { useApiQuery } from "@/hooks/use-api-query";
-import { TUserDTO } from "./user.dto";
+import { useApiQuery } from "@/shared/hooks/use-api-query";
 import { USER_KEYS } from "./user.key";
 import { userService } from "./user.service";
+import { TUser } from "../model/user.model";
+import { TApiResponse } from "@/shared/lib/fetcher";
 
 export const useGetMe = ({ enabled }: { enabled: boolean }) => {
 	const { setUser, clearUser, setStatus } = useUserStore();
 
-	const { data, isLoading, isError, error } = useApiQuery<TUserDTO>({
+	const { data, isLoading, isError, error } = useApiQuery<
+		TApiResponse<TUser | null>
+	>({
 		queryKey: USER_KEYS.ME(),
 		queryFn: () => userService.getMe(),
 		retry: false,
@@ -31,7 +34,7 @@ export const useGetMe = ({ enabled }: { enabled: boolean }) => {
 	}, [data, isLoading, isError, setUser, clearUser, setStatus]);
 
 	return {
-		user: data?.data,
+		user: data?.data ? data.data : undefined,
 		isGettingCurrentUser: isLoading,
 		isError,
 		error,

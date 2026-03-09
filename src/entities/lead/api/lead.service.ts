@@ -1,4 +1,8 @@
-import { apiFetcher, TRequestOptions, TServerResponse } from "@/lib/fetcher";
+import {
+	apiFetcher,
+	TRequestOptions,
+	TServerResponse,
+} from "@/shared/lib/fetcher";
 import { TCreateLeadDTO, TUpdateLeadDTO, TLeadDTO } from "./lead.dto";
 
 const LEADS_PATH = "/leads" as const;

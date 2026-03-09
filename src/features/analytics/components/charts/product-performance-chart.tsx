@@ -1,23 +1,21 @@
 "use client";
 
-import {
-	BarChart,
-	Bar,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-	Cell,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
 import {
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/shared/components/ui/chart";
 import { productPerformanceChartConfig } from "../../constants/analytics.constants";
 import type { TProductPerformanceDataPoint } from "../../schema/analytics.schema";
 
 const productData: TProductPerformanceDataPoint[] = [
-	{ product: "iPhone 15 Pro", leads: 42, revenue: 42000, fill: "var(--chart-1)" },
+	{
+		product: "iPhone 15 Pro",
+		leads: 42,
+		revenue: 42000,
+		fill: "var(--chart-1)",
+	},
 	{ product: "Galaxy S24", leads: 38, revenue: 38400, fill: "var(--chart-2)" },
 	{ product: "Pixel 8 Pro", leads: 28, revenue: 36400, fill: "var(--chart-3)" },
 	{ product: "MacBook Air", leads: 22, revenue: 24200, fill: "var(--chart-4)" },

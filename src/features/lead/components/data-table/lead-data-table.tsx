@@ -1,20 +1,20 @@
 "use client";
 import { useState } from "react";
-import { DataTable } from "@/components/common/data-table";
+import { DataTable } from "@/shared/components/common/data-table";
 import { LeadColumns } from "./lead-columns";
 import {
 	LEAD_PRIORITY,
 	LEAD_SOURCE,
 	LEAD_STATUS,
-} from "@/contracts/lead/lead.contract";
+} from "@/shared/contracts/lead/lead.contract";
 import { TLeadDTO } from "@/entities/lead/api/lead.dto";
-import { MainButton } from "@/components/common/main-button";
+import { MainButton } from "@/shared/components/common/main-button";
 import { PlusIcon } from "lucide-react";
-import { useFilterParams } from "@/hooks/use-filter-params";
+import { useFilterParams } from "@/shared/hooks/use-filter-params";
 import { TLeadFilters } from "../../types/lead.types";
 import { LeadFilters } from "../filters/lead-filters";
 import { LeadForm } from "../forms/lead-form";
-import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
+import { PRODUCT_STATUS } from "@/shared/contracts/product/product.contract";
 
 export const LeadDataTable = () => {
 	const [isFormOpen, setIsFormOpen] = useState(false);

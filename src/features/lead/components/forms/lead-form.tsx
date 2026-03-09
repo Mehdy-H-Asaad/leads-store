@@ -7,18 +7,18 @@ import {
 	SheetHeader,
 	SheetTitle,
 	SheetDescription,
-} from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { MainButton } from "@/components/common/main-button";
-import { SelectFormField } from "@/components/common/select/select-form-field";
+} from "@/shared/components/ui/sheet";
+import { ScrollArea } from "@/shared/components/ui/scroll-area";
+import { Field, FieldLabel, FieldError } from "@/shared/components/ui/field";
+import { Input } from "@/shared/components/ui/input";
+import { Textarea } from "@/shared/components/ui/textarea";
+import { MainButton } from "@/shared/components/common/main-button";
+import { SelectFormField } from "@/shared/components/common/select/select-form-field";
 import {
 	LEAD_STATUS,
 	LEAD_SOURCE,
 	LEAD_PRIORITY,
-} from "@/contracts/lead/lead.contract";
+} from "@/shared/contracts/lead/lead.contract";
 import { useCreateLead } from "../../hooks/use-create-lead";
 type TLeadFormProps = {
 	open: boolean;

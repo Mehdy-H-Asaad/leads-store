@@ -1,9 +1,9 @@
 "use client";
 
-import { ComboboxSelect } from "@/components/common/select/combobox-select";
-import { LEAD_STATUS } from "@/contracts/lead/lead.contract";
+import { ComboboxSelect } from "@/shared/components/common/select/combobox-select";
+import { LEAD_STATUS } from "@/shared/contracts/lead/lead.contract";
 import { LEAD_SOURCES } from "@/features/lead/constants/lead.constants";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { TLeadFilters } from "@/features/lead/types/lead.types";
 import { XIcon } from "lucide-react";
 import { ReadonlyURLSearchParams } from "next/navigation";
@@ -13,7 +13,7 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 
 type TLeadFiltersProps = {
 	filters: TLeadFilters;

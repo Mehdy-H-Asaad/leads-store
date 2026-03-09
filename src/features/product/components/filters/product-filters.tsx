@@ -1,9 +1,9 @@
 "use client";
 
-import { ComboboxSelect } from "@/components/common/select/combobox-select";
-import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
+import { ComboboxSelect } from "@/shared/components/common/select/combobox-select";
+import { PRODUCT_STATUS } from "@/shared/contracts/product/product.contract";
 import { PRODUCT_CATEGORIES } from "@/features/product/constants/product.constants";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { TProductFilters } from "@/features/product/types/product.types";
 import { XIcon } from "lucide-react";
 import { ReadonlyURLSearchParams } from "next/navigation";
@@ -13,7 +13,7 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 
 type TProductFiltersProps = {
 	filters: TProductFilters;

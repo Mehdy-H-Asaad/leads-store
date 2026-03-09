@@ -1,4 +1,4 @@
-import { USER_STATUS, USER_PLAN } from "@/contracts/user/user.contract";
+import { USER_STATUS, USER_PLAN } from "@/shared/contracts/user/user.contract";
 import { z } from "zod";
 
 export const UserSchema = z.object({

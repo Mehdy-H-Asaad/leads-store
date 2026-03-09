@@ -1,7 +1,7 @@
 "use client";
 
 import { useLogout } from "@/features/auth/hooks/use-logout";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { LogOut } from "lucide-react";
 
 export const LogoutSection = () => {

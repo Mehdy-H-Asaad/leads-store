@@ -5,6 +5,10 @@ import { AuthProvider } from "@/app/providers/auth-provider";
 import { TanstackProvider } from "@/app/providers/tanstack-provider";
 import { Toaster } from "sonner";
 import { cookies } from "next/headers";
+import { USER_KEYS } from "@/entities/user/api/user.key";
+import { userService } from "@/entities/user/api/user.service";
+import { getQueryClient } from "@/shared/lib/query-client";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export const metadata: Metadata = {
 	title: "Store Link",
@@ -24,15 +28,21 @@ export default async function RootLayout({
 }>) {
 	const cookieStore = await cookies();
 	const hasSession = !!cookieStore.get("access_token")?.value;
+	const queryClient = getQueryClient();
+	await queryClient.prefetchQuery({
+		queryKey: USER_KEYS.ME(),
+		queryFn: () => userService.getMe(),
+	});
+	const dehydratedState = dehydrate(queryClient);
 	return (
 		<html lang="en">
 			<body className={`${poppins.variable} ${poppins.className} antialiased`}>
 				<TanstackProvider>
-					<AuthProvider hasSession={hasSession}>
-						{children}
-						<Toaster position="top-right" richColors />
-					</AuthProvider>
+					<HydrationBoundary state={dehydratedState}>
+						<AuthProvider hasSession={hasSession}>{children}</AuthProvider>
+					</HydrationBoundary>
 				</TanstackProvider>
+				<Toaster position="top-right" richColors />
 			</body>
 		</html>
 	);

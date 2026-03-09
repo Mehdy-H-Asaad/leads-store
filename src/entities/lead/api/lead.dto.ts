@@ -3,8 +3,8 @@ import {
 	LEAD_SOURCE,
 	LEAD_STATUS,
 	LEAD_PRIORITY,
-} from "@/contracts/lead/lead.contract";
-import { productContractRefSchema } from "@/contracts/product/product.contract";
+} from "@/shared/contracts/lead/lead.contract";
+import { productContractRefSchema } from "@/shared/contracts/product/product.contract";
 
 export const leadSchemaDto = z.object({
 	_id: z.string(),

@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/shared/components/ui/input";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useLogin } from "../hooks/use-login";
-import { MainButton } from "@/components/common/main-button";
-import { FieldGroup, Field, FieldLabel } from "@/components/ui/field";
+import { MainButton } from "@/shared/components/common/main-button";
+import { FieldGroup, Field, FieldLabel } from "@/shared/components/ui/field";
 import { Controller } from "react-hook-form";
 import { AuthSplitLayout } from "./auth-split-layout";
 

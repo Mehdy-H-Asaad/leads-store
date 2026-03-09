@@ -7,7 +7,7 @@ import type {
 	TVerifyEmailChangeDto,
 	TVerifyOTPDto,
 	TForgotPasswordDto,
-} from "@/services/auth/auth.dto";
+} from "../api/auth.dto";
 import type {
 	TLoginSchema,
 	TRequestEmailChangeSchema,
@@ -50,4 +50,4 @@ export const authMapper = {
 
 	toVerifyEmailChangeDto: ({ token }: TVerifyEmailChangeSchema) =>
 		({ token } satisfies TVerifyEmailChangeDto),
-} as const;
+};

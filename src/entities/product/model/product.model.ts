@@ -1,9 +1,9 @@
 import z from "zod";
-import { PRODUCT_STATUS } from "@/contracts/product/product.contract";
+import { PRODUCT_STATUS } from "@/shared/contracts/product/product.contract";
 import {
 	productGalleryItemSchema,
 	productAttributeSchema,
-} from "@/contracts/product/product.contract";
+} from "@/shared/contracts/product/product.contract";
 
 export const productModel = z.object({
 	_id: z.string(),
