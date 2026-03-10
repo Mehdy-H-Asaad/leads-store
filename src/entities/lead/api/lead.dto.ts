@@ -13,27 +13,27 @@ export const leadSchemaDto = z.object({
 	email: z.email(),
 	source: z.enum(LEAD_SOURCE),
 	status: z.enum(LEAD_STATUS),
-	budgetFrom: z.number().nullable(),
-	budgetTo: z.number().nullable(),
+	budget_from: z.number().nullable(),
+	budget_to: z.number().nullable(),
 	note: z.string().nullable(),
 	priority: z.enum(LEAD_PRIORITY),
 	country: z.string().nullable(),
 	product: productContractRefSchema,
-	createdAt: z.coerce.date(),
-	updatedAt: z.coerce.date(),
+	created_at: z.date(),
+	updated_at: z.date(),
 });
 
 export const createLeadSchemaDto = leadSchemaDto.omit({
 	_id: true,
-	createdAt: true,
-	updatedAt: true,
+	created_at: true,
+	updated_at: true,
 	product: true,
 });
 
 export const updateLeadSchemaDto = leadSchemaDto.omit({
 	_id: true,
-	createdAt: true,
-	updatedAt: true,
+	created_at: true,
+	updated_at: true,
 	product: true,
 });
 

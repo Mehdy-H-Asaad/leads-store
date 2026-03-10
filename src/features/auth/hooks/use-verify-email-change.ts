@@ -7,7 +7,7 @@ import {
 } from "../schema/auth.schema";
 import { TUserDTO } from "@/entities/user/api/user.dto";
 import { authService } from "../api/auth.service";
-import { authMapper } from "../lib/auth-mapper.lib";
+import { authMapper } from "../lib/auth.mapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

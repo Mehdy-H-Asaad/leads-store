@@ -22,6 +22,7 @@ export const userMapper = {
 			createdAt: dto.created_at,
 			updatedAt: dto.updated_at,
 			links: dto.links,
+			step: dto.step,
 		} satisfies TUser;
 	},
 };

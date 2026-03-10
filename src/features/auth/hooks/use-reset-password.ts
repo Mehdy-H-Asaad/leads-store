@@ -7,15 +7,17 @@ import {
 } from "../schema/auth.schema";
 import { TUserDTO } from "@/entities/user/api/user.dto";
 import { authService } from "../api/auth.service";
-import { authMapper } from "../lib/auth-mapper.lib";
+import { authMapper } from "../lib/auth.mapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { USER_KEYS } from "@/entities/user/api/user.key";
 
 export const useResetPassword = () => {
 	const router = useRouter();
-
+	const searchParams = useSearchParams();
+	const token = searchParams.get("token");
+	const email = searchParams.get("email");
 	const { mutate, isPending } = useApiMutation<TUserDTO, TResetPasswordSchema>({
 		mutationFn: data =>
 			authService.resetPassword(authMapper.toResetPasswordDto(data)),
@@ -30,9 +32,9 @@ export const useResetPassword = () => {
 	const ResetPasswordForm = useForm<TResetPasswordSchema>({
 		resolver: zodResolver(resetPasswordSchema),
 		defaultValues: {
-			email: "",
+			email: email ?? "",
 			newPassword: "",
-			token: "",
+			token: token ?? "",
 		},
 	});
 

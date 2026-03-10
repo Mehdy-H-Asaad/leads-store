@@ -12,7 +12,6 @@ import { cn } from "@/shared/lib/utils";
 // import { UserRole } from "@/shared/types/types";
 // import { useAuthUserStore } from "@/features/auth/store/auth.store";
 import { TUser } from "@/entities/user/model/user.model";
-import { TUserContractRef } from "@/shared/contracts/user/user.contract";
 
 export function NavMain({
 	items,
@@ -27,7 +26,7 @@ export function NavMain({
 			url: string;
 		}[];
 	}[];
-	user: TUserContractRef;
+	user: TUser;
 }) {
 	const pathname = usePathname();
 

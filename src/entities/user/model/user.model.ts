@@ -1,4 +1,8 @@
-import { USER_PLAN, USER_STATUS } from "@/shared/contracts/user/user.contract";
+import {
+	USER_PLAN,
+	USER_STATUS,
+	USER_STEP,
+} from "@/shared/contracts/user/user.contract";
 import z from "zod";
 
 export const userModel = z.object({
@@ -19,12 +23,15 @@ export const userModel = z.object({
 	QRCode: z.string(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date(),
-	links: z.array(
-		z.object({
-			name: z.string(),
-			url: z.string(),
-		})
-	),
+	links: z
+		.array(
+			z.object({
+				name: z.string(),
+				url: z.string(),
+			})
+		)
+		.optional(),
+	step: z.enum(USER_STEP),
 });
 
 export type TUser = z.infer<typeof userModel>;

@@ -1,4 +1,8 @@
-import { USER_PLAN, USER_STATUS } from "@/shared/contracts/user/user.contract";
+import {
+	USER_PLAN,
+	USER_STATUS,
+	USER_STEP,
+} from "@/shared/contracts/user/user.contract";
 import z from "zod";
 
 export const userSchemaDto = z.object({
@@ -17,14 +21,17 @@ export const userSchemaDto = z.object({
 	business_description: z.string().nullable(),
 	store_url: z.string(),
 	qr_code: z.string(),
-	created_at: z.coerce.date(),
-	updated_at: z.coerce.date(),
-	links: z.array(
-		z.object({
-			name: z.string(),
-			url: z.string(),
-		})
-	),
+	created_at: z.date(),
+	updated_at: z.date(),
+	links: z
+		.array(
+			z.object({
+				name: z.string(),
+				url: z.string(),
+			})
+		)
+		.optional(),
+	step: z.enum(USER_STEP),
 });
 
 export const onboardingSchemaDto = userSchemaDto.pick({
@@ -40,8 +47,21 @@ export const onboardingSchemaDto = userSchemaDto.pick({
 	links: true,
 });
 
+export const requestEmailChangeSchemaDto = z.object({
+	new_email: z.email(),
+	password: z.string(),
+});
+
+export const verifyEmailChangeSchemaDto = z.object({
+	token: z.string(),
+});
+
 export type TUserDTO = z.infer<typeof userSchemaDto>;
 export type TOnboardingDTO = z.infer<typeof onboardingSchemaDto>;
+export type TRequestEmailChangeDTO = z.infer<
+	typeof requestEmailChangeSchemaDto
+>;
+export type TVerifyEmailChangeDTO = z.infer<typeof verifyEmailChangeSchemaDto>;
 
 export type TLoginResponseDTO = {
 	user: TUserDTO;

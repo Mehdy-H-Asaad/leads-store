@@ -94,6 +94,10 @@ export const LeadForm = ({ open, onOpenChange }: TLeadFormProps) => {
 											type="tel"
 											placeholder="+1 (555) 000-0000"
 											aria-invalid={fieldState.invalid}
+											value={field.value ?? ""}
+											onChange={e =>
+												field.onChange(e.target.value ? e.target.value : null)
+											}
 										/>
 										{fieldState.error && (
 											<FieldError>{fieldState.error.message}</FieldError>
@@ -256,6 +260,10 @@ export const LeadForm = ({ open, onOpenChange }: TLeadFormProps) => {
 										{...field}
 										placeholder="Country"
 										aria-invalid={fieldState.invalid}
+										value={field.value ?? ""}
+										onChange={e =>
+											field.onChange(e.target.value ? e.target.value : null)
+										}
 									/>
 									{fieldState.error && (
 										<FieldError>{fieldState.error.message}</FieldError>
@@ -264,7 +272,7 @@ export const LeadForm = ({ open, onOpenChange }: TLeadFormProps) => {
 							)}
 						/>
 
-						<Controller
+						{/* <Controller
 							control={CreateLeadForm.control}
 							name="product"
 							render={({ field, fieldState }) => (
@@ -283,7 +291,7 @@ export const LeadForm = ({ open, onOpenChange }: TLeadFormProps) => {
 									)}
 								</Field>
 							)}
-						/>
+						/> */}
 
 						<Controller
 							control={CreateLeadForm.control}
@@ -296,6 +304,7 @@ export const LeadForm = ({ open, onOpenChange }: TLeadFormProps) => {
 										placeholder="Additional notes about this lead"
 										rows={4}
 										aria-invalid={fieldState.invalid}
+										value={field.value ?? ""}
 									/>
 									<div className="text-xs text-muted-foreground">
 										{field.value?.length || 0}/500 characters

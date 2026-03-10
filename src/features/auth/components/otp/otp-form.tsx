@@ -20,12 +20,12 @@ import { Controller, UseFormReturn } from "react-hook-form";
 
 import { useEffect, useState } from "react";
 import { MainButton } from "@/shared/components/common/main-button";
-import { TVerifyOTPDTO } from "../../schema/auth.schema";
 import { Field, FieldGroup, FieldLabel } from "@/shared/components/ui/field";
+import { TVerifyOTPSchema } from "@/features/auth/schema/auth.schema";
 
 type OTPFormProps = {
-	form: UseFormReturn<TVerifyOTPDTO>;
-	onSubmit: (values: TVerifyOTPDTO) => void;
+	form: UseFormReturn<TVerifyOTPSchema>;
+	onSubmit: (values: TVerifyOTPSchema) => void;
 	isPending: boolean;
 };
 

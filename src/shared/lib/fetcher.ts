@@ -22,18 +22,18 @@ export type TApiResponse<T> = {
 type TApiErrorShape = {
 	message: string;
 	code: number;
-	details?: unknown;
+	detail?: unknown;
 };
 
 export class ApiError extends Error {
 	message: string;
-	details?: unknown;
+	detail?: unknown;
 	code: number;
 	constructor(error: TApiErrorShape) {
 		super(error.message);
 		this.message = error.message;
 		this.code = error.code;
-		this.details = error.details;
+		this.detail = error.detail;
 	}
 }
 
@@ -100,6 +100,7 @@ const fetcher = async <T>({
 		throw new ApiError({
 			message: error?.message ?? response.statusText ?? "Something went wrong",
 			code: response.status,
+			detail: error?.detail,
 		});
 	}
 

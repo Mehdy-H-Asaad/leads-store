@@ -3,11 +3,11 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/shared/components/ui/badge";
 import { LEAD_STATUS } from "@/shared/contracts/lead/lead.contract";
-import { TLeadDTO } from "@/entities/lead/api/lead.dto";
 import { formatDate } from "date-fns";
 import { LeadActionsCell } from "./actions/lead-actions-cell";
+import { TLead } from "@/entities/lead/model/lead.model";
 
-export const LeadColumns: ColumnDef<TLeadDTO>[] = [
+export const LeadColumns: ColumnDef<TLead>[] = [
 	{
 		accessorKey: "name",
 		header: "Name",
@@ -59,9 +59,7 @@ export const LeadColumns: ColumnDef<TLeadDTO>[] = [
 		accessorKey: "createdAt",
 		header: "Created At",
 		cell: ({ row }) => {
-			return (
-				<div>{formatDate(new Date(row.original.createdAt), "dd/MM/yyyy")}</div>
-			);
+			return <div>{formatDate(row.original.createdAt, "dd/MM/yyyy")}</div>;
 		},
 	},
 	{

@@ -5,9 +5,9 @@ import { DropdownMenuContent } from "@/shared/components/ui/dropdown-menu";
 import { Row } from "@tanstack/react-table";
 import { DeleteDialog } from "@/shared/components/common/delete-dialog";
 import { Button } from "@/shared/components/ui/button";
-import { TLeadDTO } from "@/entities/lead/api/lead.dto";
+import { TLead } from "@/entities/lead/model/lead.model";
 
-export const LeadActionsCell = ({}: { row: Row<TLeadDTO> }) => {
+export const LeadActionsCell = ({}: { row: Row<TLead> }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { DataTable } from "@/shared/components/common/data-table";
 import { ProductColumns } from "./product-columns";
-import { TProductDTO } from "@/entities/product/api/product.dto";
 import { MainButton } from "@/shared/components/common/main-button";
 import { PlusIcon } from "lucide-react";
 import { useFilterParams } from "@/shared/hooks/use-filter-params";
@@ -11,6 +10,7 @@ import { ProductFilters } from "../filters/product-filters";
 import { ProductForm } from "../forms/product-form";
 import vercel from "@/app/favicon.ico";
 import { PRODUCT_STATUS } from "@/shared/contracts/product/product.contract";
+import { TProduct } from "@/entities/product/model/product.model";
 
 export const ProductDataTable = () => {
 	const [isFormOpen, setIsFormOpen] = useState(false);
@@ -31,7 +31,7 @@ export const ProductDataTable = () => {
 		updateFiltersParams({ filters: filters, options: { resetPage: true } });
 	};
 
-	const data: TProductDTO[] = [
+	const data: TProduct[] = [
 		{
 			_id: "1",
 			name: "Apple iPhone 15 Pro Max",

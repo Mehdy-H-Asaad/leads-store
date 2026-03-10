@@ -7,7 +7,7 @@ import {
 	useQueryClient,
 	UseMutationOptions,
 } from "@tanstack/react-query";
-import { TApiResponse } from "@/shared/lib/fetcher";
+import { ApiError, TApiResponse } from "@/shared/lib/fetcher";
 
 type TUseApiMutationProps<TData, TVariables> = {
 	mutationKey?: MutationKey;
@@ -26,8 +26,8 @@ export const useApiMutation = <TData = unknown, TVariables = void>({
 	successMsg,
 	invalidatedKeys = [],
 	invalidateExact = false,
-	onSuccess: callerOnSuccess,
-	onError: callerOnError,
+	onSuccess,
+	onError,
 	...mutationOptions
 }: TUseApiMutationProps<TData, TVariables>) => {
 	const queryClient = useQueryClient();
@@ -35,7 +35,7 @@ export const useApiMutation = <TData = unknown, TVariables = void>({
 	const mutation = useMutation<TApiResponse<TData>, Error, TVariables>({
 		mutationKey,
 		mutationFn,
-		onSuccess: (data, variables, context) => {
+		onSuccess: (data, variables, context, mutation) => {
 			if (successMsg) {
 				toast.success(successMsg);
 			}
@@ -45,11 +45,13 @@ export const useApiMutation = <TData = unknown, TVariables = void>({
 					exact: invalidateExact,
 				});
 			}
-			callerOnSuccess?.(data, variables, context);
+			onSuccess?.(data, variables, context, mutation);
 		},
-		onError: (error, variables, context) => {
-			toast.error(error.message);
-			callerOnError?.(error, variables, context);
+		onError: (error, variables, context, mutation) => {
+			toast.error(error.message, {
+				description: (error as ApiError).detail as string,
+			});
+			onError?.(error, variables, context, mutation);
 		},
 		...mutationOptions,
 	});

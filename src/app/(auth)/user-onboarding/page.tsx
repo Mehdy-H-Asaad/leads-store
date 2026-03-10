@@ -1,13 +1,6 @@
 import { OnboardingForm } from "@/features/user/components/onboarding/onboarding-form";
-import { userService } from "@/entities/user/api/user.service";
-import { redirect } from "next/navigation";
 
-export default async function page() {
-	const user = await userService.getMe();
-	if (user.data) {
-		return redirect("/");
-	}
-
+export default function page() {
 	return (
 		<div className="min-h-screen bg-background flex flex-col">
 			<header className="border-b px-6 py-4">

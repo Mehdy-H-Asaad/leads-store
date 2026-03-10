@@ -1,5 +1,5 @@
 import { PageHeader } from "@/shared/components/common/page-header";
-import { SettingsContent } from "@/features/settings/components/settings-content";
+import { SettingsContent } from "@/entities/user/components/settings-content";
 
 const page = () => {
 	return (

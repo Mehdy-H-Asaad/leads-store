@@ -1,57 +1,91 @@
 import {
 	apiFetcher,
 	TRequestOptions,
-	TServerResponse,
+	TApiResponse,
+	TPaginatedApiResponse,
 } from "@/shared/lib/fetcher";
-import { TCreateLeadDTO, TUpdateLeadDTO, TLeadDTO } from "./lead.dto";
+import {
+	TCreateLeadDTO,
+	TUpdateLeadDTO,
+	TLeadDTO,
+	leadSchemaDto,
+} from "./lead.dto";
+import { TLead } from "../model/lead.model";
+import { leadMapper } from "./lead.mapper";
+import z from "zod";
 
 const LEADS_PATH = "/leads" as const;
 
 export const leadService = {
 	getLeads: async (
 		options?: TRequestOptions
-	): Promise<TServerResponse<TLeadDTO[]>> => {
-		const response = await apiFetcher.get<TLeadDTO[]>(LEADS_PATH, options);
-		return response;
+	): Promise<TPaginatedApiResponse<TLead>> => {
+		const response = await apiFetcher.get<TPaginatedApiResponse<TLeadDTO>>(
+			LEADS_PATH,
+			options
+		);
+
+		const dto = z.array(leadSchemaDto).parse(response.data ?? []);
+
+		return {
+			...response,
+			data: dto.map(leadMapper.fromDtoToModel),
+		};
 	},
 
 	getLead: async (
 		id: string,
 		options?: TRequestOptions
-	): Promise<TServerResponse<TLeadDTO>> => {
-		const response = await apiFetcher.get<TLeadDTO>(
+	): Promise<TApiResponse<TLead>> => {
+		const response = await apiFetcher.get<TApiResponse<TLeadDTO>>(
 			`${LEADS_PATH}/${id}`,
 			options
 		);
-		return response;
+		const dto = leadSchemaDto.parse(response.data);
+		return {
+			...response,
+			data: leadMapper.fromDtoToModel(dto),
+		};
 	},
 
 	createLead: async (
 		lead: TCreateLeadDTO,
 		options?: TRequestOptions
-	): Promise<TServerResponse<TLeadDTO>> => {
-		const response = await apiFetcher.post<TLeadDTO>(LEADS_PATH, lead, options);
-		return response;
+	): Promise<TApiResponse<TLead>> => {
+		const response = await apiFetcher.post<TApiResponse<TLeadDTO>>(
+			LEADS_PATH,
+			lead,
+			options
+		);
+		const dto = leadSchemaDto.parse(response.data);
+		return {
+			...response,
+			data: leadMapper.fromDtoToModel(dto),
+		};
 	},
 
 	updateLead: async (
 		id: string,
 		lead: TUpdateLeadDTO,
 		options?: TRequestOptions
-	): Promise<TServerResponse<TLeadDTO>> => {
-		const response = await apiFetcher.put<TLeadDTO>(
+	): Promise<TApiResponse<TLead>> => {
+		const response = await apiFetcher.put<TApiResponse<TLeadDTO>>(
 			`${LEADS_PATH}/${id}`,
 			lead,
 			options
 		);
-		return response;
+		const dto = leadSchemaDto.parse(response.data);
+		return {
+			...response,
+			data: leadMapper.fromDtoToModel(dto),
+		};
 	},
 
 	deleteLead: async (
 		id: string,
 		options?: TRequestOptions
-	): Promise<TServerResponse<TLeadDTO>> => {
-		const response = await apiFetcher.delete<TLeadDTO>(
+	): Promise<TApiResponse<void>> => {
+		const response = await apiFetcher.delete<TApiResponse<void>>(
 			`${LEADS_PATH}/${id}`,
 			options
 		);

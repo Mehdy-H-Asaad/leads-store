@@ -1,5 +1,8 @@
 import z from "zod";
-
+export enum USER_STEP {
+	ONE = "ONE",
+	TWO = "TWO",
+}
 export enum USER_ROLE {
 	ADMIN = "admin",
 	USER = "user",

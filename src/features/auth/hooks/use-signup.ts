@@ -2,7 +2,7 @@
 import { useApiMutation } from "@/shared/hooks/use-api-mutation";
 import { SignupSchema, TSignupSchema } from "../schema/auth.schema";
 import { authService } from "../api/auth.service";
-import { authMapper } from "../lib/auth-mapper.lib";
+import { authMapper } from "../lib/auth.mapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ export const useSignup = () => {
 		invalidateExact: true,
 		onSuccess: data => {
 			setUser(data.data);
-			router.push("/verify-email");
+			router.push(`/verify-email?email=${encodeURIComponent(data.data.email)}`);
 		},
 	});
 

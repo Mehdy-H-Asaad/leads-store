@@ -50,7 +50,7 @@ export const authService = {
 		data: TForgotPasswordDto
 	): Promise<TApiResponse<{ message: string }>> => {
 		const response = await apiFetcher.post<TApiResponse<{ message: string }>>(
-			"/auth/forgot-password",
+			"/auth/request-password-reset",
 			data
 		);
 		return response;

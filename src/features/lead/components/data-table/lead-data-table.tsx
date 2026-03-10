@@ -7,7 +7,7 @@ import {
 	LEAD_SOURCE,
 	LEAD_STATUS,
 } from "@/shared/contracts/lead/lead.contract";
-import { TLeadDTO } from "@/entities/lead/api/lead.dto";
+import { TLead } from "@/entities/lead/model/lead.model";
 import { MainButton } from "@/shared/components/common/main-button";
 import { PlusIcon } from "lucide-react";
 import { useFilterParams } from "@/shared/hooks/use-filter-params";
@@ -31,7 +31,7 @@ export const LeadDataTable = () => {
 		updateFiltersParams({ filters: filters, options: { resetPage: true } });
 	};
 
-	const data: TLeadDTO[] = [
+	const data: TLead[] = [
 		{
 			_id: "1",
 			name: "John Doe",

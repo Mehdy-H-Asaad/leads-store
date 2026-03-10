@@ -31,7 +31,7 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/shared/components/ui/sidebar";
-import { TUserContractRef } from "@/shared/contracts/user/user.contract";
+import { TUser } from "@/entities/user/model/user.model";
 // import { UserRole } from "@/shared/types/types";
 // import { UpdateBasicAgencyInfo } from "@/features/agency/components/dashboard/update-basic-agency-info/update-basic-agency-info";
 
@@ -39,7 +39,7 @@ export function NavUser({
 	user,
 	onLogout,
 }: {
-	user: TUserContractRef;
+	user: TUser;
 	onLogout: () => void;
 }) {
 	const { isMobile } = useSidebar();

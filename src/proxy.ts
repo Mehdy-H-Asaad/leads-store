@@ -1,5 +1,18 @@
 // import { jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
+const AUTH_ROUTES = ["/login", "/signup", "/user-onboarding"];
+
+export async function proxy(request: NextRequest) {
+	const refreshToken = request.cookies.get("refresh_token")?.value;
+	const pathname = request.nextUrl.pathname;
+
+	const isAuthRoute = AUTH_ROUTES.some(r => pathname.startsWith(r));
+	if (refreshToken && isAuthRoute) {
+		return NextResponse.redirect(new URL("/", request.url));
+	}
+
+	return NextResponse.next();
+}
 
 // const PROTECTED_ROUTES = ["/", "/companies"];
 
@@ -89,6 +102,3 @@ import { NextRequest, NextResponse } from "next/server";
 // 	matcher:
 // 		"/((?!login|signup|verify-email|api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|\\.well-known).*)",
 // };
-export async function proxy(request: NextRequest) {
-	return NextResponse.next();
-}

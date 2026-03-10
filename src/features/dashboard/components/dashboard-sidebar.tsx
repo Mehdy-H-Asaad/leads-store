@@ -22,7 +22,6 @@ import {
 import { useUserStore } from "@/entities/user/model/user.store";
 import { useLogout } from "@/features/auth/hooks/use-logout";
 import { TUser } from "@/entities/user/model/user.model";
-import { TUserContractRef } from "@/shared/contracts/user/user.contract";
 
 type TSidebarData = {
 	items: {
@@ -36,7 +35,7 @@ type TSidebarData = {
 			icon?: React.ReactNode;
 		}[];
 	}[];
-	user: TUserContractRef;
+	user: TUser;
 };
 
 export function DashboardSidebar({
@@ -45,7 +44,7 @@ export function DashboardSidebar({
 	const { user } = useUserStore();
 	const { onLogout } = useLogout();
 	const sidebarData: TSidebarData = {
-		user: user ?? ({} as TUserContractRef),
+		user: user ?? ({} as TUser),
 
 		items: [
 			{

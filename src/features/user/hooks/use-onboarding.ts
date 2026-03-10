@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useApiMutation } from "@/shared/hooks/use-api-mutation";
-import { TUserDTO } from "@/entities/user/api/user.dto";
 import { USER_KEYS } from "@/entities/user/api/user.key";
 import { userService } from "@/entities/user/api/user.service";
 import { onboardingMapper } from "../lib/onboarding-mapper.lib";

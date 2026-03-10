@@ -1,4 +1,4 @@
-import { LEAD_STATUS } from "../schema/lead.schema";
+import { LEAD_STATUS } from "@/shared/contracts/lead/lead.contract";
 
 export type TLeadFilters = {
 	status?: LEAD_STATUS;

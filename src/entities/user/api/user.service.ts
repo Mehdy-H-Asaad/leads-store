@@ -1,5 +1,11 @@
 import { apiFetcher, TApiResponse } from "@/shared/lib/fetcher";
-import { TMeDTO, TOnboardingDTO, TUserDTO } from "./user.dto";
+import {
+	TMeDTO,
+	TOnboardingDTO,
+	TRequestEmailChangeDTO,
+	TUserDTO,
+	TVerifyEmailChangeDTO,
+} from "./user.dto";
 import { TUser } from "../model/user.model";
 import { userMapper } from "./user.mapper";
 
@@ -12,7 +18,25 @@ export const userService = {
 		data: TOnboardingDTO
 	): Promise<TApiResponse<TUser>> => {
 		const response = await apiFetcher.post<TApiResponse<TUserDTO>>(
-			"/auth/signup/complete",
+			"/users/signup/complete",
+			data
+		);
+		return { ...response, data: userMapper.fromDtoToModel(response.data) };
+	},
+	requestEmailChange: async (
+		data: TRequestEmailChangeDTO
+	): Promise<TApiResponse<TUser>> => {
+		const response = await apiFetcher.post<TApiResponse<TUserDTO>>(
+			"/users/request-email-change",
+			data
+		);
+		return { ...response, data: userMapper.fromDtoToModel(response.data) };
+	},
+	verifyEmailChange: async (
+		data: TVerifyEmailChangeDTO
+	): Promise<TApiResponse<TUser>> => {
+		const response = await apiFetcher.post<TApiResponse<TUserDTO>>(
+			"/users/confirm-email-change",
 			data
 		);
 		return { ...response, data: userMapper.fromDtoToModel(response.data) };

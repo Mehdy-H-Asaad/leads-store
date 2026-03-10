@@ -6,7 +6,7 @@ import {
 	TRequestEmailChangeSchema,
 } from "../schema/auth.schema";
 import { authService } from "../api/auth.service";
-import { authMapper } from "../lib/auth-mapper.lib";
+import { authMapper } from "../lib/auth.mapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 

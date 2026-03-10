@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	BusinessProfileSchema,
 	TBusinessProfileDTO,
-} from "../schema/settings.schema";
+} from "../schema/user-settings.schema";
 
 const defaultValues: TBusinessProfileDTO = {
 	businessName: "",
@@ -14,7 +14,9 @@ const defaultValues: TBusinessProfileDTO = {
 	storeUrlSlug: "",
 };
 
-export const useBusinessProfileForm = (initial?: Partial<TBusinessProfileDTO>) => {
+export const useBusinessProfileForm = (
+	initial?: Partial<TBusinessProfileDTO>
+) => {
 	const form = useForm<TBusinessProfileDTO>({
 		resolver: zodResolver(BusinessProfileSchema),
 		defaultValues: { ...defaultValues, ...initial },

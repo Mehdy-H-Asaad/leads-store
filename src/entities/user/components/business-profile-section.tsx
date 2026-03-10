@@ -17,9 +17,9 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { MainButton } from "@/shared/components/common/main-button";
-import { STORE_URL_PREFIX } from "../constants/settings.constants";
+import { STORE_URL_PREFIX } from "../constants/user.constants";
 import type { UseFormReturn } from "react-hook-form";
-import type { TBusinessProfileDTO } from "../schema/settings.schema";
+import type { TBusinessProfileDTO } from "../schema/user-settings.schema";
 
 type BusinessProfileSectionProps = {
 	form: UseFormReturn<TBusinessProfileDTO>;

@@ -20,7 +20,7 @@ export const OnboardingStep2Schema = z.object({
 				url: z.url("Please enter a valid URL"),
 			})
 		)
-		.min(1, "At least one link is required"),
+		.optional(),
 });
 
 export const OnboardingSchema = OnboardingStep1Schema.and(

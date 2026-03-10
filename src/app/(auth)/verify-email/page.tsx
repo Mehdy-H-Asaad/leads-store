@@ -1,8 +1,11 @@
+import { Suspense } from "react";
 import { VerifyEmailOTP } from '@/features/auth/components/otp/verify-email-otp';
 
 const page = () => {
     return (
-        <VerifyEmailOTP />
+        <Suspense>
+            <VerifyEmailOTP />
+        </Suspense>
     )
 }
 
