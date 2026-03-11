@@ -17,7 +17,7 @@ export const userModel = z.object({
 	status: z.enum(USER_STATUS),
 	plan: z.enum(USER_PLAN),
 	logo: z.string().nullable(),
-	BusinessName: z.string().nullable(),
+	businessName: z.string().nullable(),
 	businessDescription: z.string().nullable(),
 	storeURL: z.string(),
 	QRCode: z.string(),

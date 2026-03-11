@@ -102,3 +102,7 @@ export async function proxy(request: NextRequest) {
 // 	matcher:
 // 		"/((?!login|signup|verify-email|api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|\\.well-known).*)",
 // };
+export const config = {
+	matcher:
+		"/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|\\.well-known).*)",
+};

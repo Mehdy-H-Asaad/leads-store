@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { useApiMutation } from "@/shared/hooks/use-api-mutation";
-import { authService } from "../api/auth.service";
-import { authMapper } from "../lib/auth.mapper";
-import { TVerifyEmailChangeSchema } from "../schema/auth.schema";
-import { TUserDTO } from "@/entities/user/api/user.dto";
 import { USER_KEYS } from "@/entities/user/api/user.key";
 import { Button } from "@/shared/components/ui/button";
+import { TUser } from "@/entities/user/model/user.model";
+import { userService } from "@/entities/user/api/user.service";
+import { userFormMapper } from "../../lib/user-form.mapper";
+import { TVerifyEmailChangeSchema } from "../../schema/user-settings.schema";
 
 export const ConfirmEmailChange = () => {
 	const searchParams = useSearchParams();
@@ -17,11 +17,13 @@ export const ConfirmEmailChange = () => {
 	const token = searchParams.get("token");
 
 	const { mutate, isPending, isSuccess, isError, error } = useApiMutation<
-		TUserDTO,
+		TUser,
 		TVerifyEmailChangeSchema
 	>({
 		mutationFn: data =>
-			authService.verifyEmailChange(authMapper.toVerifyEmailChangeDto(data)),
+			userService.verifyEmailChange(
+				userFormMapper.toVerifyEmailChangeDTO(data)
+			),
 		successMsg: "Email updated successfully",
 		invalidatedKeys: [USER_KEYS.ME()],
 		invalidateExact: false,
@@ -40,9 +42,9 @@ export const ConfirmEmailChange = () => {
 		return (
 			<div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6">
 				<div className="flex w-full max-w-sm flex-col items-center gap-6 text-center">
-					<div className="flex size-16 items-center justify-center rounded-full bg-destructive/10">
-						<XCircle className="size-8 text-destructive" />
-					</div>
+					{/* <div className="flex size-16 items-center justify-center rounded-full bg-destructive/10"> */}
+					<XCircle className="size-8 text-destructive" />
+					{/* </div> */}
 					<div className="flex flex-col gap-2">
 						<h1 className="text-xl font-semibold">Invalid Link</h1>
 						<p className="text-sm text-muted-foreground">
@@ -62,9 +64,7 @@ export const ConfirmEmailChange = () => {
 		return (
 			<div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6">
 				<div className="flex w-full max-w-sm flex-col items-center gap-6 text-center">
-					<div className="flex size-16 items-center justify-center rounded-full bg-primary/10">
-						<Loader2 className="size-8 text-primary animate-spin" />
-					</div>
+					<Loader2 className="size-4  animate-spin" />
 					<div className="flex flex-col gap-2">
 						<h1 className="text-xl font-semibold">Verifying your email...</h1>
 						<p className="text-sm text-muted-foreground">
@@ -80,9 +80,7 @@ export const ConfirmEmailChange = () => {
 		return (
 			<div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6">
 				<div className="flex w-full max-w-sm flex-col items-center gap-6 text-center">
-					<div className="flex size-16 items-center justify-center rounded-full bg-destructive/10">
-						<XCircle className="size-8 text-destructive" />
-					</div>
+					<XCircle className="size-8 text-destructive" />
 					<div className="flex flex-col gap-2">
 						<h1 className="text-xl font-semibold">Verification Failed</h1>
 						<p className="text-sm text-muted-foreground">
@@ -102,9 +100,7 @@ export const ConfirmEmailChange = () => {
 		return (
 			<div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6">
 				<div className="flex w-full max-w-sm flex-col items-center gap-6 text-center">
-					<div className="flex size-16 items-center justify-center rounded-full bg-primary/10">
-						<CheckCircle2 className="size-8 text-primary" />
-					</div>
+					<CheckCircle2 className="size-8 text-green-500" />
 					<div className="flex flex-col gap-2">
 						<h1 className="text-xl font-semibold">Email Updated!</h1>
 						<p className="text-sm text-muted-foreground">

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller } from "react-hook-form";
 import { CheckCircle2 } from "lucide-react";
 import {
 	Dialog,
@@ -17,40 +16,23 @@ import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Field, FieldLabel } from "@/shared/components/ui/field";
 import { MainButton } from "@/shared/components/common/main-button";
-import { useApiMutation } from "@/shared/hooks/use-api-mutation";
-import { authService } from "@/features/auth/api/auth.service";
-import { authMapper } from "@/features/auth/lib/auth.mapper";
-import {
-	requestEmailChangeSchema,
-	TRequestEmailChangeSchema,
-} from "@/features/auth/schema/auth.schema";
+import { useRequestEmailChange } from "../../hooks/use-request-email-change";
 
 export const ChangeEmailDialog = () => {
 	const [open, setOpen] = useState(false);
-	const [emailSent, setEmailSent] = useState(false);
 
-	const form = useForm<TRequestEmailChangeSchema>({
-		resolver: zodResolver(requestEmailChangeSchema),
-		defaultValues: { newEmail: "", password: "" },
-	});
-
-	const { mutate, isPending } = useApiMutation<
-		{ message: string },
-		TRequestEmailChangeSchema
-	>({
-		mutationFn: data =>
-			authService.requestEmailChange(authMapper.toRequestEmailChangeDto(data)),
-		onSuccess: () => setEmailSent(true),
-	});
-
-	const onSubmit = form.handleSubmit(values => mutate(values));
+	const {
+		RequestEmailChangeForm,
+		onRequestEmailChange,
+		isRequestEmailChangePending,
+		isRequestEmailChangeSuccess,
+	} = useRequestEmailChange();
 
 	const handleOpenChange = (value: boolean) => {
 		setOpen(value);
 		if (!value) {
 			setTimeout(() => {
-				setEmailSent(false);
-				form.reset();
+				RequestEmailChangeForm.reset();
 			}, 300);
 		}
 	};
@@ -61,7 +43,7 @@ export const ChangeEmailDialog = () => {
 				<Button variant="outline">Change Email</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-md">
-				{emailSent ? (
+				{isRequestEmailChangeSuccess ? (
 					<div className="flex flex-col items-center gap-4 py-6 text-center">
 						<div className="flex size-14 items-center justify-center rounded-full bg-primary/10">
 							<CheckCircle2 className="size-7 text-primary" />
@@ -91,9 +73,14 @@ export const ChangeEmailDialog = () => {
 							</DialogDescription>
 						</DialogHeader>
 
-						<form onSubmit={onSubmit} className="flex flex-col gap-4">
+						<form
+							onSubmit={RequestEmailChangeForm.handleSubmit(
+								onRequestEmailChange
+							)}
+							className="flex flex-col gap-4"
+						>
 							<Controller
-								control={form.control}
+								control={RequestEmailChangeForm.control}
 								name="newEmail"
 								render={({ field, fieldState }) => (
 									<Field>
@@ -117,7 +104,7 @@ export const ChangeEmailDialog = () => {
 							/>
 
 							<Controller
-								control={form.control}
+								control={RequestEmailChangeForm.control}
 								name="password"
 								render={({ field, fieldState }) => (
 									<Field>
@@ -143,8 +130,8 @@ export const ChangeEmailDialog = () => {
 							<DialogFooter className="mt-2" showCloseButton>
 								<MainButton
 									type="submit"
-									isLoading={isPending}
-									disabled={isPending}
+									isLoading={isRequestEmailChangePending}
+									disabled={isRequestEmailChangePending}
 									loadingText="Sending..."
 								>
 									Send Verification Link

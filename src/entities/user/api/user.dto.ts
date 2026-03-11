@@ -56,6 +56,25 @@ export const verifyEmailChangeSchemaDto = z.object({
 	token: z.string(),
 });
 
+export const updateBusinessProfileSchemaDto = z.object({
+	first_name: z.string().nullable(),
+	last_name: z.string(),
+	business_name: z.string().nullable(),
+	whatsapp_number: z.string(),
+	business_description: z.string().nullable(),
+	country_code: z.string(),
+	address: z.string().nullable(),
+	logo: z.string().nullable(),
+	links: z
+		.array(
+			z.object({
+				name: z.string(),
+				url: z.string(),
+			})
+		)
+		.optional(),
+});
+
 export type TUserDTO = z.infer<typeof userSchemaDto>;
 export type TOnboardingDTO = z.infer<typeof onboardingSchemaDto>;
 export type TRequestEmailChangeDTO = z.infer<
@@ -69,3 +88,6 @@ export type TLoginResponseDTO = {
 export type TMeDTO = {
 	user: TUserDTO;
 };
+export type TUpdateBusinessProfileDTO = z.infer<
+	typeof updateBusinessProfileSchemaDto
+>;

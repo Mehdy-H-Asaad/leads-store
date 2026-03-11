@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { ConfirmEmailChange } from "@/features/auth/components/confirm-email-change";
+import { ConfirmEmailChange } from "@/features/user/components/settings/confirm-email-change";
 
 const page = () => {
 	return (

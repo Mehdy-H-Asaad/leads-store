@@ -11,8 +11,6 @@ import {
 	TForgotPasswordDto,
 	TRequestVerifyEmailDto,
 	TResetPasswordDto,
-	TRequestEmailChangeDto,
-	TVerifyEmailChangeDto,
 } from "./auth.dto";
 import { TUser } from "@/entities/user/model/user.model";
 import { userMapper } from "@/entities/user/api/user.mapper";
@@ -71,26 +69,6 @@ export const authService = {
 	): Promise<TApiResponse<TUserDTO>> => {
 		const response = await apiFetcher.post<TApiResponse<TUserDTO>>(
 			"/auth/reset-password",
-			data
-		);
-		return response;
-	},
-
-	requestEmailChange: async (
-		data: TRequestEmailChangeDto
-	): Promise<TApiResponse<{ message: string }>> => {
-		const response = await apiFetcher.post<TApiResponse<{ message: string }>>(
-			"/auth/request-email-change",
-			data
-		);
-		return response;
-	},
-
-	verifyEmailChange: async (
-		data: TVerifyEmailChangeDto
-	): Promise<TApiResponse<TUserDTO>> => {
-		const response = await apiFetcher.post<TApiResponse<TUserDTO>>(
-			"/auth/verify-email-change",
 			data
 		);
 		return response;

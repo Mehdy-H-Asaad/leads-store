@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useApiMutation } from "@/shared/hooks/use-api-mutation";
 import { USER_KEYS } from "@/entities/user/api/user.key";
 import { userService } from "@/entities/user/api/user.service";
-import { onboardingMapper } from "../lib/onboarding-mapper.lib";
+import { userFormMapper } from "../lib/user-form.mapper";
 import {
 	OnboardingSchema,
 	TOnboardingSchema,
@@ -29,7 +29,7 @@ export const useOnboarding = () => {
 
 	const { mutate, isPending } = useApiMutation<TUser, TOnboardingSchema>({
 		mutationFn: data =>
-			userService.completeOnboarding(onboardingMapper.toOnboardingDTO(data)),
+			userService.completeOnboarding(userFormMapper.toOnboardingDTO(data)),
 		invalidatedKeys: [USER_KEYS.ME()],
 		invalidateExact: true,
 		successMsg: "Profile setup complete! Welcome aboard.",

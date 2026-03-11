@@ -49,15 +49,6 @@ export const resetPasswordSchema = AuthSchema.pick({
 	token: true,
 });
 
-export const requestEmailChangeSchema = AuthSchema.pick({
-	newEmail: true,
-	password: true,
-});
-
-export const verifyEmailChangeSchema = AuthSchema.pick({
-	token: true,
-});
-
 export type TSignupSchema = z.infer<typeof SignupSchema>;
 export type TLoginSchema = z.infer<typeof LoginSchema>;
 export type TVerifyOTPSchema = z.infer<typeof VerifyOTPSchema>;
@@ -66,7 +57,3 @@ export type TRequestVerifyEmailSchema = z.infer<
 	typeof requestVerifyEmailSchema
 >;
 export type TResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
-export type TRequestEmailChangeSchema = z.infer<
-	typeof requestEmailChangeSchema
->;
-export type TVerifyEmailChangeSchema = z.infer<typeof verifyEmailChangeSchema>;

@@ -1,14 +1,18 @@
+import { SettingsScreen } from "./settings-screen";
 import { PageHeader } from "@/shared/components/common/page-header";
-import { SettingsContent } from "@/entities/user/components/settings-content";
+import { Skeleton } from "@/shared/components/ui/skeleton";
+import { Suspense } from "react";
 
-const page = () => {
+const page = async () => {
 	return (
 		<div className="flex flex-col gap-8">
 			<PageHeader
 				title="Settings"
 				description="Manage your business profile and store"
 			/>
-			<SettingsContent />
+			<Suspense fallback={<Skeleton className="w-full h-screen" />}>
+				<SettingsScreen />
+			</Suspense>
 		</div>
 	);
 };

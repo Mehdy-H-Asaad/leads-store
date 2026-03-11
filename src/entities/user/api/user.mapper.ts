@@ -15,7 +15,7 @@ export const userMapper = {
 			status: dto.status,
 			plan: dto.plan,
 			logo: dto.logo,
-			BusinessName: dto.business_name,
+			businessName: dto.business_name,
 			businessDescription: dto.business_description,
 			storeURL: dto.store_url,
 			QRCode: dto.qr_code,

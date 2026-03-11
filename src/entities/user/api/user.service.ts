@@ -3,6 +3,7 @@ import {
 	TMeDTO,
 	TOnboardingDTO,
 	TRequestEmailChangeDTO,
+	TUpdateBusinessProfileDTO,
 	TUserDTO,
 	TVerifyEmailChangeDTO,
 } from "./user.dto";
@@ -25,12 +26,12 @@ export const userService = {
 	},
 	requestEmailChange: async (
 		data: TRequestEmailChangeDTO
-	): Promise<TApiResponse<TUser>> => {
-		const response = await apiFetcher.post<TApiResponse<TUserDTO>>(
+	): Promise<TApiResponse<void>> => {
+		const response = await apiFetcher.post<TApiResponse<void>>(
 			"/users/request-email-change",
 			data
 		);
-		return { ...response, data: userMapper.fromDtoToModel(response.data) };
+		return response;
 	},
 	verifyEmailChange: async (
 		data: TVerifyEmailChangeDTO
@@ -40,5 +41,18 @@ export const userService = {
 			data
 		);
 		return { ...response, data: userMapper.fromDtoToModel(response.data) };
+	},
+	updateBusinessProfile: async (
+		data: TUpdateBusinessProfileDTO
+	): Promise<TApiResponse<TUser>> => {
+		const response = await apiFetcher.patch<TApiResponse<TUserDTO>>(
+			"/users/me",
+			data
+		);
+		return { ...response, data: userMapper.fromDtoToModel(response.data) };
+	},
+	deleteAccount: async (): Promise<TApiResponse<void>> => {
+		const response = await apiFetcher.delete<TApiResponse<void>>("/users/me");
+		return response;
 	},
 };

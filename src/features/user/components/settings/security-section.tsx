@@ -10,8 +10,11 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
 import { ChangeEmailDialog } from "./change-email-dialog";
+import { DeleteDialog } from "@/shared/components/common/delete-dialog";
+import { useDeleteAccount } from "../../hooks/use-delete-account";
 
 export const SecuritySection = () => {
+	const { onDeleteAccount, isDeleteAccountPending } = useDeleteAccount();
 	return (
 		<Card className="rounded-xl border bg-card shadow-sm">
 			<CardHeader>
@@ -23,6 +26,13 @@ export const SecuritySection = () => {
 					<Link href="/forgot-password">Change Password</Link>
 				</Button>
 				<ChangeEmailDialog />
+				<div>
+					<DeleteDialog
+						deleteFunc={onDeleteAccount}
+						trigger="Delete Account"
+						isLoading={isDeleteAccountPending}
+					/>
+				</div>
 			</CardContent>
 		</Card>
 	);

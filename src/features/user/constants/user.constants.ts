@@ -1,3 +1,5 @@
+export const STORE_URL_PREFIX = "storelink.app/";
+
 export type TCountry = {
 	name: string;
 	flag: string;
