@@ -1,0 +1,48 @@
+import { MoreHorizontal, Edit } from "lucide-react";
+import {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+} from "@/shared/components/ui/dropdown-menu";
+import { Row } from "@tanstack/react-table";
+import { TCustomer } from "@/entities/customer/model/customer.model";
+import { DeleteDialog } from "@/shared/components/common/delete-dialog";
+import { Button } from "@/shared/components/ui/button";
+import { useDeleteCustomer } from "../../../hooks/use-delete-customer";
+export const CustomerActionsCell = ({
+	row,
+	onEdit,
+}: {
+	row: Row<TCustomer>;
+	onEdit: (customer: TCustomer) => void;
+}) => {
+	const { deleteCustomer, isDeletingCustomer } = useDeleteCustomer();
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant="ghost" className="h-8 w-8 p-0">
+					<span className="sr-only">Open menu</span>
+					<MoreHorizontal className="h-4 w-4" />
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end">
+				<div className="flex flex-col gap-2">
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={() => onEdit(row.original)}
+						className="cursor-pointer"
+					>
+						<Edit className="h-4 w-4" />
+						Edit
+					</Button>
+					<DeleteDialog
+						deleteFunc={() => deleteCustomer(row.original.id)}
+						trigger="Delete"
+						isLoading={isDeletingCustomer}
+					/>
+				</div>
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
+};

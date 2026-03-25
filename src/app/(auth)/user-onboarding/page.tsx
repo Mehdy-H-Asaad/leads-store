@@ -6,9 +6,9 @@ export default function page() {
 			<header className="border-b px-6 py-4">
 				<div className="flex items-center gap-2">
 					<div className="w-7 h-7 rounded-md bg-main-green flex items-center justify-center">
-						<span className="text-white text-xs font-bold">L</span>
+						<span className="text-white text-xs font-bold">R</span>
 					</div>
-					<span className="font-semibold text-sm">Leads Store</span>
+					<span className="font-semibold text-sm">ReelVee</span>
 				</div>
 			</header>
 

@@ -19,6 +19,7 @@ export const useSignup = () => {
 		invalidatedKeys: [USER_KEYS.ME()],
 		invalidateExact: true,
 		onSuccess: data => {
+			if (!data) return;
 			setUser(data.data);
 			router.push(`/verify-email?email=${encodeURIComponent(data.data.email)}`);
 		},

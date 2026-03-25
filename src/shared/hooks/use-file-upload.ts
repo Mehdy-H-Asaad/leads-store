@@ -1,0 +1,150 @@
+import { useState } from "react";
+import { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form";
+import { toast } from "sonner";
+import { E_S3_PATH, useUploadS3 } from "./use-upload-s3";
+
+type TFileUploadConfig = {
+	maxSizeMB?: number;
+	acceptedTypes?: string[];
+	generatePreview?: boolean;
+};
+
+type TUploadResult = {
+	id: string;
+	key: string;
+	url: string | null;
+};
+
+const DEFAULT_CONFIG: Required<TFileUploadConfig> = {
+	maxSizeMB: 5,
+	acceptedTypes: ["image/"],
+	generatePreview: true,
+};
+
+export const useFileUpload = (config: TFileUploadConfig = {}) => {
+	const mergedConfig = { ...DEFAULT_CONFIG, ...config };
+	const { uploadS3, isUploadingS3 } = useUploadS3();
+	const [preview, setPreview] = useState<string | null>(null);
+
+	const validateFile = (file: File): boolean => {
+		const maxSizeBytes = mergedConfig.maxSizeMB * 1024 * 1024;
+
+		if (file.size > maxSizeBytes) {
+			toast.error("File too large", {
+				description: `File size must be less than ${mergedConfig.maxSizeMB}MB`,
+			});
+			return false;
+		}
+
+		const isValidType = mergedConfig.acceptedTypes.some(type =>
+			file.type.startsWith(type)
+		);
+
+		if (!isValidType) {
+			toast.error("Invalid file type", {
+				description: `Please upload a valid file (${mergedConfig.acceptedTypes.join(
+					", "
+				)})`,
+			});
+			return false;
+		}
+
+		return true;
+	};
+
+	const generatePreview = (file: File): Promise<string> => {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onloadend = () => resolve(reader.result as string);
+			reader.onerror = reject;
+			reader.readAsDataURL(file);
+		});
+	};
+
+	const uploadFile = async <TFormValues extends FieldValues>({
+		file,
+		path,
+		form,
+		fieldName,
+		onSuccess,
+	}: {
+		file: File;
+		path: E_S3_PATH;
+		form: UseFormReturn<TFormValues>;
+		fieldName: Path<TFormValues>;
+		onSuccess?: (result: TUploadResult, previewUrl?: string) => void;
+	}): Promise<{ success: boolean; preview?: string }> => {
+		if (!validateFile(file)) {
+			return { success: false };
+		}
+
+		try {
+			let previewUrl: string | undefined;
+
+			if (mergedConfig.generatePreview) {
+				previewUrl = await generatePreview(file);
+				setPreview(previewUrl);
+			}
+
+			const result = await uploadS3({
+				filename: file.name,
+				path,
+				file,
+			});
+
+			if (result?.data?.key) {
+				const uploadResult: TUploadResult = {
+					id: result.data.id,
+					key: result.data.key,
+					url: null,
+				};
+
+				form.setValue(
+					fieldName,
+					uploadResult as PathValue<TFormValues, Path<TFormValues>>,
+					{
+						shouldValidate: true,
+					}
+				);
+
+				onSuccess?.(uploadResult, previewUrl);
+
+				return { success: true, preview: previewUrl };
+			}
+
+			throw new Error("Upload failed: No key returned");
+		} catch (error) {
+			toast.error("Upload failed", {
+				description: error instanceof Error ? error.message : "Unknown error",
+			});
+			setPreview(null);
+			return { success: false };
+		}
+	};
+
+	const clearPreview = () => {
+		setPreview(null);
+	};
+
+	const removeFile = <TFormValues extends FieldValues>(
+		form: UseFormReturn<TFormValues>,
+		fieldName: Path<TFormValues>
+	) => {
+		form.setValue(
+			fieldName,
+			undefined as PathValue<TFormValues, Path<TFormValues>>,
+			{
+				shouldValidate: true,
+			}
+		);
+		setPreview(null);
+	};
+
+	return {
+		uploadFile,
+		removeFile,
+		clearPreview,
+		preview,
+		isUploading: isUploadingS3,
+	};
+};

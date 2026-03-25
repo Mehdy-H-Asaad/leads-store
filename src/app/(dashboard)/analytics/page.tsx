@@ -6,7 +6,7 @@ const page = () => {
 		<div className="flex flex-col gap-8">
 			<PageHeader
 				title="Analytics"
-				description="Track revenue, leads, and performance"
+				description="Track revenue and performance"
 			/>
 			<AnalyticsContent />
 		</div>

@@ -19,7 +19,7 @@ export const userFormMapper = {
 			country_code: data.countryCode,
 			whatsapp_number: data.whatsappNumber,
 			address: data.address ?? null,
-			logo: data.logo ?? null,
+			logo: data.logo,
 			business_name: data.businessName ?? null,
 			business_description: data.businessDescription ?? null,
 			store_url: data.storeUrl,
@@ -34,7 +34,7 @@ export const userFormMapper = {
 			business_description: data.businessDescription ?? null,
 			country_code: data.countryCode,
 			address: data.address ?? null,
-			logo: data.logo ?? null,
+			logo: data.logo,
 			links: data.links,
 		} satisfies TUpdateBusinessProfileDTO),
 	toRequestEmailChangeDTO: (data: TRequestEmailChangeSchema) =>

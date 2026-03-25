@@ -35,13 +35,13 @@ export const OnboardingPersonalInfo = ({
 		const reader = new FileReader();
 		reader.onloadend = () => {
 			const result = reader.result as string;
+			console.log(result);
 			setLogoPreview(result);
 			OnboardingForm.setValue("logo", result);
 		};
 		reader.readAsDataURL(file);
 	};
 
-	console.log(OnboardingForm.getValues());
 	return (
 		<div className="space-y-6">
 			<div>

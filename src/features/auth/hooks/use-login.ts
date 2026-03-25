@@ -20,8 +20,7 @@ export const useLogin = () => {
 		invalidatedKeys: [USER_KEYS.ME()],
 		invalidateExact: false,
 		onSuccess: data => {
-			console.log(data.data);
-
+			if (!data) return;
 			if (!data.data.isEmailVerified) {
 				router.push(
 					`/verify-email?email=${encodeURIComponent(data.data.email)}`

@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
 	// DEBOUNCED SEARCH FUNCTION
 	const debouncedSearch = useDebounce({
 		callback: setSearchableField,
-		delay: 500,
+		delay: 300,
 	});
 
 	const table = useReactTable({

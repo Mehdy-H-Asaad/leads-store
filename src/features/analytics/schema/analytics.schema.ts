@@ -22,8 +22,8 @@ export type TLeadStatusDataPoint = {
 	fill?: string;
 };
 
-export type TProductPerformanceDataPoint = {
-	product: string;
+export type TItemPerformanceDataPoint = {
+	item: string;
 	leads: number;
 	revenue: number;
 	fill?: string;

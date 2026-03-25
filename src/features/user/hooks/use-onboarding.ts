@@ -46,7 +46,7 @@ export const useOnboarding = () => {
 			countryCode: "",
 			whatsappNumber: "",
 			address: "",
-			logo: "",
+			logo: undefined,
 			businessName: "",
 			businessDescription: "",
 			storeUrl: "",

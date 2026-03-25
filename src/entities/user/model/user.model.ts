@@ -16,7 +16,7 @@ export const userModel = z.object({
 	isEmailVerified: z.boolean(),
 	status: z.enum(USER_STATUS),
 	plan: z.enum(USER_PLAN),
-	logo: z.string().nullable(),
+	logo: z.string().optional(),
 	businessName: z.string().nullable(),
 	businessDescription: z.string().nullable(),
 	storeURL: z.string(),

@@ -4,10 +4,11 @@ import * as React from "react";
 import {
 	LayoutDashboardIcon,
 	Box,
-	User,
 	ChartBar,
 	Settings,
 	Megaphone,
+	Tag,
+	Users,
 } from "lucide-react";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -54,15 +55,22 @@ export function DashboardSidebar({
 				isActive: false,
 			},
 			{
-				title: "Products",
-				url: "/products",
+				title: "Items",
+				url: "/items",
 				icon: <Box className="size-5" />,
 				isActive: false,
 			},
+
 			{
-				title: "Leads",
-				url: "/leads",
-				icon: <User className="size-5" />,
+				title: "Customers",
+				url: "/customers",
+				icon: <Users className="size-5" />,
+				isActive: false,
+			},
+			{
+				title: "Categories",
+				url: "/categories",
+				icon: <Tag className="size-5" />,
 				isActive: false,
 			},
 			{

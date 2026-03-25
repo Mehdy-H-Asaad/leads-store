@@ -11,7 +11,7 @@ import { StatsCards } from "./stats-cards";
 import { RevenueChart } from "./charts/revenue-chart";
 import { ImpressionsChart } from "./charts/impressions-chart";
 import { LeadStatusChart } from "./charts/lead-status-chart";
-import { ProductPerformanceChart } from "./charts/product-performance-chart";
+import { ItemPerformanceChart } from "./charts/item-performance-chart";
 
 export const AnalyticsContent = () => {
 	return (
@@ -44,13 +44,13 @@ export const AnalyticsContent = () => {
 				</Card>
 				<Card className="rounded-xl border bg-card shadow-sm">
 					<CardHeader>
-						<CardTitle>Top Products by Leads</CardTitle>
+						<CardTitle>Top Items by Leads</CardTitle>
 						<CardDescription>
-							Best performing products by lead count
+							Best performing items by lead count
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<ProductPerformanceChart />
+						<ItemPerformanceChart />
 					</CardContent>
 				</Card>
 			</div>

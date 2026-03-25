@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Controller, useFieldArray } from "react-hook-form";
-import { Upload, X, PlusIcon } from "lucide-react";
+import { Upload, X, PlusIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
 	Card,
@@ -26,6 +26,8 @@ import { CountryCodeSelect } from "../onboarding/country-code-select";
 import { cn } from "@/shared/lib/utils";
 import type { UseFormReturn } from "react-hook-form";
 import type { TBusinessProfileSchema } from "../../schema/user-settings.schema";
+import { useFileUpload } from "@/shared/hooks/use-file-upload";
+import Image from "next/image";
 
 type BusinessProfileSectionProps = {
 	form: UseFormReturn<TBusinessProfileSchema>;
@@ -38,13 +40,13 @@ export const BusinessProfileSection = ({
 	onSave,
 	isLoading = false,
 }: BusinessProfileSectionProps) => {
-	const [logoPreview, setLogoPreview] = useState<string | null>(
+	const [_logoPreview, setLogoPreview] = useState<string | null>(
 		form.getValues("logo") ?? null
 	);
 	const [linkName, setLinkName] = useState("");
 	const [linkUrl, setLinkUrl] = useState("");
 	const [linkUrlError, setLinkUrlError] = useState("");
-
+	const logoUpload = useFileUpload({ maxSizeMB: 5 });
 	const {
 		fields: linkFields,
 		append: appendLink,
@@ -222,55 +224,71 @@ export const BusinessProfileSection = ({
 							name="logo"
 							render={({ fieldState }) => (
 								<Field>
-									<FieldLabel>Profile Logo</FieldLabel>
-									{!logoPreview ? (
+									<FieldLabel>
+										Featured Image <span className="text-red-500">*</span>
+									</FieldLabel>
+									{!logoUpload.preview &&
+									!logoUpload.isUploading &&
+									!form.getValues("logo") ? (
 										<label
-											htmlFor="logo-upload"
+											htmlFor="featured-image"
 											className={cn(
-												"flex flex-col items-center justify-center w-full h-36 border-2 border-dashed rounded-lg cursor-pointer transition-colors hover:bg-muted/50 hover:border-primary/50",
+												"flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-lg cursor-pointer transition-colors hover:bg-muted/50 hover:border-primary/50",
 												fieldState.invalid
 													? "border-destructive"
 													: "border-input"
 											)}
 										>
-											<Upload className="w-7 h-7 mb-2 text-muted-foreground" />
+											<Upload className="w-8 h-8 mb-2 text-muted-foreground" />
 											<p className="text-sm text-muted-foreground">
-												Click to upload logo
+												Click to upload
 											</p>
 											<p className="text-xs text-muted-foreground">
 												PNG, JPG, WEBP (MAX. 5MB)
 											</p>
 											<input
-												id="logo-upload"
+												id="featured-image"
 												type="file"
 												className="hidden"
 												accept="image/*"
 												onChange={handleLogoUpload}
 											/>
 										</label>
-									) : (
-										<div className="relative w-full h-36 rounded-lg overflow-hidden border">
-											<img
-												src={logoPreview}
-												alt="Logo preview"
-												className="w-full h-full object-contain bg-muted/20"
+									) : logoUpload.isUploading || false ? (
+										<div className="relative w-full h-40 rounded-lg overflow-hidden border flex items-center justify-center gap-2">
+											<Loader2 className="w-4 h-4 text-muted-foreground animate-spin" />
+											<p className="text-sm text-muted-foreground">
+												{false ? "Deleting..." : "Uploading..."}
+											</p>
+										</div>
+									) : logoUpload.preview || form.getValues("logo") ? (
+										<div className="relative w-full h-40 rounded-lg overflow-hidden border">
+											<Image
+												src={logoUpload.preview || form.getValues("logo") || ""}
+												alt="Featured preview"
+												className="w-full h-full object-cover"
+												width={160}
+												height={160}
 											/>
 											<Button
 												type="button"
 												variant="destructive"
 												size="icon"
 												className="absolute top-2 right-2 h-7 w-7 rounded-full"
-												onClick={() => {
-													setLogoPreview(null);
-													form.setValue("logo", "");
-												}}
+												// onClick={handleDeleteLogo}
 											>
 												<X className="h-4 w-4" />
 											</Button>
 										</div>
+									) : (
+										<div className="relative w-full h-40 rounded-lg overflow-hidden border flex items-center justify-center gap-2">
+											<p className="text-sm text-muted-foreground">
+												No image uploaded
+											</p>
+										</div>
 									)}
-									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
+									{fieldState.error && (
+										<FieldError>{fieldState.error.message}</FieldError>
 									)}
 								</Field>
 							)}

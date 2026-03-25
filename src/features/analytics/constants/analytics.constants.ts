@@ -49,7 +49,7 @@ export const leadStatusChartConfig = {
 	lost: { label: "Lost", color: "var(--chart-5)" },
 } satisfies ChartConfig;
 
-export const productPerformanceChartConfig = {
+export const itemPerformanceChartConfig = {
 	leads: {
 		label: "Leads",
 		color: "var(--chart-1)",

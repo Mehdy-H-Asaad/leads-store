@@ -16,7 +16,7 @@ export const userSchemaDto = z.object({
 	is_email_verified: z.boolean(),
 	status: z.enum(USER_STATUS),
 	plan: z.enum(USER_PLAN),
-	logo: z.string().nullable(),
+	logo: z.string().optional(),
 	business_name: z.string().nullable(),
 	business_description: z.string().nullable(),
 	store_url: z.string(),
@@ -64,7 +64,7 @@ export const updateBusinessProfileSchemaDto = z.object({
 	business_description: z.string().nullable(),
 	country_code: z.string(),
 	address: z.string().nullable(),
-	logo: z.string().nullable(),
+	logo: z.string().optional(),
 	links: z
 		.array(
 			z.object({
