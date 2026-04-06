@@ -27,19 +27,22 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const cookieStore = await cookies();
-	const hasSession = !!cookieStore.get("access_token")?.value;
+	const hasSession = !!cookieStore.get("refresh_token")?.value;
 	const queryClient = getQueryClient();
-	await queryClient.prefetchQuery({
-		queryKey: USER_KEYS.ME(),
-		queryFn: () => userService.getMe(),
-	});
+
+	if (hasSession) {
+		await queryClient.prefetchQuery({
+			queryKey: USER_KEYS.ME(),
+			queryFn: () => userService.getMe(),
+		});
+	}
 	const dehydratedState = dehydrate(queryClient);
 	return (
 		<html lang="en">
 			<body className={`${poppins.variable} ${poppins.className} antialiased`}>
 				<TanstackProvider>
 					<HydrationBoundary state={dehydratedState}>
-						<AuthProvider hasSession={hasSession}>{children}</AuthProvider>
+						{children}
 					</HydrationBoundary>
 				</TanstackProvider>
 				<Toaster position="top-right" richColors />

@@ -4,6 +4,7 @@ import {
 	itemGalleryItemSchema,
 	itemAttributeSchema,
 } from "@/shared/contracts/item/item.contract";
+import { FileSchema } from "@/shared/schema/file.schema";
 
 export const itemModel = z.object({
 	id: z.string(),
@@ -11,19 +12,13 @@ export const itemModel = z.object({
 	description: z.string().optional(),
 	price: z.number(),
 	cost: z.number().optional(),
-	thumbnail: z
-		.object({
-			id: z.string(),
-			key: z.string(),
-			url: z.string().nullable(),
-		})
-		.nullish(),
+	thumbnail: FileSchema,
 	impressions: z.number().optional(),
 	images: z.array(itemGalleryItemSchema).optional(),
 	category: z.string().optional(),
 	tags: z.array(z.string()).optional(),
 	status: z.enum(ITEM_STATUS),
-	visibility: z.boolean(),
+	isVisible: z.boolean(),
 	slug: z.string(),
 	attributes: z.array(itemAttributeSchema).optional(),
 	type: z.enum(ITEM_TYPE),

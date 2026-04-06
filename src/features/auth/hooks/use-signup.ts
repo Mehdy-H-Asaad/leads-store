@@ -6,13 +6,13 @@ import { authMapper } from "../lib/auth.mapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/entities/user/model/user.store";
+// import { useUserStore } from "@/entities/user/model/user.store";
 import { USER_KEYS } from "@/entities/user/api/user.key";
 import { TUser } from "@/entities/user/model/user.model";
 
 export const useSignup = () => {
 	const router = useRouter();
-	const { setUser } = useUserStore();
+	// const { setUser } = useUserStore();
 	const { mutate, isPending } = useApiMutation<TUser, TSignupSchema>({
 		mutationFn: data => authService.signup(authMapper.toSignupDto(data)),
 		successMsg: "Welcome to ZennHR! Please check your email for verification.",
@@ -20,7 +20,7 @@ export const useSignup = () => {
 		invalidateExact: true,
 		onSuccess: data => {
 			if (!data) return;
-			setUser(data.data);
+			// setUser(data.data);
 			router.push(`/verify-email?email=${encodeURIComponent(data.data.email)}`);
 		},
 	});

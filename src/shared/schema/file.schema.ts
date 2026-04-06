@@ -1,0 +1,11 @@
+import { z } from "zod";
+
+export const FileSchema = z
+	.object({
+		id: z.string(),
+		key: z.string(),
+		url: z.string().nullable(),
+	})
+	.nullish();
+
+export type TFileSchema = z.infer<typeof FileSchema>;

@@ -2,10 +2,12 @@
 
 import { useBusinessProfileForm } from "../../hooks/use-business-profile-form";
 import { BusinessProfileSection } from "./business-profile-section";
+import { PersonalInfoSection } from "./personal-info-section";
 import { SecuritySection } from "./security-section";
 import { LogoutSection } from "./logout-section";
 import { useEffect } from "react";
 import { useGetMe } from "@/entities/user/api/user.query";
+import { MainButton } from "@/shared/components/common/main-button";
 
 export const SettingsContent = ({
 	isLogoutPending,
@@ -27,19 +29,34 @@ export const SettingsContent = ({
 				lastName: user.lastName ?? "",
 				countryCode: user.countryCode ?? "",
 				address: user.address ?? "",
-				logo: user.logo ?? "",
-				links: user.links ?? [],
 			});
 		}
 	}, [user]);
 
 	return (
 		<div className="flex flex-col gap-8">
-			<BusinessProfileSection
-				form={businessProfileForm}
-				onSave={onSave}
-				isLoading={isSaving}
-			/>
+			<form
+				onSubmit={businessProfileForm.handleSubmit(onSave)}
+				className="flex flex-col gap-6"
+			>
+				<div className="flex gap-6 items-start">
+					<PersonalInfoSection form={businessProfileForm} />
+				</div>
+
+				<BusinessProfileSection form={businessProfileForm} />
+
+				<div className="flex justify-end">
+					<MainButton
+						type="submit"
+						isLoading={isSaving}
+						disabled={isSaving}
+						loadingText="Saving..."
+					>
+						Save Changes
+					</MainButton>
+				</div>
+			</form>
+
 			<SecuritySection />
 			<LogoutSection isLogoutPending={isLogoutPending} onLogout={onLogout} />
 		</div>

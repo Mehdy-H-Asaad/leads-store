@@ -1,4 +1,5 @@
 import z from "zod";
+import { FileSchema } from "@/shared/schema/file.schema";
 
 export const OnboardingStep1Schema = z.object({
 	firstName: z.string().min(1, "First name is required"),
@@ -6,7 +7,7 @@ export const OnboardingStep1Schema = z.object({
 	countryCode: z.string().min(1, "Country code is required"),
 	whatsappNumber: z.string().min(1, "WhatsApp number is required"),
 	address: z.string().optional(),
-	logo: z.string().optional(),
+	logo: FileSchema.nullable(),
 });
 
 export const OnboardingStep2Schema = z.object({

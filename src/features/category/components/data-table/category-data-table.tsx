@@ -60,6 +60,7 @@ export const CategoryDataTable = () => {
 				pageCount={totalPages}
 				totalCount={totalRows}
 				manualPagination={true}
+				searchValue={filters.name ?? ""}
 			>
 				<MainButton onClick={handleCreate}>
 					<PlusIcon /> Add Category

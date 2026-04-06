@@ -1,25 +1,33 @@
-import { useApiQuery } from "@/shared/hooks/use-api-query";
+import {
+	useApiQuery,
+	useApiPaginatedQuery,
+} from "@/shared/hooks/use-api-query";
 import { ITEM_KEYS } from "./item.keys";
 import { TItem } from "../model/item.model";
-import { TApiResponse, TPaginatedApiResponse } from "@/shared/lib/fetcher";
+import { TItemFilters } from "../model/item.types";
+import { TApiResponse } from "@/shared/lib/fetcher";
 import { itemService } from "./item.service";
 
 type TUseGetItemsProps = {
 	page?: number;
 	limit?: number;
+	filters?: TItemFilters;
 };
 
-export const useGetItems = ({ page, limit }: TUseGetItemsProps) => {
-	const { data, isFetching, error } = useApiQuery<TPaginatedApiResponse<TItem>>(
-		{
-			queryKey: ITEM_KEYS.LISTS(),
+export const useGetItems = ({ page, limit, filters }: TUseGetItemsProps) => {
+	const { data, totalRows, totalPages, isFetching, error } =
+		useApiPaginatedQuery<TItem>({
+			queryKey: ITEM_KEYS.LIST({ page, limit, ...filters }),
 			queryFn: () =>
-				itemService.getItems({ options: { params: { page, limit } } }),
-		}
-	);
+				itemService.getItems({
+					options: { params: { page, limit, ...filters } },
+				}),
+		});
 
 	return {
-		items: data?.data ?? [],
+		items: data,
+		totalRows,
+		totalPages,
 		isGettingItems: isFetching,
 		error,
 	};

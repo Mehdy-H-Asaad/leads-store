@@ -20,7 +20,6 @@ const STEP_1_FIELDS: (keyof TOnboardingSchema)[] = [
 	"countryCode",
 	"whatsappNumber",
 	"address",
-	"logo",
 ];
 
 export const useOnboarding = () => {
@@ -46,7 +45,7 @@ export const useOnboarding = () => {
 			countryCode: "",
 			whatsappNumber: "",
 			address: "",
-			logo: undefined,
+			logo: null,
 			businessName: "",
 			businessDescription: "",
 			storeUrl: "",

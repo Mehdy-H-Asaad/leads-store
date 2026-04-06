@@ -11,7 +11,9 @@ import {
 import { itemFormMapper } from "../lib/item-form.mapper";
 import { TItem } from "@/entities/item/model/item.model";
 
-export const useCreateItem = ({ onSuccess }: { onSuccess?: () => void } = {}) => {
+export const useCreateItem = ({
+	onSuccess,
+}: { onSuccess?: () => void } = {}) => {
 	const { mutate, isPending } = useApiMutation<TItem, TCreateItemFormValues>({
 		mutationFn: data =>
 			itemService.createItem(itemFormMapper.toCreateDTO(data)),
@@ -35,7 +37,7 @@ export const useCreateItem = ({ onSuccess }: { onSuccess?: () => void } = {}) =>
 			category: "",
 			tags: [],
 			status: ITEM_STATUS.IN_STOCK,
-			visibility: true,
+			isVisible: true,
 			attributes: [],
 			cost: undefined,
 			type: undefined,

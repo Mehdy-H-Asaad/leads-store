@@ -24,8 +24,8 @@ export const ItemAttributesCell = ({ attributes }: Props) => {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<button className="inline-flex items-center gap-1.5 rounded-md bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-200 transition-colors hover:bg-blue-200 hover:text-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
-					<span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-400 text-[10px] font-bold text-white">
+				<button className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium  ring-1 ring-border transition-colors hover:bg-border focus:outline-none focus-visible:ring-2 focus-visible:ring-border">
+					<span className="flex h-5 w-5 items-center justify-center rounded-full bg-black border border-white text-[10px] font-bold text-white">
 						{attributes.length}
 					</span>
 					{attributes.length === 1 ? "Attribute" : "Attributes"}

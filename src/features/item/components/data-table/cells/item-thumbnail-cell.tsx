@@ -24,13 +24,15 @@ export const ItemThumbnailCell = ({ thumbnail, name }: Props) => {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Image
-					src={thumbnail.url}
-					alt={name}
-					width={160}
-					height={160}
-					className="w-full rounded-md object-cover"
-				/>
+				<div className="size-25 rounded-md object-cover">
+					<Image
+						src={thumbnail.url}
+						alt={name}
+						width={160}
+						height={160}
+						className="size-full rounded-md object-cover"
+					/>
+				</div>
 			</DialogTrigger>
 
 			<DialogContent className="md:min-w-5xl">

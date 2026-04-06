@@ -43,7 +43,7 @@ export const useUpdateItem = ({
 			category: "",
 			tags: [],
 			status: undefined,
-			visibility: false,
+			isVisible: false,
 			attributes: [],
 			type: undefined,
 		},

@@ -8,7 +8,7 @@ import { useFilterParams } from "@/shared/hooks/use-filter-params";
 import { TItemFilters } from "../../types/item.types";
 import { ItemFilters } from "../filters/item-filters";
 import { ItemForm } from "../forms/item-form";
-import { ITEM_STATUS } from "@/shared/contracts/item/item.contract";
+import { ITEM_STATUS, ITEM_TYPE } from "@/shared/contracts/item/item.contract";
 import { useGetItems } from "@/entities/item/api/item.query";
 import { TItem } from "@/entities/item/model/item.model";
 
@@ -20,20 +20,24 @@ export const ItemDataTable = () => {
 		useFilterParams<TItemFilters>();
 
 	const filters: TItemFilters = {
-		visibility: searchParams.get("visibility") === "true",
 		name: searchParams.get("name") ?? undefined,
-		category: searchParams.get("category") ?? undefined,
-		price: searchParams.get("price")
-			? parseFloat(searchParams.get("price")!)
+		category_id: searchParams.get("category_id") ?? undefined,
+		status: (searchParams.get("status") as ITEM_STATUS) ?? undefined,
+		is_visible: searchParams.has("is_visible")
+			? searchParams.get("is_visible") === "true"
 			: undefined,
-		status: searchParams.get("status") as ITEM_STATUS,
+		type: (searchParams.get("type") as ITEM_TYPE) ?? undefined,
 	};
 
-	const updateFilters = (filters: TItemFilters) => {
-		updateFiltersParams({ filters: filters, options: { resetPage: true } });
+	const updateFilters = (newFilters: TItemFilters) => {
+		updateFiltersParams({ filters: newFilters, options: { resetPage: true } });
 	};
 
-	const { items, isGettingItems } = useGetItems({ page: 1, limit: 10 });
+	const { items, isGettingItems, totalRows, totalPages } = useGetItems({
+		page: 1,
+		limit: 10,
+		filters,
+	});
 
 	const handleEdit = (item: TItem) => {
 		setEditingItem(item);
@@ -60,27 +64,24 @@ export const ItemDataTable = () => {
 				columns={columns}
 				data={items}
 				searchablePlaceholder="Search items"
-				setSearchableField={() => {}}
+				setSearchableField={value => updateFilters({ name: value })}
+				searchValue={filters.name ?? ""}
 				isLoading={isGettingItems}
-				pageCount={1}
-				totalCount={items.length}
+				pageCount={totalPages}
+				totalCount={totalRows}
 				manualPagination={true}
-				children={
-					<>
-						<div className="mr-auto w-fit">
-							<ItemFilters
-								filters={filters}
-								onFilterChange={updateFilters}
-								onClearAllFilters={clearFilers}
-								searchParams={searchParams}
-							/>
-						</div>
-						<MainButton onClick={handleCreate}>
-							<PlusIcon /> Add Item
-						</MainButton>
-					</>
-				}
-			/>
+			>
+				<div className="flex gap-4 w-full justify-between">
+					<ItemFilters
+						filters={filters}
+						onFilterChange={updateFilters}
+						onClearAllFilters={clearFilers}
+					/>
+					<MainButton onClick={handleCreate}>
+						<PlusIcon /> Add Item
+					</MainButton>
+				</div>
+			</DataTable>
 
 			<ItemForm
 				open={isFormOpen}

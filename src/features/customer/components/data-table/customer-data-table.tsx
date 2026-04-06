@@ -30,11 +30,12 @@ export const CustomerDataTable = () => {
 		updateFiltersParams({ filters: newFilters, options: { resetPage: true } });
 	};
 
-	const { customers, isGettingCustomers } = useGetCustomers({
-		page: 1,
-		limit: 10,
-		filters,
-	});
+	const { customers, isGettingCustomers, totalRows, totalPages } =
+		useGetCustomers({
+			page: 1,
+			limit: 10,
+			filters,
+		});
 
 	const handleEdit = (customer: TCustomer) => {
 		setEditingCustomer(customer);
@@ -63,23 +64,22 @@ export const CustomerDataTable = () => {
 				searchablePlaceholder="Search customers"
 				setSearchableField={value => updateFilters({ name: value })}
 				isLoading={isGettingCustomers}
-				pageCount={1}
-				totalCount={customers.length}
+				pageCount={totalPages}
+				totalCount={totalRows}
 				manualPagination={true}
+				searchValue={filters.name ?? ""}
 				children={
-					<>
-						<div className="mr-auto w-fit">
-							<CustomerFilters
-								filters={filters}
-								onFilterChange={updateFilters}
-								onClearAllFilters={clearFilers}
-								searchParams={searchParams}
-							/>
-						</div>
+					<div className="flex gap-4 w-full justify-between">
+						<CustomerFilters
+							filters={filters}
+							onFilterChange={updateFilters}
+							onClearAllFilters={clearFilers}
+							searchParams={searchParams}
+						/>
 						<MainButton onClick={handleCreate}>
 							<PlusIcon /> Add Customer
 						</MainButton>
-					</>
+					</div>
 				}
 			/>
 

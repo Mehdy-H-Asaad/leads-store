@@ -26,7 +26,7 @@ export const itemService = {
 			ITEMS_PATH,
 			options
 		);
-
+		console.log(response);
 		const parsed = z.array(itemSchemaDto).safeParse(response.data);
 
 		if (!parsed.success) {
@@ -67,7 +67,7 @@ export const itemService = {
 
 	updateItem: async (
 		id: string,
-		item: TUpdateItemDTO,
+		item: Partial<TUpdateItemDTO>,
 		options?: TRequestOptions
 	): Promise<TApiResponse<TItem>> => {
 		const response = await apiFetcher.patch<TApiResponse<TItemDTO>>(
@@ -81,11 +81,5 @@ export const itemService = {
 
 	deleteItem: async (id: string, options?: TRequestOptions): Promise<void> => {
 		await apiFetcher.delete<void>(`${ITEMS_PATH}/${id}`, options);
-	},
-	deleteItemThumbnail: async (
-		id: string,
-		options?: TRequestOptions
-	): Promise<void> => {
-		await apiFetcher.delete<void>(`${ITEMS_PATH}/${id}/thumbnail`, options);
 	},
 };

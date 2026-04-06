@@ -1,16 +1,16 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { Badge } from "@/shared/components/ui/badge";
 import { TItem } from "@/entities/item/model/item.model";
 import { ITEM_STATUS } from "@/shared/contracts/item/item.contract";
 import { formatDate } from "date-fns";
-import { Switch } from "@/shared/components/ui/switch";
 import { ItemActionsCell } from "./actions/item-actions-cell";
+import { ItemVisibilityCell } from "./cells/item-visibility-cell";
 import { ItemAttributesCell } from "./cells/item-attributes-cell";
 import { ItemImagesCell } from "./cells/item-images-cell";
 import { ItemThumbnailCell } from "./cells/item-thumbnail-cell";
 import { ItemDescriptionCell } from "./cells/item-description-cell";
+import { ColorBadge } from "@/shared/components/common/color-badge";
 
 export const getItemColumns = (
 	onEdit: (item: TItem) => void
@@ -53,7 +53,7 @@ export const getItemColumns = (
 		header: "Cost",
 		cell: ({ row }) => {
 			return (
-				<div className="capitalize font-medium">${row.original.price}</div>
+				<div className="capitalize font-medium">${row.original.cost ?? 0}</div>
 			);
 		},
 	},
@@ -65,13 +65,9 @@ export const getItemColumns = (
 		},
 	},
 	{
-		accessorKey: "visibility",
+		accessorKey: "isVisible",
 		header: "Visibility",
-		cell: ({ row }) => {
-			return (
-				<Switch checked={row.original.visibility} onCheckedChange={() => {}} />
-			);
-		},
+		cell: ({ row }) => <ItemVisibilityCell item={row.original} />,
 	},
 	{
 		accessorKey: "attributes",
@@ -80,19 +76,7 @@ export const getItemColumns = (
 			<ItemAttributesCell attributes={row.original.attributes} />
 		),
 	},
-	{
-		accessorKey: "description",
-		header: "Description",
-		cell: ({ row }) => (
-			<ItemDescriptionCell description={row.original.description} />
-		),
-	},
 
-	{
-		accessorKey: "images",
-		header: "Images",
-		cell: ({ row }) => <ItemImagesCell images={row.original.images} />,
-	},
 	{
 		accessorKey: "createdAt",
 		header: "Created At",
@@ -107,15 +91,11 @@ export const getItemColumns = (
 		header: "Type",
 		cell: ({ row }) => {
 			return (
-				<Badge
-					className={`capitalize ${
-						row.original.type === "product"
-							? "bg-yellow-50 text-yellow-500"
-							: "bg-violet-50 text-violet-500"
-					}`}
+				<ColorBadge
+					color={row.original.type === "product" ? "yellow" : "purple"}
 				>
 					{row.original.type}
-				</Badge>
+				</ColorBadge>
 			);
 		},
 	},
@@ -124,21 +104,33 @@ export const getItemColumns = (
 		header: "Status",
 		cell: ({ row }) => {
 			return (
-				<Badge
-					className={`capitalize ${
+				<ColorBadge
+					color={
 						row.original.status === ITEM_STATUS.IN_STOCK
-							? "bg-green-100 text-green-500"
+							? "green"
 							: row.original.status === ITEM_STATUS.OUT_OF_STOCK
-							? "bg-red-100 text-red-500"
+							? "red"
 							: row.original.status === ITEM_STATUS.LOW_STOCK
-							? "bg-yellow-100 text-yellow-500"
-							: "bg-red-100 text-red-500"
-					}`}
+							? "yellow"
+							: "red"
+					}
 				>
 					{row.original.status.split("_").join(" ")}
-				</Badge>
+				</ColorBadge>
 			);
 		},
+	},
+	{
+		accessorKey: "description",
+		header: "Description",
+		cell: ({ row }) => (
+			<ItemDescriptionCell description={row.original.description} />
+		),
+	},
+	{
+		accessorKey: "images",
+		header: "Images",
+		cell: ({ row }) => <ItemImagesCell images={row.original.images} />,
 	},
 	{
 		accessorKey: "actions",

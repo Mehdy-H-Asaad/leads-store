@@ -4,6 +4,7 @@ import {
 	USER_STEP,
 } from "@/shared/contracts/user/user.contract";
 import z from "zod";
+import { FileSchema } from "@/shared/schema/file.schema";
 
 export const userSchemaDto = z.object({
 	_id: z.string(),
@@ -16,7 +17,13 @@ export const userSchemaDto = z.object({
 	is_email_verified: z.boolean(),
 	status: z.enum(USER_STATUS),
 	plan: z.enum(USER_PLAN),
-	logo: z.string().optional(),
+	logo: z
+		.object({
+			id: z.string(),
+			key: z.string(),
+			url: z.string().nullable(),
+		})
+		.nullable(),
 	business_name: z.string().nullable(),
 	business_description: z.string().nullable(),
 	store_url: z.string(),
@@ -64,7 +71,7 @@ export const updateBusinessProfileSchemaDto = z.object({
 	business_description: z.string().nullable(),
 	country_code: z.string(),
 	address: z.string().nullable(),
-	logo: z.string().optional(),
+	logo: FileSchema,
 	links: z
 		.array(
 			z.object({
@@ -82,9 +89,6 @@ export type TRequestEmailChangeDTO = z.infer<
 >;
 export type TVerifyEmailChangeDTO = z.infer<typeof verifyEmailChangeSchemaDto>;
 
-export type TLoginResponseDTO = {
-	user: TUserDTO;
-};
 export type TMeDTO = {
 	user: TUserDTO;
 };

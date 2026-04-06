@@ -12,17 +12,8 @@ export const UserSchema = z.object({
 	isEmailVerified: z.boolean(),
 	status: z.enum(USER_STATUS),
 	plan: z.enum(USER_PLAN),
-	logo: z.string().optional(), // COMPLETE
 	BusinessName: z.string().optional(), // COMPLETE
 	businessDescription: z.string().optional(), // COMPLETE
-	storeURL: z.string().min(1, "Store URL is required"),
-	QRCode: z.string().min(1, "QR Code is required"),
 	createdAt: z.date().or(z.string()),
 	updatedAt: z.date().or(z.string()),
-	links: z.array(
-		z.object({
-			label: z.string().min(1, "Label is required"),
-			url: z.string().min(1, "URL is required"),
-		})
-	),
 });

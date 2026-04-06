@@ -5,16 +5,16 @@ import { authService } from "../api/auth.service";
 import { authMapper } from "../lib/auth.mapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useUserStore } from "@/entities/user/model/user.store";
+// import { useUserStore } from "@/entities/user/model/user.store";
 import { useRouter, useSearchParams } from "next/navigation";
 import { USER_KEYS } from "@/entities/user/api/user.key";
 import { TUser } from "@/entities/user/model/user.model";
 
 export const useVerifyEmailOTP = () => {
-	const { user } = useUserStore();
+	// 	const { user } = useUserStore();
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const email = user?.email ?? searchParams.get("email") ?? "";
+	const email = searchParams.get("email") ?? "";
 	const { mutate, isPending } = useApiMutation<TUser, TVerifyOTPSchema>({
 		mutationFn: data =>
 			authService.verifyEmailOTP(authMapper.toVerifyOtpDto(data)),

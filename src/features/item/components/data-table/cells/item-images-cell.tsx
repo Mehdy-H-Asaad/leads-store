@@ -26,23 +26,25 @@ export const ItemImagesCell = ({ images }: Props) => {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<button className="inline-flex items-center gap-1.5 rounded-md bg-sky-100 px-2.5 py-1 text-xs font-medium text-sky-700 ring-1 ring-sky-200 transition-colors hover:bg-sky-200 hover:text-sky-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
-					<ImageIcon className="h-3.5 w-3.5" />
-					<span className="flex h-4 w-4 items-center justify-center rounded-full bg-sky-400 text-[10px] font-bold text-white">
-						{images.length}
+				<div className="relative size-25">
+					<Image
+						src={images[0]?.url || ""}
+						alt={`Image 1`}
+						className="object-cover rounded-md size-full"
+						width={100}
+						height={100}
+					/>
+					<span className="text-xl font-bold text-white absolute top-0 left-0 z-10 bg-black/20 hover:bg-black/30 transition-all duration-200 rounded-md size-full flex items-center justify-center">
+						+{images.length - 1}
 					</span>
-					{images.length === 1 ? "Image" : "Images"}
-				</button>
+				</div>
 			</DialogTrigger>
 
 			<DialogContent className="max-w-lg">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<ImageIcon className="h-4 w-4 text-sky-500" />
+						<ImageIcon className="h-4 w-4" />
 						Gallery
-						<span className="flex h-5 w-5 items-center justify-center rounded-full bg-sky-400 text-[11px] font-bold text-white">
-							{images.length}
-						</span>
 					</DialogTitle>
 				</DialogHeader>
 
@@ -51,23 +53,17 @@ export const ItemImagesCell = ({ images }: Props) => {
 						{images.map((img, i) => (
 							<a
 								key={i}
-								href={img.fileUrl}
+								href={img?.url || ""}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="group relative aspect-square overflow-hidden rounded-lg border bg-muted ring-1 ring-transparent transition-all hover:ring-2 hover:ring-sky-400"
+								className="group relative aspect-square overflow-hidden rounded-lg border bg-muted ring-1 ring-transparent transition-all hover:border-black"
 							>
 								<Image
-									src={img.fileUrl}
+									src={img?.url || ""}
 									alt={`Image ${i + 1}`}
 									fill
-									className="object-cover transition-transform duration-200 group-hover:scale-105"
-									sizes="(max-width: 640px) 50vw, 33vw"
+									className="object-contain transition-transform duration-200"
 								/>
-								<div className="absolute inset-0 flex items-end bg-linear-to-t from-black/40 to-transparent p-2 opacity-0 transition-opacity group-hover:opacity-100">
-									<span className="truncate text-[10px] font-medium text-white">
-										{img.fileKey}
-									</span>
-								</div>
 							</a>
 						))}
 					</div>

@@ -9,7 +9,7 @@ const page = async () => {
 	const queryClient = getQueryClient();
 
 	await queryClient.prefetchQuery({
-		queryKey: ITEM_KEYS.LISTS(),
+		queryKey: ITEM_KEYS.LIST({ page: 1, limit: 10 }),
 		queryFn: () =>
 			itemService.getItems({ options: { params: { page: 1, limit: 10 } } }),
 	});

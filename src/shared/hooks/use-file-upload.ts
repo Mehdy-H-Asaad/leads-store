@@ -66,13 +66,11 @@ export const useFileUpload = (config: TFileUploadConfig = {}) => {
 		path,
 		form,
 		fieldName,
-		onSuccess,
 	}: {
 		file: File;
 		path: E_S3_PATH;
 		form: UseFormReturn<TFormValues>;
 		fieldName: Path<TFormValues>;
-		onSuccess?: (result: TUploadResult, previewUrl?: string) => void;
 	}): Promise<{ success: boolean; preview?: string }> => {
 		if (!validateFile(file)) {
 			return { success: false };
@@ -86,16 +84,20 @@ export const useFileUpload = (config: TFileUploadConfig = {}) => {
 				setPreview(previewUrl);
 			}
 
-			const result = await uploadS3({
-				filename: file.name,
-				path,
-				file,
-			});
+			const result = await uploadS3([
+				{
+					filename: file.name,
+					path,
+					file,
+				},
+			]);
 
-			if (result?.data?.key) {
+			const uploaded = result?.data?.[0];
+
+			if (uploaded?.key) {
 				const uploadResult: TUploadResult = {
-					id: result.data.id,
-					key: result.data.key,
+					id: uploaded.id,
+					key: uploaded.key,
 					url: null,
 				};
 
@@ -107,8 +109,6 @@ export const useFileUpload = (config: TFileUploadConfig = {}) => {
 					}
 				);
 
-				onSuccess?.(uploadResult, previewUrl);
-
 				return { success: true, preview: previewUrl };
 			}
 
@@ -118,6 +118,51 @@ export const useFileUpload = (config: TFileUploadConfig = {}) => {
 				description: error instanceof Error ? error.message : "Unknown error",
 			});
 			setPreview(null);
+			return { success: false };
+		}
+	};
+
+	const uploadMultipleFiles = async ({
+		files,
+		path,
+		onSuccess,
+	}: {
+		files: File[];
+		path: E_S3_PATH;
+		onSuccess?: (items: { result: TUploadResult; preview: string }[]) => void;
+	}): Promise<{ success: boolean }> => {
+		for (const file of files) {
+			if (!validateFile(file)) return { success: false };
+		}
+
+		try {
+			const previews = await Promise.all(files.map(generatePreview));
+
+			const s3Result = await uploadS3(
+				files.map(file => ({
+					filename: file.name,
+					path,
+					file,
+				}))
+			);
+
+			if (!s3Result?.data?.length) throw new Error("Upload failed");
+
+			const items = s3Result.data.map((uploaded, index) => ({
+				result: {
+					id: uploaded.id,
+					key: uploaded.key,
+					url: null,
+				} as TUploadResult,
+				preview: previews[index],
+			}));
+
+			onSuccess?.(items);
+			return { success: true };
+		} catch (error) {
+			toast.error("Upload failed", {
+				description: error instanceof Error ? error.message : "Unknown error",
+			});
 			return { success: false };
 		}
 	};
@@ -142,6 +187,7 @@ export const useFileUpload = (config: TFileUploadConfig = {}) => {
 
 	return {
 		uploadFile,
+		uploadMultipleFiles,
 		removeFile,
 		clearPreview,
 		preview,

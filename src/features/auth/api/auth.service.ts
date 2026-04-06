@@ -1,9 +1,6 @@
 import { apiFetcher, TApiResponse } from "@/shared/lib/fetcher";
 
-import {
-	TLoginResponseDTO,
-	TUserDTO,
-} from "../../../entities/user/api/user.dto";
+import { TUserDTO } from "../../../entities/user/api/user.dto";
 import {
 	TLoginDto,
 	TSignupDto,
@@ -17,11 +14,11 @@ import { userMapper } from "@/entities/user/api/user.mapper";
 
 export const authService = {
 	login: async (credentials: TLoginDto): Promise<TApiResponse<TUser>> => {
-		const response = await apiFetcher.post<TApiResponse<TLoginResponseDTO>>(
+		const response = await apiFetcher.post<TApiResponse<TUserDTO>>(
 			"/auth/login",
 			credentials
 		);
-		return { ...response, data: userMapper.fromDtoToModel(response.data.user) };
+		return { ...response, data: userMapper.fromDtoToModel(response.data) };
 	},
 
 	signup: async (data: TSignupDto): Promise<TApiResponse<TUser>> => {

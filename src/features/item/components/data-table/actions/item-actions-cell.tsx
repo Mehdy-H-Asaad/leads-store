@@ -6,6 +6,7 @@ import { Row } from "@tanstack/react-table";
 import { TItem } from "@/entities/item/model/item.model";
 import { DeleteDialog } from "@/shared/components/common/delete-dialog";
 import { Button } from "@/shared/components/ui/button";
+import { useDeleteItem } from "@/features/item/hooks/use-delete-item";
 
 export const ItemActionsCell = ({
 	row,
@@ -14,6 +15,8 @@ export const ItemActionsCell = ({
 	row: Row<TItem>;
 	onEdit: (item: TItem) => void;
 }) => {
+	const { onDeleteItem, isDeletingItem } = useDeleteItem();
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -34,9 +37,9 @@ export const ItemActionsCell = ({
 						Edit
 					</Button>
 					<DeleteDialog
-						deleteFunc={() => {}}
-						trigger="Delete Item"
-						isLoading={false}
+						deleteFunc={() => onDeleteItem(row.original.id)}
+						trigger="Delete"
+						isLoading={isDeletingItem}
 					/>
 				</div>
 			</DropdownMenuContent>

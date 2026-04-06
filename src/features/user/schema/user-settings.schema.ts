@@ -6,18 +6,8 @@ export const BusinessProfileSchema = z.object({
 	businessName: z.string().min(1, "Business name is required"),
 	whatsappNumber: z.string().min(1, "WhatsApp number is required"),
 	businessDescription: z.string().optional(),
-
 	countryCode: z.string().min(1, "Country code is required"),
 	address: z.string().optional(),
-	logo: z.string().optional(),
-	links: z
-		.array(
-			z.object({
-				name: z.string().min(1, "Platform name is required"),
-				url: z.url("Please enter a valid URL"),
-			})
-		)
-		.optional(),
 });
 
 export const requestEmailChangeSchema = z.object({

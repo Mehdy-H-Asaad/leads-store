@@ -9,6 +9,7 @@ export const AuthProvider = ({
 	hasSession: boolean;
 	children: React.ReactNode;
 }) => {
-	useGetMe({ enabled: hasSession });
+	const {} = useGetMe({ enabled: hasSession });
+
 	return <>{children}</>;
 };

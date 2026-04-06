@@ -22,7 +22,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/shared/components/ui/table";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import {
 	DEFAULT_PAGE_SIZE,
@@ -42,6 +42,7 @@ interface DataTableProps<TData, TValue> {
 	children?: React.ReactNode;
 	manualPagination?: boolean;
 	setSearchableField: (filter: string) => void;
+	searchValue: string;
 	filters?: React.ReactNode;
 }
 
@@ -54,9 +55,15 @@ export function DataTable<TData, TValue>({
 	children,
 	manualPagination = true,
 	setSearchableField,
+	searchValue,
 	filters,
 }: DataTableProps<TData, TValue>) {
+	const [inputValue, setInputValue] = useState(searchValue ?? "");
 	const [sorting, setSorting] = useState<SortingState>([]);
+
+	useEffect(() => {
+		setInputValue(searchValue ?? "");
+	}, [searchValue]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = useState({});
@@ -107,7 +114,9 @@ export function DataTable<TData, TValue>({
 					<Search className="absolute z-10 left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60 transition-colors duration-200" />
 					<Input
 						placeholder={searchablePlaceholder}
+						value={inputValue}
 						onChange={e => {
+							setInputValue(e.target.value);
 							debouncedSearch(e.target.value);
 						}}
 						className="pl-10 h-10 bg-background border-border/60 shadow-sm focus:border-primary/60 focus:ring-2 focus:ring-primary/10 transition-all duration-200 hover:border-border"

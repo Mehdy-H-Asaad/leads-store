@@ -5,6 +5,7 @@ import {
 	itemAttributeSchema,
 } from "@/shared/contracts/item/item.contract";
 import { ITEM_TYPE } from "@/shared/contracts/item/item.contract";
+import { FileSchema } from "@/shared/schema/file.schema";
 
 export const itemFormSchema = z.object({
 	name: z.string().min(1, "Name is required"),
@@ -14,18 +15,12 @@ export const itemFormSchema = z.object({
 		.optional(),
 	price: z.number().min(0.01, "Price must be greater than 0"),
 	cost: z.number().optional(),
-	thumbnail: z
-		.object({
-			id: z.string(),
-			key: z.string(),
-			url: z.string().nullable(),
-		})
-		.optional(),
+	thumbnail: FileSchema.optional(),
 	images: z.array(itemGalleryItemSchema).optional(),
 	category: z.string().optional(),
 	tags: z.array(z.string()).optional(),
 	status: z.enum(ITEM_STATUS),
-	visibility: z.boolean(),
+	isVisible: z.boolean(),
 	attributes: z.array(itemAttributeSchema).optional(),
 	type: z.enum(ITEM_TYPE),
 });

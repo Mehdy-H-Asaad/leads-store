@@ -9,6 +9,7 @@ import {
 	Megaphone,
 	Tag,
 	Users,
+	Paintbrush,
 } from "lucide-react";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -20,9 +21,10 @@ import {
 	SidebarHeader,
 	SidebarRail,
 } from "@/shared/components/ui/sidebar";
-import { useUserStore } from "@/entities/user/model/user.store";
+// import { useUserStore } from "@/entities/user/model/user.store";
 import { useLogout } from "@/features/auth/hooks/use-logout";
 import { TUser } from "@/entities/user/model/user.model";
+import { useGetMe } from "@/entities/user/api/user.query";
 
 type TSidebarData = {
 	items: {
@@ -42,7 +44,8 @@ type TSidebarData = {
 export function DashboardSidebar({
 	...props
 }: React.ComponentProps<typeof Sidebar>) {
-	const { user } = useUserStore();
+	// const { user } = useUserStore();
+	const { user } = useGetMe({ enabled: true });
 	const { onLogout } = useLogout();
 	const sidebarData: TSidebarData = {
 		user: user ?? ({} as TUser),
@@ -74,6 +77,12 @@ export function DashboardSidebar({
 				isActive: false,
 			},
 			{
+				title: "Customization",
+				url: "/customization",
+				icon: <Paintbrush className="size-5" />,
+				isActive: false,
+			},
+			{
 				title: "Marketing",
 				url: "/marketing",
 				icon: <Megaphone className="size-5" />,
@@ -96,7 +105,7 @@ export function DashboardSidebar({
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader className="px-4 pt-6 mb-4">
-				<h1 className="text-2xl font-bold w-fit ">⚡ ReelVee</h1>
+				<h1 className="text-2xl font-bold w-fit "> ReelVee</h1>
 				{/* <Logo /> */}
 			</SidebarHeader>
 			<SidebarContent>

@@ -2,18 +2,20 @@
 import { SidebarTrigger } from "@/shared/components/ui/sidebar";
 import { Separator } from "@/shared/components/ui/separator";
 import { useEffect, useState } from "react";
-import { useUserStore } from "@/entities/user/model/user.store";
+// import { useUserStore } from "@/entities/user/model/user.store";
 import { usePathname } from "next/navigation";
 import { Calendar, Menu } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
+import { useGetMe } from "@/entities/user/api/user.query";
 //
 export const DashboardHeader = () => {
-	const { user } = useUserStore();
+	// const { user } = useUserStore();
 	const pathname = usePathname();
 	const [greeting, setGreeting] = useState("");
 	const [motivationalText, setMotivationalText] = useState("");
 	const [currentDate, setCurrentDate] = useState("");
 
+	const { user } = useGetMe({ enabled: true });
 	// Get greeting based on time of day (only once)
 	useEffect(() => {
 		const hour = new Date().getHours();

@@ -23,8 +23,6 @@ export const useBusinessProfileForm = () => {
 			lastName: "",
 			countryCode: "",
 			address: "",
-			logo: "",
-			links: [],
 		},
 	});
 

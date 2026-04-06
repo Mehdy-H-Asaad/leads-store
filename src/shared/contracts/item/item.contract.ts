@@ -1,4 +1,5 @@
 import z from "zod";
+import { FileSchema } from "../../schema/file.schema";
 
 export enum ITEM_STATUS {
 	IN_STOCK = "in_stock",
@@ -10,10 +11,7 @@ export enum ITEM_TYPE {
 	PRODUCT = "product",
 	SERVICE = "service",
 }
-export const itemGalleryItemSchema = z.object({
-	fileUrl: z.string(),
-	fileKey: z.string(),
-});
+export const itemGalleryItemSchema = FileSchema;
 
 export const itemAttributeSchema = z.object({
 	name: z.string(),
@@ -32,7 +30,7 @@ export const itemContractRefSchema = z.object({
 	category: z.string(),
 	tags: z.array(z.string()).nullable(),
 	status: z.enum(ITEM_STATUS),
-	visibility: z.boolean(),
+	isVisible: z.boolean(),
 	slug: z.string(),
 	attributes: z.array(itemAttributeSchema).nullable(),
 	createdAt: z.date(),

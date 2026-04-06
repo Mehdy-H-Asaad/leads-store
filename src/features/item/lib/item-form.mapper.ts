@@ -22,7 +22,7 @@ export const itemFormMapper = {
 			category: item.category,
 			tags: item.tags,
 			status: item.status,
-			visibility: item.visibility,
+			isVisible: item.isVisible,
 			attributes: item.attributes,
 		};
 	},
@@ -37,7 +37,7 @@ export const itemFormMapper = {
 		category,
 		tags,
 		status,
-		visibility,
+		isVisible,
 		attributes,
 		type,
 	}: TCreateItemFormValues): TCreateItemDTO {
@@ -51,7 +51,7 @@ export const itemFormMapper = {
 			category,
 			tags,
 			status,
-			visibility,
+			is_visible: isVisible,
 			attributes,
 			type,
 		};
@@ -67,7 +67,7 @@ export const itemFormMapper = {
 		category,
 		tags,
 		status,
-		visibility,
+		isVisible,
 		attributes,
 		type,
 	}: TUpdateItemFormValues): TUpdateItemDTO {
@@ -81,7 +81,7 @@ export const itemFormMapper = {
 			category,
 			tags,
 			status,
-			visibility,
+			is_visible: isVisible,
 			attributes,
 			type,
 		};

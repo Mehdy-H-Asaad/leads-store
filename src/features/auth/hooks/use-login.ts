@@ -7,13 +7,13 @@ import { authMapper } from "../lib/auth.mapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/entities/user/model/user.store";
+// import { useUserStore } from "@/entities/user/model/user.store";
 import { USER_KEYS } from "@/entities/user/api/user.key";
 import { USER_STEP } from "@/shared/contracts/user/user.contract";
 
 export const useLogin = () => {
 	const router = useRouter();
-	const { setUser } = useUserStore();
+	// const { setUser } = useUserStore();
 	const { mutate, isPending } = useApiMutation<TUser, TLoginSchema>({
 		mutationFn: data => authService.login(authMapper.toLoginDto(data)),
 		successMsg: "Logged in successfully",
@@ -30,7 +30,7 @@ export const useLogin = () => {
 			} else {
 				// Refresh server components to fetch new user data
 				// router.refresh();
-				setUser(data.data);
+				// setUser(data.data);
 				router.push("/");
 			}
 		},

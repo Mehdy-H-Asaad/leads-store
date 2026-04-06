@@ -15,7 +15,7 @@ export const itemMapper = {
 			category: dto.category,
 			tags: dto.tags,
 			status: dto.status,
-			visibility: dto.visibility,
+			isVisible: dto.is_visible,
 			slug: dto.slug,
 			attributes: dto.attributes,
 			type: dto.type,

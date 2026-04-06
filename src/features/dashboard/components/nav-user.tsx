@@ -51,10 +51,13 @@ export function NavUser({
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
 							size="lg"
-							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground duration-300 transition-all cursor-pointer"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
-								<AvatarImage className="object-cover" src={user.logo || ""} />
+								<AvatarImage
+									className="object-cover"
+									src={user.logo?.url || ""}
+								/>
 								<AvatarFallback className="rounded-lg">
 									{user.firstName
 										? user.firstName[0].toUpperCase() +
