@@ -10,6 +10,7 @@ import {
 	Tag,
 	Users,
 	Paintbrush,
+	ShoppingCart,
 } from "lucide-react";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -64,6 +65,12 @@ export function DashboardSidebar({
 				isActive: false,
 			},
 
+			{
+				title: "Orders",
+				url: "/orders",
+				icon: <ShoppingCart className="size-5" />,
+				isActive: false,
+			},
 			{
 				title: "Customers",
 				url: "/customers",
