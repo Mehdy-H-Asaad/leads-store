@@ -43,8 +43,6 @@ export const SignupForm = () => {
 									<div className="relative">
 										<Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
 										<Input
-											type="email"
-											aria-invalid={fieldState.invalid}
 											placeholder="Email"
 											{...field}
 											className="pl-10 pr-10"

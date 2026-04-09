@@ -44,9 +44,4 @@ export const customizationService = {
 			data: customizationMapper.fromDtoToModel(dto.data),
 		};
 	},
-	deleteLogo: async (): Promise<void> => {
-		await apiFetcher.delete<TApiResponse<void>>(
-			`${CUSTOMIZATION_PATH}/me/logo`
-		);
-	},
 };

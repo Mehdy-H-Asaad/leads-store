@@ -1,6 +1,20 @@
 import { OnboardingForm } from "@/features/user/components/onboarding/onboarding-form";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function page() {
+export default async function page() {
+	const cookieStore = await cookies();
+	const refreshToken = cookieStore.get("refresh_token")?.value;
+
+	const signUpCompleteToken = cookieStore.get("sign_up_complete_token")?.value;
+	if (!signUpCompleteToken && !refreshToken) {
+		redirect("/login");
+	}
+
+	if (!signUpCompleteToken && refreshToken) {
+		redirect("/");
+	}
+
 	return (
 		<div className="min-h-screen bg-background flex flex-col">
 			<header className="border-b px-6 py-4">

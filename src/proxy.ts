@@ -1,12 +1,19 @@
 // proxy.ts
 import { NextRequest, NextResponse } from "next/server";
 
-const AUTH_ROUTES = ["/login", "/signup"];
+const AUTH_ROUTES = [
+	"/login",
+	"/signup",
+	"/forgot-password",
+	"/reset-password",
+	"/verify-email",
+	"/change-email",
+	"/user-onboarding",
+];
 
 export function proxy(req: NextRequest) {
 	const pathname = req.nextUrl.pathname;
 	const refresh = req.cookies.get("refresh_token")?.value;
-	const access = req.cookies.get("access_token")?.value;
 
 	const isAuthRoute = AUTH_ROUTES.some(r => pathname.startsWith(r));
 

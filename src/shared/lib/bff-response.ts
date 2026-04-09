@@ -22,9 +22,13 @@ export function messageFromUpstreamError(body: {
 	detail?: unknown;
 }): string {
 	if (typeof body.message === "string" && body.message.length > 0) {
+		console.log("body.message", body.message);
+
 		return body.message;
 	}
 	if (typeof body.detail === "string") {
+		console.log("body.detail", body.detail);
+
 		return body.detail;
 	}
 	return "Request failed";

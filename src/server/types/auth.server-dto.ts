@@ -20,3 +20,8 @@ export type TUpstreamRefreshDataDTO = {
 	refresh_token: string;
 	token_type: string;
 };
+
+export type TUpstreamVerifyEmailResponseDTO = {
+	user: TUserDTO;
+	sign_up_complete_token: string;
+};
