@@ -6,8 +6,8 @@ export const useDeleteItem = () => {
 	const { mutate, isPending } = useApiMutation({
 		mutationFn: (id: string) => itemService.deleteItem(id),
 		successMsg: "Item deleted successfully",
-		invalidatedKeys: [ITEM_KEYS.LISTS()],
-		invalidateExact: true,
+		invalidatedKeys: [ITEM_KEYS.LIST()],
+		invalidateExact: false,
 	});
 
 	const onDeleteItem = (id: string) => {

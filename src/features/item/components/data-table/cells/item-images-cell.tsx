@@ -34,9 +34,11 @@ export const ItemImagesCell = ({ images }: Props) => {
 						width={100}
 						height={100}
 					/>
-					<span className="text-xl font-bold text-white absolute top-0 left-0 z-10 bg-black/20 hover:bg-black/30 transition-all duration-200 rounded-md size-full flex items-center justify-center">
-						+{images.length - 1}
-					</span>
+					{images.length > 1 && (
+						<span className="text-xl font-bold text-white absolute top-0 left-0 z-10 bg-black/20 hover:bg-black/30 transition-all duration-200 rounded-md size-full flex items-center justify-center">
+							+{images.length - 1}
+						</span>
+					)}
 				</div>
 			</DialogTrigger>
 

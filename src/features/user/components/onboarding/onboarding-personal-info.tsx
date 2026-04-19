@@ -2,7 +2,7 @@ import { Field, FieldLabel, FieldError } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { TOnboardingSchema } from "../../schema/onboarding.schema";
-import { CountryCodeSelect } from "./country-code-select";
+import { CountryCodeSelect } from "@/shared/components/common/select/country-code-select";
 
 export const OnboardingPersonalInfo = ({
 	OnboardingForm,

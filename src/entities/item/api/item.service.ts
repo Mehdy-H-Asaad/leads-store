@@ -26,7 +26,6 @@ export const itemService = {
 			ITEMS_PATH,
 			options
 		);
-		console.log(response);
 		const parsed = z.array(itemSchemaDto).safeParse(response.data);
 
 		if (!parsed.success) {

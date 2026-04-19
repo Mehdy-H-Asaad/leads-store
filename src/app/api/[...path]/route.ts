@@ -71,6 +71,9 @@ async function handler(request: NextRequest, context: RouteContext) {
 		const payload = hasBody ? await upstream.json().catch(() => null) : null;
 
 		if (!upstream.ok) {
+			console.log(upstream);
+			console.log("payload", payload);
+			console.log("upstream.status", upstream.status);
 			return bffErrorResponse(
 				messageFromUpstreamError(payload ?? {}),
 				upstream.status,

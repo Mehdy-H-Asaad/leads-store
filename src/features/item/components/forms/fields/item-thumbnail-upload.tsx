@@ -1,6 +1,6 @@
 "use client";
 
-import { Controller, Control } from "react-hook-form";
+import { Controller, Control, useWatch } from "react-hook-form";
 import { Field, FieldLabel, FieldError } from "@/shared/components/ui/field";
 import { Button } from "@/shared/components/ui/button";
 import { Upload, X, Loader2 } from "lucide-react";
@@ -12,8 +12,7 @@ type TItemThumbnailUploadProps = {
 	control: Control<TItemFormValues>;
 	preview: string | null;
 	isUploading: boolean;
-	isDeletingThumbnail: boolean;
-	existingThumbnailUrl?: string | null;
+	// existingThumbnailUrl?: string | null;
 	onUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	onDelete: () => void;
 };
@@ -22,22 +21,46 @@ export const ItemThumbnailUpload = ({
 	control,
 	preview,
 	isUploading,
-	isDeletingThumbnail,
-	existingThumbnailUrl,
+	// existingThumbnailUrl,
 	onUpload,
 	onDelete,
 }: TItemThumbnailUploadProps) => {
+	const thumbnailUrl =
+		useWatch({ control, name: "thumbnail" })?.url ?? preview ?? null;
+
 	return (
 		<Controller
 			control={control}
 			name="thumbnail"
 			render={({ fieldState }) => (
 				<Field>
-					<FieldLabel>
-						Featured Image <span className="text-red-500">*</span>
-					</FieldLabel>
+					<FieldLabel>Featured Image</FieldLabel>
 
-					{!preview && !isUploading && !existingThumbnailUrl ? (
+					{isUploading ? (
+						<div className="relative w-full h-40 rounded-lg overflow-hidden border flex items-center justify-center gap-2">
+							<Loader2 className="w-4 h-4 text-muted-foreground animate-spin" />
+							<p className="text-sm text-muted-foreground">Uploading...</p>
+						</div>
+					) : thumbnailUrl ? (
+						<div className="relative w-full h-40 rounded-lg overflow-hidden border">
+							<Image
+								src={thumbnailUrl}
+								alt="Featured preview"
+								className="w-full h-full object-cover"
+								width={160}
+								height={160}
+							/>
+							<Button
+								type="button"
+								variant="destructive"
+								size="icon"
+								className="absolute top-2 right-2 h-7 w-7 rounded-full"
+								onClick={onDelete}
+							>
+								<X className="h-4 w-4" />
+							</Button>
+						</div>
+					) : !thumbnailUrl ? (
 						<label
 							htmlFor="featured-image"
 							className={cn(
@@ -58,32 +81,6 @@ export const ItemThumbnailUpload = ({
 								onChange={onUpload}
 							/>
 						</label>
-					) : isUploading || isDeletingThumbnail ? (
-						<div className="relative w-full h-40 rounded-lg overflow-hidden border flex items-center justify-center gap-2">
-							<Loader2 className="w-4 h-4 text-muted-foreground animate-spin" />
-							<p className="text-sm text-muted-foreground">
-								{isDeletingThumbnail ? "Deleting..." : "Uploading..."}
-							</p>
-						</div>
-					) : preview || existingThumbnailUrl ? (
-						<div className="relative w-full h-40 rounded-lg overflow-hidden border">
-							<Image
-								src={preview || existingThumbnailUrl || ""}
-								alt="Featured preview"
-								className="w-full h-full object-cover"
-								width={160}
-								height={160}
-							/>
-							<Button
-								type="button"
-								variant="destructive"
-								size="icon"
-								className="absolute top-2 right-2 h-7 w-7 rounded-full"
-								onClick={onDelete}
-							>
-								<X className="h-4 w-4" />
-							</Button>
-						</div>
 					) : (
 						<div className="relative w-full h-40 rounded-lg overflow-hidden border flex items-center justify-center gap-2">
 							<p className="text-sm text-muted-foreground">No image uploaded</p>

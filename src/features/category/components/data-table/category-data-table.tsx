@@ -9,6 +9,7 @@ import { TCategory } from "@/entities/category/model/category.model";
 import { CategoryForm } from "../forms/category-form";
 import { useFilterParams } from "@/shared/hooks/use-filter-params";
 import { TCategoryFilters } from "../../types/category.types";
+import { DEFAULT_PAGE_SIZE } from "@/shared/types/types";
 
 export const CategoryDataTable = () => {
 	const [isFormOpen, setIsFormOpen] = useState(false);
@@ -19,6 +20,12 @@ export const CategoryDataTable = () => {
 	const { updateFiltersParams, searchParams } =
 		useFilterParams<TCategoryFilters>();
 
+	const page = parseInt(searchParams.get("page") ?? "1", 10);
+	const limit = parseInt(
+		searchParams.get("limit") ?? DEFAULT_PAGE_SIZE.toString(),
+		10
+	);
+
 	const filters: TCategoryFilters = {
 		name: searchParams.get("name") ?? undefined,
 	};
@@ -28,7 +35,7 @@ export const CategoryDataTable = () => {
 	};
 
 	const { categories, isGettingCategories, totalRows, totalPages } =
-		useGetCategories({ page: 1, limit: 10, filters });
+		useGetCategories({ page, limit, filters });
 
 	const handleEdit = (category: TCategory) => {
 		setEditingCategory(category);

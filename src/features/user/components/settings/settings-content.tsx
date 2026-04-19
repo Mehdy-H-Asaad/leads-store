@@ -1,7 +1,7 @@
 "use client";
 
 import { useBusinessProfileForm } from "../../hooks/use-business-profile-form";
-import { BusinessProfileSection } from "./business-profile-section";
+// import { BusinessProfileSection } from "./business-profile-section";
 import { PersonalInfoSection } from "./personal-info-section";
 import { SecuritySection } from "./security-section";
 import { LogoutSection } from "./logout-section";
@@ -43,7 +43,7 @@ export const SettingsContent = ({
 					<PersonalInfoSection form={businessProfileForm} />
 				</div>
 
-				<BusinessProfileSection form={businessProfileForm} />
+				{/* <BusinessProfileSection form={businessProfileForm} /> */}
 
 				<div className="flex justify-end">
 					<MainButton

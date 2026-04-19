@@ -81,6 +81,11 @@ const fetcher = async <T>({
 		headers: {
 			"Content-Type": "application/json",
 			...headers,
+			...(cookieHeader
+				? {
+						Cookie: cookieHeader,
+				  }
+				: {}),
 		},
 		body: body ? JSON.stringify(body) : undefined,
 		credentials: "include",

@@ -1,8 +1,6 @@
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { PaginationState, Updater } from "@tanstack/react-table";
-
-export const DEFAULT_PAGE_SIZE = 5;
-export const PAGINATION_PARAM_KEYS = ["page", "limit"] as const;
+import { DEFAULT_PAGE_SIZE } from "../types/types";
 
 export const INITIAL_PAGINATION = {
 	pageIndex: 0,

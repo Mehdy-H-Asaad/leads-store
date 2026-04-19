@@ -1,57 +1,44 @@
 import type { ChartConfig } from "@/shared/components/ui/chart";
 
-export const revenueChartConfig = {
+export const viewsChartConfig = {
+	storeViews: {
+		label: "Store Views",
+		color: "var(--chart-1)",
+	},
+	itemViews: {
+		label: "Item Views",
+		color: "var(--chart-2)",
+	},
+} satisfies ChartConfig;
+
+export const revenueOrdersChartConfig = {
 	revenue: {
 		label: "Revenue",
 		color: "var(--chart-1)",
 	},
-	leads: {
-		label: "Leads",
+	orders: {
+		label: "Orders",
 		color: "var(--chart-2)",
 	},
 } satisfies ChartConfig;
 
-export const leadsBySourceChartConfig = {
-	website: {
-		label: "Website",
+export const countriesChartConfig = {
+	count: {
+		label: "Visitors",
 		color: "var(--chart-1)",
 	},
-	referral: {
-		label: "Referral",
-		color: "var(--chart-2)",
-	},
-	social: {
-		label: "Social Media",
-		color: "var(--chart-3)",
-	},
-	other: {
-		label: "Other",
-		color: "var(--chart-4)",
-	},
 } satisfies ChartConfig;
 
-export const impressionsChartConfig = {
-	impressions: {
-		label: "Impressions",
+export const osBreakdownChartConfig = {
+	count: {
+		label: "Sessions",
 		color: "var(--chart-1)",
 	},
-	visits: {
-		label: "Store Visits",
-		color: "var(--chart-2)",
-	},
 } satisfies ChartConfig;
 
-export const leadStatusChartConfig = {
-	new: { label: "New", color: "var(--chart-1)" },
-	contacted: { label: "Contacted", color: "var(--chart-2)" },
-	qualified: { label: "Qualified", color: "var(--chart-3)" },
-	converted: { label: "Converted", color: "var(--chart-4)" },
-	lost: { label: "Lost", color: "var(--chart-5)" },
-} satisfies ChartConfig;
-
-export const itemPerformanceChartConfig = {
-	leads: {
-		label: "Leads",
+export const topItemsChartConfig = {
+	views: {
+		label: "Views",
 		color: "var(--chart-1)",
 	},
 } satisfies ChartConfig;

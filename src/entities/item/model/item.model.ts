@@ -5,17 +5,18 @@ import {
 	itemAttributeSchema,
 } from "@/shared/contracts/item/item.contract";
 import { FileSchema } from "@/shared/schema/file.schema";
+import { categoryRefContractSchema } from "@/shared/contracts/category/category.contract";
 
 export const itemModel = z.object({
 	id: z.string(),
 	name: z.string(),
-	description: z.string().optional(),
+	description: z.string().nullish(),
 	price: z.number(),
-	cost: z.number().optional(),
-	thumbnail: FileSchema,
+	cost: z.number().nullish(),
+	thumbnail: FileSchema.nullable(),
 	impressions: z.number().optional(),
-	images: z.array(itemGalleryItemSchema).optional(),
-	category: z.string().optional(),
+	images: z.array(itemGalleryItemSchema),
+	categories: z.array(categoryRefContractSchema).optional(),
 	tags: z.array(z.string()).optional(),
 	status: z.enum(ITEM_STATUS),
 	isVisible: z.boolean(),

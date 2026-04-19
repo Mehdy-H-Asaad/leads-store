@@ -7,6 +7,7 @@ import { TCustomerFilters } from "@/features/customer/types/customer.types";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 import { XIcon } from "lucide-react";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { hasFiltersParams } from "@/shared/utils/has-filters-params";
 
 type TCustomerFiltersProps = {
 	filters: TCustomerFilters;
@@ -19,7 +20,6 @@ export const CustomerFilters = ({
 	filters,
 	onFilterChange,
 	onClearAllFilters,
-	searchParams,
 }: TCustomerFiltersProps) => {
 	const [localFilters, setLocalFilters] = useState<TCustomerFilters>({
 		email: filters.email ?? "",
@@ -62,7 +62,7 @@ export const CustomerFilters = ({
 				className="w-40"
 			/>
 
-			{searchParams.size > 0 && (
+			{hasFiltersParams(filters) && (
 				<Button variant="outline" onClick={onClearAllFilters}>
 					<XIcon className="size-4" />
 					Clear Filters

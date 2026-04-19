@@ -12,7 +12,7 @@ export const itemMapper = {
 			thumbnail: dto.thumbnail,
 			impressions: dto.impressions,
 			images: dto.images,
-			category: dto.category,
+			categories: dto.categories,
 			tags: dto.tags,
 			status: dto.status,
 			isVisible: dto.is_visible,

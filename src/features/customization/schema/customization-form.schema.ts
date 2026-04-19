@@ -29,7 +29,7 @@ export const customizationProfileFormSchema = z.object({
 
 export const customizationFormSchema = z.object({
 	templateId: z.enum(TEMPLATE_ID_VALUES),
-	logo: FileSchema,
+	logo: FileSchema.nullable(),
 	config: z.object({
 		layout: z.enum(LAYOUT_VALUES),
 		buttonVariant: z.enum(BUTTON_VARIANT_VALUES),

@@ -38,6 +38,7 @@ export enum DELIVERY_STATUS {
 
 export enum ORDER_SOURCE {
 	WEB = "web",
+	INTERNAL = "internal",
 }
 
 export const orderItemRefSchema = z.object({
@@ -68,9 +69,9 @@ export const orderCustomerRefSchema = z.object({
 export const orderPaymentSchema = z.object({
 	status: z.enum(PAYMENT_STATUS),
 	method: z.enum(PAYMENT_METHOD),
-	amount_paid: z.number(),
+	amount_paid: z.number().nullable(),
 	paid_at: z.coerce.date().nullish(),
-	reference: z.string().nullish(),
+	reference: z.enum(ORDER_SOURCE).nullish(),
 	notes: z.string().nullish(),
 });
 

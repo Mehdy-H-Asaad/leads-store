@@ -19,7 +19,7 @@ export const useCreateItem = ({
 			itemService.createItem(itemFormMapper.toCreateDTO(data)),
 		successMsg: "Item created successfully",
 		invalidatedKeys: [ITEM_KEYS.LIST()],
-		invalidateExact: true,
+		invalidateExact: false,
 		onSuccess: () => {
 			CreateItemForm.reset();
 			onSuccess?.();
@@ -32,9 +32,9 @@ export const useCreateItem = ({
 			name: "",
 			description: undefined,
 			price: undefined,
-			thumbnail: undefined,
+			thumbnail: null,
 			images: [],
-			category: "",
+			categories: [],
 			tags: [],
 			status: ITEM_STATUS.IN_STOCK,
 			isVisible: true,

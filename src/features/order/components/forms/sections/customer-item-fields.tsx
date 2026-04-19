@@ -60,7 +60,7 @@ export const CustomerItemFields = ({
 		<div className="grid grid-cols-2 gap-4">
 			<Field>
 				<FieldLabel>Customer</FieldLabel>
-				<Input value={order?.customer.name ?? ""} disabled />
+				<Input value={order?.customer?.name ?? ""} disabled />
 			</Field>
 			<AsyncSelectFormField
 				form={updateForm}
@@ -70,7 +70,7 @@ export const CustomerItemFields = ({
 				placeholder="Search items..."
 				options={itemOptions}
 				onSearch={onItemSearch}
-				defaultLabel={order?.item.name}
+				defaultLabel={order?.item?.name}
 			/>
 		</div>
 	);

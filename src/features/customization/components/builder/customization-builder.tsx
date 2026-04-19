@@ -10,6 +10,7 @@ import { ProfilePanel } from "./panels/profile-panel";
 import { LinksPanel } from "./panels/links-panel";
 import { LayoutPanel } from "./panels/layout-panel";
 import { cn } from "@/shared/lib/utils";
+import { useFileUpload } from "@/shared/hooks/use-file-upload";
 import {
 	Loader2,
 	Save,
@@ -37,6 +38,9 @@ export function CustomizationBuilder() {
 
 	const { CustomizationForm, onUpdateCustomization, isUpdatingCustomization } =
 		useUpdateCustomization({ customization: customization ?? undefined });
+
+	const logoUpload = useFileUpload({ maxSizeMB: 5 });
+	const backgroundUpload = useFileUpload({ maxSizeMB: 5 });
 
 	const watchedValues = CustomizationForm.watch();
 
@@ -86,12 +90,18 @@ export function CustomizationBuilder() {
 							QRImage={customization?.qrCode?.url ?? ""}
 							control={CustomizationForm.control}
 							form={CustomizationForm}
+							logoUpload={logoUpload}
 						/>
 					)}
 					{activeTab === "links" && (
 						<LinksPanel control={CustomizationForm.control} />
 					)}
-					{activeTab === "theme" && <ThemePanel form={CustomizationForm} />}
+					{activeTab === "theme" && (
+						<ThemePanel
+							form={CustomizationForm}
+							backgroundUpload={backgroundUpload}
+						/>
+					)}
 					{activeTab === "layout" && (
 						<LayoutPanel control={CustomizationForm.control} />
 					)}
@@ -121,6 +131,8 @@ export function CustomizationBuilder() {
 					templateProps={{
 						config: watchedValues.config,
 						logo: watchedValues.logo,
+						logoPreview: logoUpload.preview,
+						backgroundPreview: backgroundUpload.preview,
 						profile: watchedValues.config?.profile ?? undefined,
 						links: watchedValues.links ?? [],
 					}}

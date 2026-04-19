@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { ComboboxSelect } from "@/shared/components/common/select/combobox-select";
 import { ITEM_STATUS, ITEM_TYPE } from "@/shared/contracts/item/item.contract";
-import { ITEM_CATEGORIES } from "@/features/item/constants/item.constants";
 import { Button } from "@/shared/components/ui/button";
 import { TItemFilters } from "@/features/item/types/item.types";
 import { XIcon } from "lucide-react";
@@ -15,6 +14,7 @@ import {
 	SelectValue,
 } from "@/shared/components/ui/select";
 import { hasFiltersParams } from "@/shared/utils/has-filters-params";
+import { useGetCategories } from "@/entities/category/api/category.query";
 
 type TItemFiltersProps = {
 	filters: TItemFilters;
@@ -34,15 +34,20 @@ export const ItemFilters = ({
 		if (localName !== next) setLocalName(next);
 	}, [filters.name]);
 
+	const { categories } = useGetCategories({ page: 1, limit: 30 });
+
+	const categoryOptions =
+		categories?.map(category => ({
+			value: category.id,
+			label: category.name,
+		})) ?? [];
+
 	return (
 		<div className="flex items-center gap-4 flex-wrap">
 			<div>
 				<ComboboxSelect
 					value={filters.category_id}
-					options={ITEM_CATEGORIES.map(category => ({
-						value: category,
-						label: category.replace("_", " "),
-					}))}
+					options={categoryOptions}
 					onChange={value => {
 						onFilterChange({ category_id: value as string });
 					}}

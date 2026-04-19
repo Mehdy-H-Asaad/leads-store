@@ -6,36 +6,35 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
-import { itemPerformanceChartConfig } from "../../constants/analytics.constants";
-import type { TItemPerformanceDataPoint } from "../../schema/analytics.schema";
+import { topItemsChartConfig } from "../../constants/analytics.constants";
+import type { TAnalyticsTopItem } from "../../schema/analytics.schema";
 
-const itemData: TItemPerformanceDataPoint[] = [
-	{
-		item: "iPhone 15 Pro",
-		leads: 42,
-		revenue: 42000,
-		fill: "var(--chart-1)",
-	},
-	{ item: "Galaxy S24", leads: 38, revenue: 38400, fill: "var(--chart-2)" },
-	{ item: "Pixel 8 Pro", leads: 28, revenue: 36400, fill: "var(--chart-3)" },
-	{ item: "MacBook Air", leads: 22, revenue: 24200, fill: "var(--chart-4)" },
-	{ item: "AirPods Pro", leads: 35, revenue: 8750, fill: "var(--chart-5)" },
+type TItemPerformanceChartProps = {
+	data: TAnalyticsTopItem[];
+};
+
+const CHART_COLORS = [
+	"var(--chart-1)",
+	"var(--chart-2)",
+	"var(--chart-3)",
+	"var(--chart-4)",
+	"var(--chart-5)",
 ];
 
-export const ItemPerformanceChart = () => {
+export const ItemPerformanceChart = ({ data }: TItemPerformanceChartProps) => {
 	return (
 		<ChartContainer
-			config={itemPerformanceChartConfig}
+			config={topItemsChartConfig}
 			className="min-h-[280px] w-full"
 		>
 			<BarChart
 				accessibilityLayer
-				data={itemData}
+				data={data}
 				margin={{ left: 12, right: 12 }}
 			>
 				<CartesianGrid vertical={false} strokeDasharray="3 3" />
 				<XAxis
-					dataKey="item"
+					dataKey="name"
 					tickLine={false}
 					axisLine={false}
 					tickMargin={8}
@@ -43,9 +42,12 @@ export const ItemPerformanceChart = () => {
 				/>
 				<YAxis tickLine={false} axisLine={false} tickMargin={8} />
 				<ChartTooltip content={<ChartTooltipContent />} />
-				<Bar dataKey="leads" radius={[4, 4, 0, 0]}>
-					{itemData.map((entry, index) => (
-						<Cell key={index} fill={entry.fill} />
+				<Bar dataKey="views" radius={[4, 4, 0, 0]}>
+					{data.map((_, index) => (
+						<Cell
+							key={index}
+							fill={CHART_COLORS[index % CHART_COLORS.length]}
+						/>
 					))}
 				</Bar>
 			</BarChart>

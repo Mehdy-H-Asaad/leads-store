@@ -23,8 +23,6 @@ export const OnboardingForm = () => {
 		isOnboardingPending,
 	} = useOnboarding();
 
-	console.log(OnboardingForm.getValues());
-
 	return (
 		<div className="w-full max-w-2xl mx-auto">
 			<div className="flex items-center gap-3 mb-10">

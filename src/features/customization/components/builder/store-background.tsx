@@ -10,13 +10,13 @@ import { TCustomizationFormValues } from "../../schema/customization-form.schema
 
 type TStoreBackgroundSectionProps = {
 	form: UseFormReturn<TCustomizationFormValues>;
+	backgroundUpload: ReturnType<typeof useFileUpload>;
 };
 
 export const StoreBackgroundSection = ({
 	form,
+	backgroundUpload,
 }: TStoreBackgroundSectionProps) => {
-	const backgroundUpload = useFileUpload({ maxSizeMB: 5 });
-
 	const handleDeleteBackground = () => {
 		backgroundUpload.removeFile(form, "config.theme.backgroundImage");
 	};

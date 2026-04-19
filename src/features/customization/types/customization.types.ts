@@ -3,7 +3,9 @@ import { TFileSchema } from "@/shared/schema/file.schema";
 
 export type TTemplateProps = {
 	config: TCustomizationConfig;
-	logo: TFileSchema;
+	logo: TFileSchema | null;
+	logoPreview?: string | null;
+	backgroundPreview?: string | null;
 	profile:
 		| {
 				title: string;

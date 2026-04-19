@@ -24,12 +24,10 @@ import {
 } from "@/shared/components/ui/table";
 import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/shared/components/ui/skeleton";
-import {
-	DEFAULT_PAGE_SIZE,
-	usePaginationParams,
-} from "@/shared/hooks/use-pagination-params";
+import { usePaginationParams } from "@/shared/hooks/use-pagination-params";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 import { Search, ChevronLeft, ChevronRight, FileX } from "lucide-react";
+import { DEFAULT_PAGE_SIZE } from "@/shared/types/types";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];

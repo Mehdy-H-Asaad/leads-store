@@ -40,7 +40,7 @@ export const customizationModel = z.object({
 	id: z.string(),
 	templateId: z.enum(TEMPLATE_ID_VALUES),
 	storeURL: z.string(),
-	logo: FileSchema,
+	logo: FileSchema.nullable(),
 	qrCode: FileSchema,
 	config: customizationConfigModel,
 	links: z.array(customizationLinkModel),

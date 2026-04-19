@@ -10,16 +10,13 @@ import { TCustomizationFormValues } from "../../schema/customization-form.schema
 
 type TLogoSectionProps = {
 	form: UseFormReturn<TCustomizationFormValues>;
+	logoUpload: ReturnType<typeof useFileUpload>;
 };
 
-export const LogoSection = ({ form }: TLogoSectionProps) => {
-	const logoUpload = useFileUpload({ maxSizeMB: 5 });
-
-	// const { deleteLogo, isDeletingLogo } = useDeleteLogo();
+export const LogoSection = ({ form, logoUpload }: TLogoSectionProps) => {
 
 	const handleDeleteLogo = () => {
 		logoUpload.removeFile(form, "logo");
-		// deleteLogo();
 	};
 
 	const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

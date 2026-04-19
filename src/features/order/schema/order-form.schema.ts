@@ -4,14 +4,15 @@ import {
 	PAYMENT_STATUS,
 	PAYMENT_METHOD,
 	DELIVERY_STATUS,
+	ORDER_SOURCE,
 } from "@/shared/contracts/order/order.contract";
 
 export const orderPaymentFormSchema = z.object({
 	status: z.enum(PAYMENT_STATUS),
 	method: z.enum(PAYMENT_METHOD),
-	amountPaid: z.number().min(0),
+	amountPaid: z.number().min(0).optional(),
 	paidAt: z.date().optional(),
-	reference: z.string().optional(),
+	reference: z.enum(ORDER_SOURCE).optional(),
 	notes: z.string().optional(),
 });
 
@@ -19,15 +20,17 @@ export const orderFormSchema = z.object({
 	customerId: z.string().min(1, "Customer is required"),
 	itemId: z.string().min(1, "Item is required"),
 	status: z.enum(ORDER_STATUS),
-	itemPrice: z.number().min(0),
-	quantity: z.number().min(1, "Quantity must be at least 1"),
-	total: z.number().min(0),
-	totalCost: z.number().min(0),
+	itemPrice: z.number({ error: "Item price is required" }).min(0),
+	quantity: z
+		.number({ error: "Quantity is required" })
+		.min(1, "Quantity must be at least 1"),
+	total: z.number({ error: "Total is required" }).min(0),
+	totalCost: z.number({ error: "Total cost is required" }).min(0),
 	customerMessage: z.string().optional(),
 	address: z.string().optional(),
 	notes: z.string().optional(),
 	deliveryStatus: z.enum(DELIVERY_STATUS),
-	payment: orderPaymentFormSchema,
+	payment: orderPaymentFormSchema.optional(),
 });
 
 export const createOrderFormSchema = orderFormSchema;

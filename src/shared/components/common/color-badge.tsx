@@ -36,6 +36,7 @@ export const ColorBadge = ({
 			case COLORS.ORANGE:
 				return "bg-orange-100 text-orange-500";
 			case COLORS.GRAY:
+				return "bg-gray-100 text-gray-500";
 			default:
 				return "bg-red-100 text-red-500";
 		}

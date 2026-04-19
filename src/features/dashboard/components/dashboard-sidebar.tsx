@@ -6,7 +6,7 @@ import {
 	Box,
 	ChartBar,
 	Settings,
-	Megaphone,
+	// Megaphone,
 	Tag,
 	Users,
 	Paintbrush,
@@ -89,12 +89,12 @@ export function DashboardSidebar({
 				icon: <Paintbrush className="size-5" />,
 				isActive: false,
 			},
-			{
-				title: "Marketing",
-				url: "/marketing",
-				icon: <Megaphone className="size-5" />,
-				isActive: false,
-			},
+			// {
+			// 	title: "Marketing",
+			// 	url: "/marketing",
+			// 	icon: <Megaphone className="size-5" />,
+			// 	isActive: false,
+			// },
 			{
 				title: "Analytics",
 				url: "/analytics",

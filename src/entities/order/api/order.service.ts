@@ -26,7 +26,6 @@ export const orderService = {
 			ORDERS_PATH,
 			options
 		);
-		console.log(response);
 		const parsed = z.array(orderSchemaDto).safeParse(response.data);
 
 		if (!parsed.success) {

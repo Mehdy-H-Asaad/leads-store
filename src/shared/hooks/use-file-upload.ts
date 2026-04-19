@@ -177,7 +177,7 @@ export const useFileUpload = (config: TFileUploadConfig = {}) => {
 	) => {
 		form.setValue(
 			fieldName,
-			undefined as PathValue<TFormValues, Path<TFormValues>>,
+			null as PathValue<TFormValues, Path<TFormValues>>,
 			{
 				shouldValidate: true,
 			}

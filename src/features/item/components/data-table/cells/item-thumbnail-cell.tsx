@@ -8,6 +8,7 @@ import {
 import { TItem } from "@/entities/item/model/item.model";
 import { useState } from "react";
 import Image from "next/image";
+import { ImageOff } from "lucide-react";
 
 type Props = {
 	thumbnail: TItem["thumbnail"];
@@ -18,7 +19,11 @@ export const ItemThumbnailCell = ({ thumbnail, name }: Props) => {
 	const [open, setOpen] = useState(false);
 
 	if (!thumbnail || !thumbnail.url) {
-		return <span className="text-muted-foreground text-xs">—</span>;
+		return (
+			<div className="size-25 rounded-md bg-muted flex items-center justify-center border border-dashed border-muted-foreground/30">
+				<ImageOff className="size-4 text-muted-foreground/50" />
+			</div>
+		);
 	}
 
 	return (

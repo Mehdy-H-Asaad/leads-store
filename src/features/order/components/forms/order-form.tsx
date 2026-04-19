@@ -83,7 +83,7 @@ export const OrderForm = ({ open, onOpenChange, order }: TOrderFormProps) => {
 							onCustomerSearch={setCustomerSearch}
 							onItemSearch={setItemSearch}
 						/>
-						<PricingFields form={form} />
+						<PricingFields form={form} order={order} />
 						<StatusFields control={sharedControl} />
 						<PaymentFields control={sharedControl} />
 						<AdditionalFields control={sharedControl} />

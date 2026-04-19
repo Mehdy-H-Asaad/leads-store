@@ -11,6 +11,7 @@ import { ItemImagesCell } from "./cells/item-images-cell";
 import { ItemThumbnailCell } from "./cells/item-thumbnail-cell";
 import { ItemDescriptionCell } from "./cells/item-description-cell";
 import { ColorBadge } from "@/shared/components/common/color-badge";
+import { Badge } from "@/shared/components/ui/badge";
 
 export const getItemColumns = (
 	onEdit: (item: TItem) => void
@@ -28,14 +29,10 @@ export const getItemColumns = (
 		header: "Thumbnail",
 		cell: ({ row }) => {
 			return (
-				<>
-					{row.original.thumbnail && row.original.thumbnail.url && (
-						<ItemThumbnailCell
-							thumbnail={row.original.thumbnail}
-							name={row.original.name}
-						/>
-					)}
-				</>
+				<ItemThumbnailCell
+					thumbnail={row.original.thumbnail}
+					name={row.original.name}
+				/>
 			);
 		},
 	},
@@ -58,10 +55,18 @@ export const getItemColumns = (
 		},
 	},
 	{
-		accessorKey: "category",
+		accessorKey: "categories",
 		header: "Category",
 		cell: ({ row }) => {
-			return <div className="capitalize">{row.original.category}</div>;
+			return (
+				<div className="flex gap-2 flex-row items-center">
+					{row.original.categories?.map(category => (
+						<Badge variant="outline" className="capitalize" key={category.id}>
+							{category.name}
+						</Badge>
+					))}
+				</div>
+			);
 		},
 	},
 	{

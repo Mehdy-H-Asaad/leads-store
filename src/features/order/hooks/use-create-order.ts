@@ -14,6 +14,7 @@ import {
 	DELIVERY_STATUS,
 	PAYMENT_STATUS,
 	PAYMENT_METHOD,
+	ORDER_SOURCE,
 } from "@/shared/contracts/order/order.contract";
 
 export const useCreateOrder = ({
@@ -37,10 +38,10 @@ export const useCreateOrder = ({
 			customerId: "",
 			itemId: "",
 			status: ORDER_STATUS.NEW,
-			itemPrice: 0,
+			itemPrice: undefined,
 			quantity: 1,
-			total: 0,
-			totalCost: 0,
+			total: undefined,
+			totalCost: undefined,
 			customerMessage: "",
 			address: "",
 			notes: "",
@@ -48,9 +49,9 @@ export const useCreateOrder = ({
 			payment: {
 				status: PAYMENT_STATUS.UNPAID,
 				method: PAYMENT_METHOD.CASH,
-				amountPaid: 0,
+				amountPaid: undefined,
 				paidAt: undefined,
-				reference: undefined,
+				reference: ORDER_SOURCE.INTERNAL,
 				notes: "",
 			},
 		},

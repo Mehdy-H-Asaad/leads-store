@@ -16,6 +16,7 @@ import { MainButton } from "@/shared/components/common/main-button";
 import { TCustomer } from "@/entities/customer/model/customer.model";
 import { useCreateCustomer } from "../../hooks/use-create-customer";
 import { useUpdateCustomer } from "../../hooks/use-update-customer";
+import { CountryCodeSelect } from "@/shared/components/common/select/country-code-select";
 
 type TCustomerFormProps = {
 	open: boolean;
@@ -91,11 +92,10 @@ export const CustomerForm = ({
 										<FieldLabel>
 											Country Code <span className="text-red-500">*</span>
 										</FieldLabel>
-										<Input
-											{...field}
-											placeholder="+1"
-											value={field.value ?? ""}
-											aria-invalid={fieldState.invalid}
+										<CountryCodeSelect
+											value={field.value}
+											onChange={field.onChange}
+											invalid={fieldState.invalid}
 										/>
 										{fieldState.error && (
 											<FieldError>{fieldState.error.message}</FieldError>

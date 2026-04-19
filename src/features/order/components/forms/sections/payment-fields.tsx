@@ -85,7 +85,7 @@ export const PaymentFields = ({ control }: TPaymentFieldsProps) => {
 
 			<Controller
 				control={control}
-				name="payment.amount_paid"
+				name="payment.amountPaid"
 				render={({ field, fieldState }) => (
 					<Field>
 						<FieldLabel>Amount Paid</FieldLabel>
@@ -94,26 +94,8 @@ export const PaymentFields = ({ control }: TPaymentFieldsProps) => {
 							min={0}
 							step="0.01"
 							{...field}
-							onChange={e => field.onChange(Number(e.target.value))}
-							aria-invalid={fieldState.invalid}
-						/>
-						{fieldState.error && (
-							<FieldError>{fieldState.error.message}</FieldError>
-						)}
-					</Field>
-				)}
-			/>
-
-			<Controller
-				control={control}
-				name="payment.reference"
-				render={({ field, fieldState }) => (
-					<Field>
-						<FieldLabel>Reference</FieldLabel>
-						<Input
-							{...field}
 							value={field.value ?? ""}
-							placeholder="Transaction reference..."
+							onChange={e => field.onChange(Number(e.target.value))}
 							aria-invalid={fieldState.invalid}
 						/>
 						{fieldState.error && (

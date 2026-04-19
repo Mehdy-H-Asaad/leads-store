@@ -10,10 +10,6 @@ import {
 import { useEffect } from "react";
 import { ORDER_KEYS } from "@/entities/order/api/order.keys";
 import { orderFormMapper } from "../lib/order-form.mapper";
-import {
-	DELIVERY_STATUS,
-	ORDER_STATUS,
-} from "@/shared/contracts/order/order.contract";
 
 export const useUpdateOrder = ({
 	order,
@@ -37,10 +33,6 @@ export const useUpdateOrder = ({
 
 	const UpdateOrderForm = useForm<TUpdateOrderFormValues>({
 		resolver: zodResolver(updateOrderFormSchema),
-		defaultValues: {
-			status: ORDER_STATUS.NEW,
-			deliveryStatus: DELIVERY_STATUS.PENDING,
-		},
 	});
 
 	const onUpdateOrder = (values: TUpdateOrderFormValues) => {
@@ -49,8 +41,7 @@ export const useUpdateOrder = ({
 
 	useEffect(() => {
 		if (order) {
-			const { customerId: _, ...updateValues } =
-				orderFormMapper.fromModelToFormValues(order);
+			const { ...updateValues } = orderFormMapper.fromModelToFormValues(order);
 			UpdateOrderForm.reset(updateValues);
 		}
 	}, [order]);

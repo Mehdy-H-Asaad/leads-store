@@ -155,9 +155,7 @@ export const AsyncSelectFormField = <
 							</Command>
 						</PopoverContent>
 					</Popover>
-					{fieldState.invalid && (
-						<FieldError>{fieldState.error?.message}</FieldError>
-					)}
+					{fieldState.invalid && <FieldError>{fieldState.invalid}</FieldError>}
 				</Field>
 			)}
 		/>

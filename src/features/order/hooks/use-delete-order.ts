@@ -6,8 +6,8 @@ export const useDeleteOrder = () => {
 	const { mutate, isPending } = useApiMutation({
 		mutationFn: (id: string) => orderService.deleteOrder(id),
 		successMsg: "Order deleted successfully",
-		invalidatedKeys: [ORDER_KEYS.LISTS()],
-		invalidateExact: true,
+		invalidatedKeys: [ORDER_KEYS.LIST()],
+		invalidateExact: false,
 	});
 
 	const onDeleteOrder = (id: string) => {

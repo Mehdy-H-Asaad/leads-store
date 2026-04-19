@@ -4,7 +4,12 @@ import { Input } from "@/shared/components/ui/input";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useLogin } from "../hooks/use-login";
 import { MainButton } from "@/shared/components/common/main-button";
-import { FieldGroup, Field, FieldLabel } from "@/shared/components/ui/field";
+import {
+	FieldGroup,
+	Field,
+	FieldLabel,
+	FieldError,
+} from "@/shared/components/ui/field";
 import { Controller } from "react-hook-form";
 import { AuthSplitLayout } from "./auth-split-layout";
 import { Button } from "@/shared/components/ui/button";
@@ -33,19 +38,21 @@ export const LoginForm = () => {
 						<Controller
 							control={LoginForm.control}
 							name="email"
-							render={({ field }) => (
+							render={({ field, fieldState }) => (
 								<Field>
 									<FieldLabel htmlFor="email">Email</FieldLabel>
 									<div className="relative">
 										<Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
 										<Input
-											type="email"
 											placeholder="Email"
 											{...field}
 											className="pl-10 pr-10"
 											minLength={8}
 										/>
 									</div>
+									{fieldState.error && (
+										<FieldError>{fieldState.error.message}</FieldError>
+									)}
 								</Field>
 							)}
 						/>
@@ -53,7 +60,7 @@ export const LoginForm = () => {
 						<Controller
 							control={LoginForm.control}
 							name="password"
-							render={({ field }) => (
+							render={({ field, fieldState }) => (
 								<Field>
 									<div className="flex justify-between items-center">
 										<FieldLabel htmlFor="password">Password</FieldLabel>
@@ -71,7 +78,7 @@ export const LoginForm = () => {
 											placeholder="Password"
 											{...field}
 											className="pl-10 pr-10"
-											minLength={8}
+											// minLength={8}
 										/>
 										<button
 											type="button"
@@ -85,6 +92,9 @@ export const LoginForm = () => {
 											)}
 										</button>
 									</div>
+									{fieldState.error && (
+										<FieldError>{fieldState.error.message}</FieldError>
+									)}
 								</Field>
 							)}
 						/>

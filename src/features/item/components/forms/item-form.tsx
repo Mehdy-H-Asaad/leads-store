@@ -1,7 +1,7 @@
 "use client";
 
 import { useFieldArray } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
 	Sheet,
 	SheetContent,
@@ -16,7 +16,6 @@ import { useUpdateItem } from "../../hooks/use-update-item";
 import { E_S3_PATH } from "@/shared/hooks/use-upload-s3";
 import { useFileUpload } from "@/shared/hooks/use-file-upload";
 import { TItem } from "@/entities/item/model/item.model";
-import { useDeleteThumbnail } from "../../hooks/use-delete-thumbnail";
 import { toast } from "sonner";
 import { ItemBasicInfoFields } from "./fields/item-basic-info-fields";
 import { ItemPricingFields } from "./fields/item-pricing-fields";
@@ -58,8 +57,6 @@ export const ItemForm = ({ open, onOpenChange, item }: TItemFormProps) => {
 	const form = isEditMode ? UpdateItemForm : CreateItemForm;
 	const onSubmit = isEditMode ? onUpdateItem : onCreateItem;
 	const isSubmitting = isEditMode ? isUpdatingItem : isCreatingItem;
-
-	const { deleteThumbnail, isDeletingThumbnail } = useDeleteThumbnail();
 
 	const {
 		fields: attributeFields,
@@ -103,9 +100,6 @@ export const ItemForm = ({ open, onOpenChange, item }: TItemFormProps) => {
 
 	const handleDeleteThumbnail = () => {
 		thumbnailUpload.removeFile(form, "thumbnail");
-		if (item?.id) {
-			deleteThumbnail(item.id);
-		}
 	};
 
 	const handleGalleryUpload = async (
@@ -136,7 +130,10 @@ export const ItemForm = ({ open, onOpenChange, item }: TItemFormProps) => {
 
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
-			<SheetContent className="w-full sm:max-w-2xl overflow-hidden p-0">
+			<SheetContent
+				className="w-full sm:max-w-2xl overflow-hidden p-0"
+				style={{ pointerEvents: "auto" }}
+			>
 				<SheetHeader className="border-b">
 					<SheetTitle>
 						{isEditMode ? "Edit Item" : "Create New Item"}
@@ -157,15 +154,13 @@ export const ItemForm = ({ open, onOpenChange, item }: TItemFormProps) => {
 
 						<ItemPricingFields control={form.control} />
 
-						<ItemClassificationFields control={form.control} />
+						<ItemClassificationFields form={form} />
 
 						<div className="grid grid-cols-2 gap-4">
 							<ItemThumbnailUpload
 								control={form.control}
 								preview={thumbnailUpload.preview}
 								isUploading={thumbnailUpload.isUploading}
-								isDeletingThumbnail={isDeletingThumbnail}
-								existingThumbnailUrl={item?.thumbnail?.url}
 								onUpload={handleThumbnailUpload}
 								onDelete={handleDeleteThumbnail}
 							/>

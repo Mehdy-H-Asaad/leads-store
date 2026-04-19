@@ -12,18 +12,36 @@ import { TCustomizationFormValues } from "../../../schema/customization-form.sch
 import { cn } from "@/shared/lib/utils";
 import { ImageIcon, PaletteIcon } from "lucide-react";
 import { StoreBackgroundSection } from "../store-background";
+import { useFileUpload } from "@/shared/hooks/use-file-upload";
 
 type ThemePanelProps = {
 	form: UseFormReturn<TCustomizationFormValues>;
+	backgroundUpload: ReturnType<typeof useFileUpload>;
 };
 
 const FONT_LABELS: Record<FONT, string> = {
 	[FONT.INTER]: "Inter",
 	[FONT.ROBOTO]: "Roboto",
 	[FONT.POPPINS]: "Poppins",
+	[FONT.MONTSERRAT]: "Montserrat",
+	// [FONT.SEKUYA]: "Sekuya",
+	[FONT.RUBIK]: "Rubik",
+	[FONT.ARCHIVO_BLACK]: "Archivo Black",
+	[FONT.LATO]: "Lato",
 };
 
-export function ThemePanel({ form }: ThemePanelProps) {
+const FONT_FAMILY_MAP: Record<FONT, string> = {
+	[FONT.INTER]: "var(--font-inter), Inter, sans-serif",
+	[FONT.ROBOTO]: "var(--font-roboto), Roboto, sans-serif",
+	[FONT.POPPINS]: "var(--font-poppins), Poppins, sans-serif",
+	[FONT.MONTSERRAT]: "var(--font-montserrat), Montserrat, sans-serif",
+	// [FONT.SEKUYA]: "var(--font-sekuya), Sekuya, sans-serif",
+	[FONT.RUBIK]: "var(--font-rubik), Rubik, sans-serif",
+	[FONT.ARCHIVO_BLACK]: "var(--font-archivo-black), Archivo Black, sans-serif",
+	[FONT.LATO]: "var(--font-lato), Lato, sans-serif",
+};
+
+export function ThemePanel({ form, backgroundUpload }: ThemePanelProps) {
 	const backgroundType = useWatch({
 		control: form.control,
 		name: "config.theme.backgroundType",
@@ -132,7 +150,10 @@ export function ThemePanel({ form }: ThemePanelProps) {
 							)}
 						/>
 					) : (
-						<StoreBackgroundSection form={form} />
+						<StoreBackgroundSection
+							form={form}
+							backgroundUpload={backgroundUpload}
+						/>
 					)}
 				</div>
 
@@ -184,11 +205,12 @@ export function ThemePanel({ form }: ThemePanelProps) {
 										type="button"
 										onClick={() => field.onChange(font)}
 										className={cn(
-											"px-3 py-2 rounded-lg border text-sm transition-all text-left",
+											"px-3 py-2 rounded-lg border  transition-all text-left",
 											field.value === font
 												? "border-primary bg-primary/5 text-primary font-medium"
 												: "border-border text-muted-foreground hover:border-muted-foreground/40"
 										)}
+										style={{ fontFamily: FONT_FAMILY_MAP[font] }}
 									>
 										{FONT_LABELS[font]}
 									</button>

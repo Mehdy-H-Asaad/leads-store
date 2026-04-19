@@ -70,6 +70,9 @@ export const OrderDataTable = () => {
 				pageCount={totalPages}
 				totalCount={totalRows}
 				manualPagination={true}
+				setSearchableField={() => {}}
+				searchValue={""}
+				searchablePlaceholder="Search orders"
 			>
 				<div className="flex gap-4 w-full justify-between">
 					<OrderFilters

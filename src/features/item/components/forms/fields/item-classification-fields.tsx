@@ -1,35 +1,112 @@
 "use client";
 
-import { Controller, Control } from "react-hook-form";
+import { Controller, UseFormReturn } from "react-hook-form";
 import { Field, FieldLabel, FieldError } from "@/shared/components/ui/field";
 import { SelectFormField } from "@/shared/components/common/select/select-form-field";
 import { ITEM_STATUS, ITEM_TYPE } from "@/shared/contracts/item/item.contract";
-import { ITEM_CATEGORIES } from "../../../constants/item.constants";
-import { TItemFormValues } from "../../../schema/item-form.schema";
+import { TCreateItemFormValues } from "../../../schema/item-form.schema";
+import {
+	useGetCategories,
+	useGetCategory,
+} from "@/entities/category/api/category.query";
+import { RefObject, useState } from "react";
+import { ComboboxMultiSelectField } from "@/shared/components/common/select/combobox-multi-select-field";
+import {
+	Combobox,
+	ComboboxChips,
+	ComboboxChipsInput,
+	ComboboxContent,
+	ComboboxEmpty,
+	ComboboxItem,
+	ComboboxList,
+	ComboboxValue,
+	ComboboxChip,
+} from "@/shared/components/ui/combobox";
+import { useComboboxAnchor } from "@/shared/components/ui/combobox";
 
 type TItemClassificationFieldsProps = {
-	control: Control<TItemFormValues>;
+	form: UseFormReturn<TCreateItemFormValues>;
 };
 
 export const ItemClassificationFields = ({
-	control,
+	form,
 }: TItemClassificationFieldsProps) => {
+	const [categorySearch, setCategorySearch] = useState("");
+	const anchor = useComboboxAnchor();
+	const { categories, isGettingCategories } = useGetCategories({
+		page: 1,
+		limit: 2,
+		filters: {
+			name: categorySearch,
+		},
+	});
+
+	const handleCategorySearch = (searchValue: string) => {
+		setCategorySearch(searchValue);
+	};
+
+	type TCategoryOption = {
+		value: string;
+		label: string;
+	};
+
+	const categoryOptions: TCategoryOption[] =
+		categories?.map(category => ({
+			value: category.id,
+			label: category.name,
+		})) ?? ([] as TCategoryOption[]);
+
 	return (
 		<div className="grid grid-cols-3 gap-4">
 			<Controller
-				control={control}
-				name="category"
+				control={form.control}
+				name="categories"
 				render={({ field, fieldState }) => (
 					<Field>
-						<FieldLabel>Category</FieldLabel>
-						<SelectFormField
-							field={field}
-							options={ITEM_CATEGORIES.map(cat => ({
-								label: cat,
-								value: cat,
-							}))}
-							placeholder="Select category"
-						/>
+						<FieldLabel>
+							Category <span className="text-red-500">*</span>
+						</FieldLabel>
+						<Combobox
+							multiple
+							autoHighlight
+							items={categoryOptions}
+							value={field.value?.map(id =>
+								categoryOptions.find(option => option.value === id)
+							)}
+							onValueChange={(newSelected: (TCategoryOption | undefined)[]) => {
+								field.onChange(newSelected.map(o => o?.value) ?? []);
+							}}
+							// defaultValue={[categoryOptions[0]]}
+						>
+							<ComboboxChips className="w-full max-w-xs">
+								<ComboboxValue>
+									{(values: TCategoryOption[]) => (
+										<>
+											{values.map((value: TCategoryOption) => (
+												<ComboboxChip key={value.value}>
+													{value.label}
+												</ComboboxChip>
+											))}
+											<ComboboxChipsInput />
+										</>
+									)}
+								</ComboboxValue>
+							</ComboboxChips>
+							<ComboboxContent
+								onWheel={e => e.stopPropagation()}
+								className="pointer-events-auto"
+								anchor={anchor}
+							>
+								<ComboboxEmpty>No items found.</ComboboxEmpty>
+								<ComboboxList>
+									{(item: TCategoryOption) => (
+										<ComboboxItem key={item.value} value={item}>
+											{item.label}
+										</ComboboxItem>
+									)}
+								</ComboboxList>
+							</ComboboxContent>
+						</Combobox>
 						{fieldState.error && (
 							<FieldError>{fieldState.error.message}</FieldError>
 						)}
@@ -38,7 +115,7 @@ export const ItemClassificationFields = ({
 			/>
 
 			<Controller
-				control={control}
+				control={form.control}
 				name="status"
 				render={({ field, fieldState }) => (
 					<Field>
@@ -61,7 +138,7 @@ export const ItemClassificationFields = ({
 			/>
 
 			<Controller
-				control={control}
+				control={form.control}
 				name="type"
 				render={({ field, fieldState }) => (
 					<Field>

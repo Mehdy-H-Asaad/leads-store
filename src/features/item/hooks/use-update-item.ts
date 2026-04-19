@@ -38,9 +38,9 @@ export const useUpdateItem = ({
 			description: "",
 			price: 0,
 			cost: 0,
-			thumbnail: undefined,
+			thumbnail: null,
 			images: [],
-			category: "",
+			categories: [],
 			tags: [],
 			status: undefined,
 			isVisible: false,
@@ -55,9 +55,9 @@ export const useUpdateItem = ({
 
 	useEffect(() => {
 		if (item) {
-			UpdateItemForm.reset(itemFormMapper.fromModelToFormValues(item));
+			UpdateItemForm.reset(itemFormMapper.fromModelToUpdateFormValues(item));
 		}
-	}, [item]);
+	}, [item, UpdateItemForm]);
 
 	return {
 		UpdateItemForm,

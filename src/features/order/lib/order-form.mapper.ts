@@ -23,14 +23,16 @@ export const orderFormMapper = {
 			address: order.address ?? "",
 			notes: order.notes ?? "",
 			deliveryStatus: order.deliveryStatus,
-			payment: {
-				status: order.payment.status,
-				method: order.payment.method,
-				amountPaid: order.payment.amountPaid,
-				paidAt: order.payment.paidAt ?? undefined,
-				reference: order.payment.reference ?? "",
-				notes: order.payment.notes ?? "",
-			},
+			payment: order.payment
+				? {
+						status: order.payment.status,
+						method: order.payment.method,
+						amountPaid: order.payment.amountPaid ?? undefined,
+						paidAt: order.payment.paidAt ?? undefined,
+						reference: order.payment.reference ?? undefined,
+						notes: order.payment.notes ?? "",
+				  }
+				: undefined,
 		};
 	},
 
@@ -60,14 +62,16 @@ export const orderFormMapper = {
 			address: address || undefined,
 			notes: notes || undefined,
 			delivery_status: deliveryStatus,
-			payment: {
-				status: payment.status,
-				method: payment.method,
-				amount_paid: payment.amountPaid,
-				paid_at: payment.paidAt,
-				reference: payment.reference || undefined,
-				notes: payment.notes || undefined,
-			},
+			payment: payment
+				? {
+						status: payment.status,
+						method: payment.method,
+						amount_paid: payment.amountPaid,
+						paid_at: payment.paidAt,
+						reference: payment.reference ?? undefined,
+						notes: payment.notes ?? undefined,
+				  }
+				: undefined,
 		};
 	},
 
@@ -86,6 +90,7 @@ export const orderFormMapper = {
 		payment,
 	}: TUpdateOrderFormValues): TUpdateOrderDTO {
 		return {
+			customer_id: customerId,
 			item_id: itemId,
 			status,
 			item_price: itemPrice,
@@ -96,14 +101,16 @@ export const orderFormMapper = {
 			address: address || undefined,
 			notes: notes || undefined,
 			delivery_status: deliveryStatus,
-			payment: {
-				status: payment.status,
-				method: payment.method,
-				amount_paid: payment.amountPaid,
-				paid_at: payment.paidAt,
-				reference: payment.reference || undefined,
-				notes: payment.notes || undefined,
-			},
+			payment: payment
+				? {
+						status: payment.status,
+						method: payment.method,
+						amount_paid: payment.amountPaid,
+						paid_at: payment.paidAt,
+						reference: payment.reference || undefined,
+						notes: payment.notes || undefined,
+				  }
+				: undefined,
 		};
 	},
 };

@@ -4,7 +4,7 @@ import {
 	USER_STEP,
 } from "@/shared/contracts/user/user.contract";
 import z from "zod";
-import { FileSchema } from "@/shared/schema/file.schema";
+// import { FileSchema } from "@/shared/schema/file.schema";
 
 export const userSchemaDto = z.object({
 	_id: z.string(),
@@ -71,15 +71,15 @@ export const updateBusinessProfileSchemaDto = z.object({
 	business_description: z.string().nullable(),
 	country_code: z.string(),
 	address: z.string().nullable(),
-	logo: FileSchema,
-	links: z
-		.array(
-			z.object({
-				name: z.string(),
-				url: z.string(),
-			})
-		)
-		.optional(),
+	// logo: FileSchema,
+	// links: z
+	// 	.array(
+	// 		z.object({
+	// 			name: z.string(),
+	// 			url: z.string(),
+	// 		})
+	// 	)
+	// 	.optional(),
 });
 
 export type TUserDTO = z.infer<typeof userSchemaDto>;

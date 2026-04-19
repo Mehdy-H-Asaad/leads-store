@@ -32,7 +32,7 @@ export const customizationSchemaDto = z.object({
 	id: z.string(),
 	template_id: z.string(),
 	store_url: z.string(),
-	logo: FileSchema,
+	logo: FileSchema.nullable(),
 	qr_code: FileSchema,
 	config: customizationConfigDtoSchema,
 	links: z.array(customizationLinkDtoSchema),

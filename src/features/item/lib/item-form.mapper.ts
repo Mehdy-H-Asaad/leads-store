@@ -6,20 +6,19 @@ import type { TItem } from "@/entities/item/model/item.model";
 import type {
 	TCreateItemFormValues,
 	TUpdateItemFormValues,
-	TItemFormValues,
 } from "../schema/item-form.schema";
 
 export const itemFormMapper = {
-	fromModelToFormValues(item: TItem): TItemFormValues {
+	fromModelToUpdateFormValues(item: TItem): TUpdateItemFormValues {
 		return {
 			name: item.name,
 			description: item.description,
 			price: item.price,
 			cost: item.cost,
-			thumbnail: item.thumbnail ?? undefined,
+			thumbnail: item.thumbnail,
 			images: item.images,
 			type: item.type,
-			category: item.category,
+			categories: item.categories?.map(category => category.id) ?? [],
 			tags: item.tags,
 			status: item.status,
 			isVisible: item.isVisible,
@@ -34,7 +33,7 @@ export const itemFormMapper = {
 		cost,
 		thumbnail,
 		images,
-		category,
+		categories,
 		tags,
 		status,
 		isVisible,
@@ -48,7 +47,7 @@ export const itemFormMapper = {
 			cost: cost,
 			thumbnail,
 			images,
-			category,
+			categories,
 			tags,
 			status,
 			is_visible: isVisible,
@@ -64,7 +63,7 @@ export const itemFormMapper = {
 		cost,
 		thumbnail,
 		images,
-		category,
+		categories,
 		tags,
 		status,
 		isVisible,
@@ -78,7 +77,7 @@ export const itemFormMapper = {
 			cost,
 			thumbnail,
 			images,
-			category,
+			categories,
 			tags,
 			status,
 			is_visible: isVisible,

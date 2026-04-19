@@ -3,6 +3,7 @@ import {
 	BACKGROUND_TYPE,
 	BUTTON_SHAPE,
 	BUTTON_VARIANT,
+	FONT,
 	LAYOUT,
 } from "@/shared/contracts/customization/customization.contract";
 import { TFileSchema } from "@/shared/schema/file.schema";
@@ -11,7 +12,9 @@ import Image from "next/image";
 
 type TemplateAProps = {
 	config: TCustomizationConfig;
-	logo: TFileSchema;
+	logo: TFileSchema | null;
+	logoPreview?: string | null;
+	backgroundPreview?: string | null;
 	profile:
 		| {
 				title: string;
@@ -22,21 +25,41 @@ type TemplateAProps = {
 	storeUrl?: string;
 };
 
+const FONT_FAMILY_MAP: Record<FONT, string> = {
+	[FONT.INTER]: "var(--font-inter), Inter, sans-serif",
+	[FONT.ROBOTO]: "var(--font-roboto), Roboto, sans-serif",
+	[FONT.POPPINS]: "var(--font-poppins), Poppins, sans-serif",
+	[FONT.MONTSERRAT]: "var(--font-montserrat), Montserrat, sans-serif",
+	// [FONT.SEKUYA]: "var(--font-sekuya), Sekuya, sans-serif",
+	[FONT.RUBIK]: "var(--font-rubik), Rubik, sans-serif",
+	[FONT.ARCHIVO_BLACK]: "var(--font-archivo-black), Archivo Black, sans-serif",
+	[FONT.LATO]: "var(--font-lato), Lato, sans-serif",
+};
+
 const BUTTON_SHAPE_RADIUS: Record<BUTTON_SHAPE, string> = {
 	[BUTTON_SHAPE.ROUNDED]: "12px",
 	[BUTTON_SHAPE.PILL]: "9999px",
 	[BUTTON_SHAPE.SQUARE]: "4px",
 };
 
-export function TemplateA({ config, logo, profile, links, storeUrl }: TemplateAProps) {
+export function TemplateA({
+	config,
+	logo,
+	logoPreview,
+	backgroundPreview,
+	profile,
+	links,
+	storeUrl,
+}: TemplateAProps) {
 	const { theme, layout, buttonVariant, buttonShape } = config;
 
 	const borderRadius = BUTTON_SHAPE_RADIUS[buttonShape];
 
 	const backgroundStyle: React.CSSProperties =
-		theme.backgroundType === BACKGROUND_TYPE.IMAGE && theme.backgroundImage
+		theme.backgroundType === BACKGROUND_TYPE.IMAGE &&
+		(theme.backgroundImage?.url || backgroundPreview)
 			? {
-					backgroundImage: `url(${theme.backgroundImage?.url})`,
+					backgroundImage: `url(${theme.backgroundImage?.url ?? backgroundPreview})`,
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					backgroundRepeat: "no-repeat",
@@ -72,27 +95,31 @@ export function TemplateA({ config, logo, profile, links, storeUrl }: TemplateAP
 
 	return (
 		<div
-			className="relative flex flex-col items-center min-h-full w-full px-4 py-10 gap-5"
-			style={{ ...backgroundStyle, color: theme.text }}
+			className="relative flex flex-col  items-center min-h-full w-full px-4 py-10 gap-5"
+			style={{
+				...backgroundStyle,
+				color: theme.text,
+				fontFamily: FONT_FAMILY_MAP[theme.font],
+			}}
 		>
-			{/* Backdrop overlay for image backgrounds */}
-			{theme.backgroundType === BACKGROUND_TYPE.IMAGE &&
-				theme.backgroundImage && (
+		{/* Backdrop overlay for image backgrounds */}
+		{theme.backgroundType === BACKGROUND_TYPE.IMAGE &&
+			(theme.backgroundImage?.url || backgroundPreview) && (
 					<div className="absolute inset-0 bg-black/35 pointer-events-none" />
 				)}
 
-			{/* Profile section */}
-			<div className="relative z-10 flex flex-col items-center gap-3 text-center w-full">
-				{logo?.url ? (
-					<Image
-						src={logo.url}
-						width={80}
-						height={80}
-						alt={profile?.title ?? "Your Name"}
-						className="w-20 h-20 rounded-full object-cover"
-						style={{ outline: `2px solid ${theme.primary}`, outlineOffset: 2 }}
-					/>
-				) : (
+		{/* Profile section */}
+		<div className="relative z-10 flex flex-col items-center gap-3 text-center w-full">
+			{logo?.url || logoPreview ? (
+				<Image
+					src={logo?.url ?? logoPreview!}
+					width={80}
+					height={80}
+					alt={profile?.title ?? "Your Name"}
+					className="w-20 h-20 rounded-full object-cover"
+					style={{ outline: `2px solid ${theme.primary}`, outlineOffset: 2 }}
+				/>
+			) : (
 					<div
 						className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold shrink-0"
 						style={{ backgroundColor: theme.primary, color: theme.background }}

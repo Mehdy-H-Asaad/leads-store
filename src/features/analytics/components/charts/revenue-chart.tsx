@@ -8,48 +8,38 @@ import {
 	ChartLegend,
 	ChartLegendContent,
 } from "@/shared/components/ui/chart";
-import { revenueChartConfig } from "../../constants/analytics.constants";
-import type { TRevenueDataPoint } from "../../schema/analytics.schema";
+import { revenueOrdersChartConfig } from "../../constants/analytics.constants";
+import type { TAnalyticsDailyTrend } from "../../schema/analytics.schema";
 
-const revenueData: TRevenueDataPoint[] = [
-	{ month: "Jan", revenue: 4200, leads: 24 },
-	{ month: "Feb", revenue: 3800, leads: 18 },
-	{ month: "Mar", revenue: 5100, leads: 31 },
-	{ month: "Apr", revenue: 4600, leads: 28 },
-	{ month: "May", revenue: 5900, leads: 35 },
-	{ month: "Jun", revenue: 6200, leads: 42 },
-	{ month: "Jul", revenue: 5800, leads: 38 },
-	{ month: "Aug", revenue: 6400, leads: 45 },
-	{ month: "Sep", revenue: 7100, leads: 52 },
-	{ month: "Oct", revenue: 6900, leads: 48 },
-	{ month: "Nov", revenue: 7500, leads: 55 },
-	{ month: "Dec", revenue: 8200, leads: 61 },
-];
+type TRevenueChartProps = {
+	data: TAnalyticsDailyTrend[];
+};
 
-export const RevenueChart = () => {
+export const RevenueChart = ({ data }: TRevenueChartProps) => {
 	return (
 		<ChartContainer
-			config={revenueChartConfig}
+			config={revenueOrdersChartConfig}
 			className="min-h-[280px] w-full"
 		>
 			<LineChart
 				accessibilityLayer
-				data={revenueData}
+				data={data}
 				margin={{ left: 12, right: 12 }}
 			>
 				<CartesianGrid vertical={false} strokeDasharray="3 3" />
 				<XAxis
-					dataKey="month"
+					dataKey="date"
 					tickLine={false}
 					axisLine={false}
 					tickMargin={8}
+					tickFormatter={value =>
+						new Date(value).toLocaleDateString("en-US", {
+							month: "short",
+							day: "numeric",
+						})
+					}
 				/>
-				<YAxis
-					tickLine={false}
-					axisLine={false}
-					tickMargin={8}
-					tickFormatter={value => `$${value}`}
-				/>
+				<YAxis tickLine={false} axisLine={false} tickMargin={8} />
 				<ChartTooltip content={<ChartTooltipContent />} />
 				<ChartLegend content={<ChartLegendContent />} />
 				<Line
@@ -61,10 +51,10 @@ export const RevenueChart = () => {
 				/>
 				<Line
 					type="monotone"
-					dataKey="leads"
-					stroke="var(--color-leads)"
+					dataKey="orders"
+					stroke="var(--color-orders)"
 					strokeWidth={2}
-					dot={{ fill: "var(--color-leads)" }}
+					dot={{ fill: "var(--color-orders)" }}
 				/>
 			</LineChart>
 		</ChartContainer>

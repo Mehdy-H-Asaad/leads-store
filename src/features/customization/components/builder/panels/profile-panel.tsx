@@ -7,14 +7,16 @@ import { Textarea } from "@/shared/components/ui/textarea";
 import { TCustomizationFormValues } from "../../../schema/customization-form.schema";
 import { LogoSection } from "../logo-section";
 import Image from "next/image";
+import { useFileUpload } from "@/shared/hooks/use-file-upload";
 
 type ProfilePanelProps = {
 	control: Control<TCustomizationFormValues>;
 	form: UseFormReturn<TCustomizationFormValues>;
 	QRImage: string;
+	logoUpload: ReturnType<typeof useFileUpload>;
 };
 
-export function ProfilePanel({ control, form, QRImage }: ProfilePanelProps) {
+export function ProfilePanel({ control, form, QRImage, logoUpload }: ProfilePanelProps) {
 	return (
 		<div className="flex flex-col gap-5">
 			{QRImage && (
@@ -71,7 +73,7 @@ export function ProfilePanel({ control, form, QRImage }: ProfilePanelProps) {
 				)}
 			/>
 
-			<LogoSection form={form} />
+			<LogoSection form={form} logoUpload={logoUpload} />
 		</div>
 	);
 }

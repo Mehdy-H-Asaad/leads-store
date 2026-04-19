@@ -31,5 +31,6 @@ export function messageFromUpstreamError(body: {
 
 		return body.detail;
 	}
+
 	return "Request failed";
 }

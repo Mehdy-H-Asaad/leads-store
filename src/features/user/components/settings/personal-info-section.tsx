@@ -15,7 +15,7 @@ import {
 	FieldLabel,
 } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
-import { CountryCodeSelect } from "../onboarding/country-code-select";
+import { CountryCodeSelect } from "@/shared/components/common/select/country-code-select";
 import type { UseFormReturn } from "react-hook-form";
 import type { TBusinessProfileSchema } from "../../schema/user-settings.schema";
 
@@ -98,8 +98,7 @@ export const PersonalInfoSection = ({ form }: TPersonalInfoSectionProps) => {
 						render={({ field, fieldState }) => (
 							<Field>
 								<FieldLabel>
-									WhatsApp Number{" "}
-									<span className="text-destructive">*</span>
+									WhatsApp Number <span className="text-destructive">*</span>
 								</FieldLabel>
 								<Input
 									{...field}
@@ -127,9 +126,7 @@ export const PersonalInfoSection = ({ form }: TPersonalInfoSectionProps) => {
 								placeholder="123 Main St, City, Country"
 								aria-invalid={fieldState.invalid}
 							/>
-							{fieldState.invalid && (
-								<FieldError errors={[fieldState.error]} />
-							)}
+							{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 						</Field>
 					)}
 				/>

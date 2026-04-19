@@ -45,6 +45,15 @@ export const getCustomerColumns = (
 		),
 	},
 	{
+		accessorKey: "notes",
+		header: "Notes",
+		cell: ({ row }) => (
+			<div className="max-w-[200px] truncate text-muted-foreground">
+				{row.original.notes ?? "—"}
+			</div>
+		),
+	},
+	{
 		accessorKey: "createdAt",
 		header: "Created At",
 		cell: ({ row }) => (

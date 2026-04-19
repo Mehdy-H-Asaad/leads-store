@@ -17,7 +17,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/shared/components/ui/popover";
-import { COUNTRY_CODES } from "../../constants/user.constants";
+import { COUNTRY_CODES } from "@/shared/constants/constants";
 
 type CountryCodeSelectProps = {
 	value: string;

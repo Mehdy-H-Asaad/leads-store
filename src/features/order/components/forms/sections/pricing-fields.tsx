@@ -1,45 +1,47 @@
-import {
-	Controller,
-	Control,
-	useWatch,
-	useFormContext,
-	UseFormReturn,
-} from "react-hook-form";
+import { useEffect } from "react";
+import { Controller, useWatch, UseFormReturn } from "react-hook-form";
 import { Field, FieldLabel, FieldError } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
 import {
 	TCreateOrderFormValues,
 	TUpdateOrderFormValues,
 } from "@/features/order/schema/order-form.schema";
-import { useEffect } from "react";
 import { useGetItem } from "@/entities/item/api/item.query";
+import { TOrder } from "@/entities/order/model/order.model";
+import { handleNumberInput } from "@/shared/utils/handle-number-input";
 
 type TPricingFieldsProps = {
 	form: UseFormReturn<TUpdateOrderFormValues | TCreateOrderFormValues>;
+	order?: TOrder;
 };
 
-export const PricingFields = ({ form }: TPricingFieldsProps) => {
+export const PricingFields = ({ form, order }: TPricingFieldsProps) => {
 	const itemId = useWatch({
 		control: form.control,
 		name: "itemId",
 	});
 
-	console.log("itemId", itemId);
+	const itemPrice = useWatch({ control: form.control, name: "itemPrice" });
+	const quantity = useWatch({ control: form.control, name: "quantity" });
 
 	const { item, isGettingItem } = useGetItem({ id: itemId });
 
-	console.log("item", item);
+	useEffect(() => {
+		if (!order && item) {
+			form.setValue("itemPrice", item.price);
+			if (item.cost != null) {
+				form.setValue("totalCost", item.cost);
+			}
+		}
+	}, [item]);
 
 	useEffect(() => {
-		if (itemId && item) {
-			form.reset({
-				itemPrice: item.price,
-				quantity: 1,
-				total: item.price,
-				totalCost: item.cost,
-			});
+		const price = Number(itemPrice) || 0;
+		const qty = Number(quantity) || 0;
+		if (price > 0 && qty > 0) {
+			form.setValue("total", price * qty);
 		}
-	}, [itemId, item]);
+	}, [itemPrice, quantity]);
 
 	return (
 		<>
@@ -54,8 +56,13 @@ export const PricingFields = ({ form }: TPricingFieldsProps) => {
 								type="number"
 								min={0}
 								step="0.01"
+								placeholder="Item Price"
 								{...field}
-								onChange={e => field.onChange(Number(e.target.value))}
+								value={field.value ?? ""}
+								onChange={e => {
+									field.onChange(handleNumberInput(e.target.value));
+								}}
+								disabled={isGettingItem}
 								aria-invalid={fieldState.invalid}
 							/>
 							{fieldState.error && (
@@ -74,9 +81,14 @@ export const PricingFields = ({ form }: TPricingFieldsProps) => {
 							</FieldLabel>
 							<Input
 								type="number"
-								min={1}
+								min={0}
+								placeholder="Quantity"
 								{...field}
-								onChange={e => field.onChange(Number(e.target.value))}
+								value={field.value ?? ""}
+								onChange={e => {
+									field.onChange(handleNumberInput(e.target.value));
+								}}
+								disabled={isGettingItem}
 								aria-invalid={fieldState.invalid}
 							/>
 							{fieldState.error && (
@@ -98,8 +110,13 @@ export const PricingFields = ({ form }: TPricingFieldsProps) => {
 								type="number"
 								min={0}
 								step="0.01"
+								placeholder="Total"
 								{...field}
-								onChange={e => field.onChange(Number(e.target.value))}
+								value={field.value ?? ""}
+								onChange={e => {
+									field.onChange(handleNumberInput(e.target.value));
+								}}
+								disabled={isGettingItem}
 								aria-invalid={fieldState.invalid}
 							/>
 							{fieldState.error && (
@@ -118,8 +135,13 @@ export const PricingFields = ({ form }: TPricingFieldsProps) => {
 								type="number"
 								min={0}
 								step="0.01"
+								placeholder="Total Cost"
 								{...field}
-								onChange={e => field.onChange(Number(e.target.value))}
+								value={field.value ?? ""}
+								onChange={e => {
+									field.onChange(handleNumberInput(e.target.value));
+								}}
+								disabled={isGettingItem}
 								aria-invalid={fieldState.invalid}
 							/>
 							{fieldState.error && (
