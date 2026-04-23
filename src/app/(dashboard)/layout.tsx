@@ -9,7 +9,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 			<DashboardSidebar />
 			<SidebarInset className="w-[calc(100%-16rem)]">
 				<DashboardHeader />
-				<div className="flex flex-1 flex-col gap-4 p-4 pb-10 px-12">
+				<div className="flex flex-1 flex-col gap-4 p-0 pb-10 px-8">
 					{children}
 				</div>
 			</SidebarInset>

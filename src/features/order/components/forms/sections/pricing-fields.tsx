@@ -27,13 +27,24 @@ export const PricingFields = ({ form, order }: TPricingFieldsProps) => {
 	const { item, isGettingItem } = useGetItem({ id: itemId });
 
 	useEffect(() => {
-		if (!order && item) {
+		if (!order && item && itemId) {
 			form.setValue("itemPrice", item.price);
+			form.setValue("quantity", 1);
 			if (item.cost != null) {
 				form.setValue("totalCost", item.cost);
 			}
+		} else if (order && item) {
+			form.setValue("itemPrice", order.itemPrice);
+			form.setValue("quantity", order.quantity);
+			if (itemId !== order.itemId) {
+				form.setValue("quantity", 1);
+				form.setValue("itemPrice", item.price);
+				if (item.cost != null) {
+					form.setValue("totalCost", item.cost);
+				}
+			}
 		}
-	}, [item]);
+	}, [item, order, itemId]);
 
 	useEffect(() => {
 		const price = Number(itemPrice) || 0;

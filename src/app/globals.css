@@ -14,6 +14,31 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@utility animate-loadingBar {
+	animation: loadingBar 2s ease-in-out infinite;
+}
+
+@keyframes loadingBar {
+	0% {
+		width: 0%;
+	}
+	10% {
+		width: 30%;
+	}
+	50% {
+		width: 60%;
+	}
+	80% {
+		width: 80%;
+	}
+	95% {
+		width: 90%;
+	}
+	100% {
+		width: 95%;
+	}
+}
+
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);

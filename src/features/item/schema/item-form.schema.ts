@@ -12,7 +12,7 @@ export const itemFormSchema = z.object({
 	name: z.string().min(1, "Name is required"),
 	description: z
 		.string()
-		.max(500, "Description must be less than 500 characters")
+		.max(250, "Description must be less than 250 characters")
 		.nullish(),
 	price: z
 		.number({ error: "Price is required" })
@@ -28,13 +28,9 @@ export const itemFormSchema = z.object({
 	type: z.enum(ITEM_TYPE, { error: "Type is required" }),
 });
 
-export const createItemFormSchema = itemFormSchema.extend({
-	categories: z.array(z.string()).optional(),
-});
+export const createItemFormSchema = itemFormSchema;
 
-export const updateItemFormSchema = itemFormSchema.extend({
-	categories: z.array(z.string()).optional(),
-});
+export const updateItemFormSchema = itemFormSchema;
 
 export type TItemFormValues = z.infer<typeof itemFormSchema>;
 export type TCreateItemFormValues = z.infer<typeof createItemFormSchema>;

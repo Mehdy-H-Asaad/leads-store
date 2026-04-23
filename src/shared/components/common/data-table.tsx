@@ -49,6 +49,7 @@ export function DataTable<TData, TValue>({
 	data,
 	pageCount,
 	isLoading,
+	totalCount,
 	searchablePlaceholder,
 	children,
 	manualPagination = true,
@@ -60,7 +61,9 @@ export function DataTable<TData, TValue>({
 	const [sorting, setSorting] = useState<SortingState>([]);
 
 	useEffect(() => {
-		setInputValue(searchValue ?? "");
+		if (!searchValue) {
+			setInputValue("");
+		}
 	}, [searchValue]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -107,7 +110,7 @@ export function DataTable<TData, TValue>({
 	return (
 		<div className="w-full space-y-6">
 			{/* Header Section */}
-			<div className="flex items-center justify-between gap-4 flex-wrap">
+			<div className="flex items-center justify-between gap-6 flex-wrap">
 				<div className="relative flex-1 max-w-xs min-w-[200px]">
 					<Search className="absolute z-10 left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60 transition-colors duration-200" />
 					<Input
@@ -226,7 +229,8 @@ export function DataTable<TData, TValue>({
 					</span>{" "}
 					of{" "}
 					<span className="font-semibold text-foreground">
-						{table.getFilteredRowModel().rows.length}
+						{/* {table.getFilteredRowModel().rows.length} */}
+						{totalCount ?? 0}
 					</span>{" "}
 					results
 				</div>

@@ -7,5 +7,6 @@ export type TOrderFilters = {
 	status?: ORDER_STATUS;
 	customer_id?: string;
 	item_id?: string;
+	reference_number?: string;
 	delivery_status?: DELIVERY_STATUS;
 };

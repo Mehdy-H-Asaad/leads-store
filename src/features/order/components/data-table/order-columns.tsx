@@ -147,9 +147,16 @@ export const getOrderColumns = (
 	},
 	{
 		accessorKey: "createdAt",
-		header: "Created At",
+		header: "Created Date",
 		cell: ({ row }) => (
 			<div>{formatDate(new Date(row.original.createdAt), "dd/MM/yyyy")}</div>
+		),
+	},
+	{
+		accessorKey: "updatedAt",
+		header: "Last Modified",
+		cell: ({ row }) => (
+			<div>{formatDate(new Date(row.original.updatedAt), "dd/MM/yyyy")}</div>
 		),
 	},
 	{

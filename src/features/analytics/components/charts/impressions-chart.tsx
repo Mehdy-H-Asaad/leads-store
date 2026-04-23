@@ -17,10 +17,7 @@ type TImpressionsChartProps = {
 
 export const ImpressionsChart = ({ data }: TImpressionsChartProps) => {
 	return (
-		<ChartContainer
-			config={viewsChartConfig}
-			className="min-h-[280px] w-full"
-		>
+		<ChartContainer config={viewsChartConfig} className="min-h-[280px] w-full">
 			<AreaChart
 				accessibilityLayer
 				data={data}

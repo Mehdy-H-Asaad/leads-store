@@ -24,8 +24,8 @@ export const orderFormSchema = z.object({
 	quantity: z
 		.number({ error: "Quantity is required" })
 		.min(1, "Quantity must be at least 1"),
-	total: z.number({ error: "Total is required" }).min(0),
-	totalCost: z.number({ error: "Total cost is required" }).min(0),
+	total: z.number().optional(),
+	totalCost: z.number().optional(),
 	customerMessage: z.string().optional(),
 	address: z.string().optional(),
 	notes: z.string().optional(),

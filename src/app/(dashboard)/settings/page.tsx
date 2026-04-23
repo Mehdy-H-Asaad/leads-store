@@ -1,7 +1,5 @@
 import { SettingsScreen } from "./settings-screen";
 import { PageHeader } from "@/shared/components/common/page-header";
-import { Skeleton } from "@/shared/components/ui/skeleton";
-import { Suspense } from "react";
 
 const page = async () => {
 	return (
@@ -10,9 +8,7 @@ const page = async () => {
 				title="Settings"
 				description="Manage your business profile and store"
 			/>
-			<Suspense fallback={<Skeleton className="w-full h-screen" />}>
-				<SettingsScreen />
-			</Suspense>
+			<SettingsScreen />
 		</div>
 	);
 };

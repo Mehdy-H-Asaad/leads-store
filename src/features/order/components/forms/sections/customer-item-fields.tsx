@@ -15,6 +15,8 @@ type TCustomerItemFieldsProps = {
 	createForm: UseFormReturn<TCreateOrderFormValues>;
 	updateForm: UseFormReturn<TUpdateOrderFormValues>;
 	order?: TOrder;
+	isGettingCustomers: boolean;
+	isGettingItems: boolean;
 	customerOptions: TSelectOption[];
 	itemOptions: TSelectOption[];
 	onCustomerSearch: (value: string) => void;
@@ -26,6 +28,8 @@ export const CustomerItemFields = ({
 	createForm,
 	updateForm,
 	order,
+	isGettingCustomers,
+	isGettingItems,
 	customerOptions,
 	itemOptions,
 	onCustomerSearch,
@@ -42,6 +46,7 @@ export const CustomerItemFields = ({
 					placeholder="Search customers..."
 					options={customerOptions}
 					onSearch={onCustomerSearch}
+					isLoading={isGettingCustomers}
 				/>
 				<AsyncSelectFormField
 					form={createForm}
@@ -51,6 +56,7 @@ export const CustomerItemFields = ({
 					placeholder="Search items..."
 					options={itemOptions}
 					onSearch={onItemSearch}
+					isLoading={isGettingItems}
 				/>
 			</div>
 		);
@@ -71,6 +77,7 @@ export const CustomerItemFields = ({
 				options={itemOptions}
 				onSearch={onItemSearch}
 				defaultLabel={order?.item?.name}
+				isLoading={isGettingItems}
 			/>
 		</div>
 	);

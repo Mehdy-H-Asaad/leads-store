@@ -30,6 +30,7 @@ export const OrderDataTable = () => {
 		item_id: searchParams.get("item_id") ?? undefined,
 		delivery_status:
 			(searchParams.get("delivery_status") as DELIVERY_STATUS) ?? undefined,
+		reference_number: searchParams.get("reference_number") ?? undefined,
 	};
 
 	const updateFilters = (newFilters: TOrderFilters) => {
@@ -70,8 +71,8 @@ export const OrderDataTable = () => {
 				pageCount={totalPages}
 				totalCount={totalRows}
 				manualPagination={true}
-				setSearchableField={() => {}}
-				searchValue={""}
+				setSearchableField={value => updateFilters({ reference_number: value })}
+				searchValue={filters.reference_number ?? ""}
 				searchablePlaceholder="Search orders"
 			>
 				<div className="flex gap-4 w-full justify-between">

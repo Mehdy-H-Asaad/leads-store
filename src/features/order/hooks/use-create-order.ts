@@ -25,7 +25,7 @@ export const useCreateOrder = ({
 			orderService.createOrder(orderFormMapper.toCreateDTO(data)),
 		successMsg: "Order created successfully",
 		invalidatedKeys: [ORDER_KEYS.LIST()],
-		invalidateExact: true,
+		invalidateExact: false,
 		onSuccess: () => {
 			CreateOrderForm.reset();
 			onSuccess?.();
@@ -39,7 +39,7 @@ export const useCreateOrder = ({
 			itemId: "",
 			status: ORDER_STATUS.NEW,
 			itemPrice: undefined,
-			quantity: 1,
+			quantity: undefined,
 			total: undefined,
 			totalCost: undefined,
 			customerMessage: "",

@@ -7,24 +7,21 @@ import {
 	TUpdateItemFormValues,
 	updateItemFormSchema,
 } from "../schema/item-form.schema";
-import { useEffect } from "react";
 import { ITEM_KEYS } from "@/entities/item/api/item.keys";
 import { itemFormMapper } from "../lib/item-form.mapper";
 
 export const useUpdateItem = ({
-	item,
+	id,
 	onSuccess,
 }: {
-	item?: TItem;
+	id: string;
 	onSuccess?: () => void;
 }) => {
 	const { mutate, isPending } = useApiMutation<TItem, TUpdateItemFormValues>({
 		mutationFn: data =>
-			itemService.updateItem(item!.id, itemFormMapper.toUpdateDTO(data)),
+			itemService.updateItem(id, itemFormMapper.toUpdateDTO(data)),
 		successMsg: "Item updated successfully",
-		invalidatedKeys: item
-			? [ITEM_KEYS.DETAIL(item.id), ITEM_KEYS.LIST()]
-			: [ITEM_KEYS.LIST()],
+		invalidatedKeys: [ITEM_KEYS.DETAIL(id), ITEM_KEYS.LIST()],
 		invalidateExact: false,
 		onSuccess: () => {
 			onSuccess?.();
@@ -53,11 +50,11 @@ export const useUpdateItem = ({
 		mutate(values);
 	};
 
-	useEffect(() => {
-		if (item) {
-			UpdateItemForm.reset(itemFormMapper.fromModelToUpdateFormValues(item));
-		}
-	}, [item, UpdateItemForm]);
+	// useEffect(() => {
+	// 	if (item) {
+	// 		UpdateItemForm.reset(itemFormMapper.fromModelToUpdateFormValues(item));
+	// 	}
+	// }, [item, UpdateItemForm]);
 
 	return {
 		UpdateItemForm,

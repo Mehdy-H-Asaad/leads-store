@@ -4,13 +4,9 @@ import { Controller, UseFormReturn } from "react-hook-form";
 import { Field, FieldLabel, FieldError } from "@/shared/components/ui/field";
 import { SelectFormField } from "@/shared/components/common/select/select-form-field";
 import { ITEM_STATUS, ITEM_TYPE } from "@/shared/contracts/item/item.contract";
-import { TCreateItemFormValues } from "../../../schema/item-form.schema";
-import {
-	useGetCategories,
-	useGetCategory,
-} from "@/entities/category/api/category.query";
-import { RefObject, useState } from "react";
-import { ComboboxMultiSelectField } from "@/shared/components/common/select/combobox-multi-select-field";
+import { TItemFormValues } from "../../../schema/item-form.schema";
+import { useGetCategories } from "@/entities/category/api/category.query";
+import { useState } from "react";
 import {
 	Combobox,
 	ComboboxChips,
@@ -23,38 +19,48 @@ import {
 	ComboboxChip,
 } from "@/shared/components/ui/combobox";
 import { useComboboxAnchor } from "@/shared/components/ui/combobox";
+import { Loader2 } from "lucide-react";
+import React from "react";
+import { useDebounce } from "@/shared/hooks/use-debounce";
 
 type TItemClassificationFieldsProps = {
-	form: UseFormReturn<TCreateItemFormValues>;
+	form: UseFormReturn<TItemFormValues>;
 };
 
 export const ItemClassificationFields = ({
 	form,
 }: TItemClassificationFieldsProps) => {
 	const [categorySearch, setCategorySearch] = useState("");
+	const [debouncedCategorySearch, setDebouncedCategorySearch] = useState("");
 	const anchor = useComboboxAnchor();
 	const { categories, isGettingCategories } = useGetCategories({
 		page: 1,
-		limit: 2,
+		limit: 30,
 		filters: {
-			name: categorySearch,
+			name: debouncedCategorySearch,
 		},
 	});
 
-	const handleCategorySearch = (searchValue: string) => {
-		setCategorySearch(searchValue);
+	const debouncedSetCategorySearch = useDebounce({
+		callback: setDebouncedCategorySearch,
+		delay: 500,
+	});
+
+	const handleCategorySearch = (value: string) => {
+		setCategorySearch(value);
+		debouncedSetCategorySearch(value);
 	};
 
 	type TCategoryOption = {
-		value: string;
-		label: string;
+		id: string;
+		name: string;
 	};
 
 	const categoryOptions: TCategoryOption[] =
 		categories?.map(category => ({
-			value: category.id,
-			label: category.name,
-		})) ?? ([] as TCategoryOption[]);
+			id: category.id,
+			name: category.name,
+		})) ?? [];
 
 	return (
 		<div className="grid grid-cols-3 gap-4">
@@ -63,45 +69,50 @@ export const ItemClassificationFields = ({
 				name="categories"
 				render={({ field, fieldState }) => (
 					<Field>
-						<FieldLabel>
-							Category <span className="text-red-500">*</span>
-						</FieldLabel>
+						<FieldLabel>Category</FieldLabel>
 						<Combobox
 							multiple
 							autoHighlight
-							items={categoryOptions}
-							value={field.value?.map(id =>
-								categoryOptions.find(option => option.value === id)
-							)}
-							onValueChange={(newSelected: (TCategoryOption | undefined)[]) => {
-								field.onChange(newSelected.map(o => o?.value) ?? []);
+							value={field.value}
+							onValueChange={values => {
+								field.onChange(values);
+								setCategorySearch("");
 							}}
-							// defaultValue={[categoryOptions[0]]}
+							items={categoryOptions}
+							itemToStringValue={(item: TCategoryOption) => item.name}
+							isItemEqualToValue={(
+								objectA: TCategoryOption,
+								objectB: TCategoryOption
+							) => objectA.id === objectB.id}
 						>
-							<ComboboxChips className="w-full max-w-xs">
+							<ComboboxChips ref={anchor} className="w-full max-w-xs">
 								<ComboboxValue>
 									{(values: TCategoryOption[]) => (
-										<>
-											{values.map((value: TCategoryOption) => (
-												<ComboboxChip key={value.value}>
-													{value.label}
-												</ComboboxChip>
+										<React.Fragment>
+											{values.map(value => (
+												<ComboboxChip key={value.id}>{value.name}</ComboboxChip>
 											))}
-											<ComboboxChipsInput />
-										</>
+											<ComboboxChipsInput
+												value={categorySearch}
+												onChange={e => handleCategorySearch(e.target.value)}
+												placeholder="Select category"
+											/>
+										</React.Fragment>
 									)}
 								</ComboboxValue>
 							</ComboboxChips>
-							<ComboboxContent
-								onWheel={e => e.stopPropagation()}
-								className="pointer-events-auto"
-								anchor={anchor}
-							>
-								<ComboboxEmpty>No items found.</ComboboxEmpty>
+							<ComboboxContent anchor={anchor}>
+								<ComboboxEmpty>
+									{isGettingCategories ? (
+										<Loader2 className="w-4 h-4 animate-spin mx-auto" />
+									) : (
+										"No categories found"
+									)}
+								</ComboboxEmpty>
 								<ComboboxList>
 									{(item: TCategoryOption) => (
-										<ComboboxItem key={item.value} value={item}>
-											{item.label}
+										<ComboboxItem key={item.id} value={item}>
+											{item.name}
 										</ComboboxItem>
 									)}
 								</ComboboxList>

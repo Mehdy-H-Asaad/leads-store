@@ -25,7 +25,7 @@ export const ItemGalleryUpload = ({
 				<Field>
 					<FieldLabel>Item Gallery</FieldLabel>
 					{isUploading ? (
-						<div className="flex flex-col items-center justify-center w-full h-full border-2 border-dashed rounded-lg border-input gap-2">
+						<div className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg border-input gap-2">
 							<Loader2 className="w-7 h-7 text-muted-foreground animate-spin" />
 							<p className="text-sm text-muted-foreground">Uploading...</p>
 						</div>
@@ -33,7 +33,7 @@ export const ItemGalleryUpload = ({
 						<label
 							htmlFor="gallery-images"
 							className={cn(
-								"flex flex-col items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer transition-colors hover:bg-muted/50 hover:border-primary/50",
+								"flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-colors hover:bg-muted/50 hover:border-primary/50",
 								fieldState.invalid ? "border-destructive" : "border-input"
 							)}
 						>

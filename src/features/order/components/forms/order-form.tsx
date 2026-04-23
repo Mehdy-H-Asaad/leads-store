@@ -30,10 +30,16 @@ export const OrderForm = ({ open, onOpenChange, order }: TOrderFormProps) => {
 	const [customerSearch, setCustomerSearch] = useState("");
 	const [itemSearch, setItemSearch] = useState("");
 
-	const { customers } = useGetCustomers({
+	const { customers, isGettingCustomers } = useGetCustomers({
 		filters: { name: customerSearch || undefined },
+		limit: 1,
+		page: 1,
 	});
-	const { items } = useGetItems({ filters: { name: itemSearch || undefined } });
+	const { items, isGettingItems } = useGetItems({
+		filters: { name: itemSearch || undefined },
+		limit: 1,
+		page: 1,
+	});
 
 	const handleClose = () => {
 		onOpenChange(false);
@@ -78,6 +84,8 @@ export const OrderForm = ({ open, onOpenChange, order }: TOrderFormProps) => {
 							createForm={CreateOrderForm}
 							updateForm={UpdateOrderForm}
 							order={order}
+							isGettingCustomers={isGettingCustomers}
+							isGettingItems={isGettingItems}
 							customerOptions={customerOptions}
 							itemOptions={itemOptions}
 							onCustomerSearch={setCustomerSearch}

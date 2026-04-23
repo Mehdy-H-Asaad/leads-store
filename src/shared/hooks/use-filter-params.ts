@@ -17,7 +17,12 @@ export const useFilterParams = <TFilters extends Record<string, unknown>>() => {
 		const params = new URLSearchParams(searchParams.toString());
 
 		Object.entries(filters).forEach(([key, value]) => {
-			if (value === undefined || value === null || value === "") {
+			if (
+				value === undefined ||
+				value === null ||
+				value === "" ||
+				value === "all"
+			) {
 				params.delete(key);
 			} else {
 				params.set(key, String(value));

@@ -47,7 +47,7 @@ export const ItemBasicInfoFields = ({ control }: TItemBasicInfoFieldsProps) => {
 							aria-invalid={fieldState.invalid}
 						/>
 						<div className="text-xs text-muted-foreground">
-							{field.value?.length || 0}/500 characters
+							{field.value?.length || 0}/250 characters
 						</div>
 						{fieldState.error && (
 							<FieldError>{fieldState.error.message}</FieldError>

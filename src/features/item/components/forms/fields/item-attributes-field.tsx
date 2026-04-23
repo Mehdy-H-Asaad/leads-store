@@ -43,7 +43,7 @@ export const ItemAttributesField = ({
 			name="attributes"
 			render={({ field }) => (
 				<Field>
-					<FieldLabel>Item Attributes</FieldLabel>
+					<FieldLabel className="sr-only">Item Attributes</FieldLabel>
 					<div className="space-y-3">
 						<div className="grid grid-cols-[1fr,1fr,auto] gap-2">
 							<div className="flex items-center gap-4">

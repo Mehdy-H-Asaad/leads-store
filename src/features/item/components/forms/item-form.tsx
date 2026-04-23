@@ -1,21 +1,22 @@
 "use client";
 
 import { useFieldArray } from "react-hook-form";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
-	Sheet,
-	SheetContent,
-	SheetHeader,
-	SheetTitle,
-	SheetDescription,
-} from "@/shared/components/ui/sheet";
-import { ScrollArea } from "@/shared/components/ui/scroll-area";
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+	CardDescription,
+} from "@/shared/components/ui/card";
+import { Separator } from "@/shared/components/ui/separator";
 import { MainButton } from "@/shared/components/common/main-button";
+import { Button } from "@/shared/components/ui/button";
 import { useCreateItem } from "../../hooks/use-create-item";
 import { useUpdateItem } from "../../hooks/use-update-item";
 import { E_S3_PATH } from "@/shared/hooks/use-upload-s3";
 import { useFileUpload } from "@/shared/hooks/use-file-upload";
-import { TItem } from "@/entities/item/model/item.model";
 import { toast } from "sonner";
 import { ItemBasicInfoFields } from "./fields/item-basic-info-fields";
 import { ItemPricingFields } from "./fields/item-pricing-fields";
@@ -25,34 +26,37 @@ import { ItemGalleryUpload } from "./fields/item-gallery-upload";
 import { ItemGalleryGrid } from "./fields/item-gallery-grid";
 import { ItemAttributesField } from "./fields/item-attributes-field";
 import { ItemVisibilityField } from "./fields/item-visibility-field";
+import { ArrowLeft } from "lucide-react";
+import { useGetItem } from "@/entities/item/api/item.query";
+import { itemFormMapper } from "../../lib/item-form.mapper";
 
 type TItemFormProps = {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-	item?: TItem;
+	id: string;
 };
 
-export const ItemForm = ({ open, onOpenChange, item }: TItemFormProps) => {
-	const isEditMode = !!item;
+export const ItemForm = ({ id }: TItemFormProps) => {
+	const router = useRouter();
 
 	const [galleryPreviews, setGalleryPreviews] = useState<string[]>([]);
 
 	const thumbnailUpload = useFileUpload({ maxSizeMB: 5 });
 	const galleryUpload = useFileUpload({ maxSizeMB: 5 });
 
-	const handleClose = () => {
-		onOpenChange(false);
-		thumbnailUpload.clearPreview();
-		setGalleryPreviews([]);
+	const handleSuccess = () => {
+		router.push("/items");
 	};
 
 	const { CreateItemForm, onCreateItem, isCreatingItem } = useCreateItem({
-		onSuccess: handleClose,
+		onSuccess: handleSuccess,
 	});
 	const { UpdateItemForm, onUpdateItem, isUpdatingItem } = useUpdateItem({
-		item,
-		onSuccess: handleClose,
+		id,
+		onSuccess: handleSuccess,
 	});
+
+	const { item } = useGetItem({ id });
+
+	const isEditMode = !!item;
 
 	const form = isEditMode ? UpdateItemForm : CreateItemForm;
 	const onSubmit = isEditMode ? onUpdateItem : onCreateItem;
@@ -78,11 +82,8 @@ export const ItemForm = ({ open, onOpenChange, item }: TItemFormProps) => {
 			if (item.images && item.images.length > 0) {
 				setGalleryPreviews(item.images.map(img => img?.url ?? ""));
 			}
-		} else {
-			thumbnailUpload.clearPreview();
-			setGalleryPreviews([]);
 		}
-	}, [isEditMode, item, open]);
+	}, [isEditMode, item]);
 
 	const handleThumbnailUpload = async (
 		e: React.ChangeEvent<HTMLInputElement>
@@ -128,70 +129,158 @@ export const ItemForm = ({ open, onOpenChange, item }: TItemFormProps) => {
 		setGalleryPreviews(prev => prev.filter((_, i) => i !== index));
 	};
 
+	useEffect(() => {
+		if (item) {
+			form.reset(itemFormMapper.fromModelToUpdateFormValues(item));
+		}
+	}, [item, form]);
+
 	return (
-		<Sheet open={open} onOpenChange={onOpenChange}>
-			<SheetContent
-				className="w-full sm:max-w-2xl overflow-hidden p-0"
-				style={{ pointerEvents: "auto" }}
+		<div className="space-y-6">
+			<Button
+				variant="outline"
+				className="gap-2 text-muted-foreground hover:text-foreground -ml-2"
+				onClick={() => router.push("/items")}
 			>
-				<SheetHeader className="border-b">
-					<SheetTitle>
+				<ArrowLeft className="h-4 w-4" />
+				Back to Items
+			</Button>
+
+			<div className="flex items-center justify-between">
+				<div className="space-y-1">
+					<h1 className="text-2xl font-semibold tracking-tight">
 						{isEditMode ? "Edit Item" : "Create New Item"}
-					</SheetTitle>
-					<SheetDescription>
+					</h1>
+					<p className="text-sm text-muted-foreground">
 						{isEditMode
 							? "Update the details of your item"
 							: "Add a new item to your catalog"}
-					</SheetDescription>
-				</SheetHeader>
+					</p>
+				</div>
+			</div>
 
-				<ScrollArea className="h-[calc(100vh-140px)] pb-16">
-					<form
-						onSubmit={form.handleSubmit(onSubmit)}
-						className="space-y-6 py- px-6"
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+					<div className="lg:col-span-2 space-y-6">
+						<Card>
+							<CardHeader>
+								<CardTitle>Basic Information</CardTitle>
+								<CardDescription>
+									Name, description, and core details of your item
+								</CardDescription>
+							</CardHeader>
+							<CardContent className="space-y-4">
+								<ItemBasicInfoFields control={form.control} />
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Pricing</CardTitle>
+								<CardDescription>
+									Set the selling price and cost for this item
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<ItemPricingFields control={form.control} />
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Classification</CardTitle>
+								<CardDescription>
+									Category, stock status, and item type
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<ItemClassificationFields form={form} />
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Attributes</CardTitle>
+								<CardDescription>
+									Custom attributes like color, size, or material
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<ItemAttributesField
+									control={form.control}
+									fields={attributeFields}
+									onAppend={appendAttribute}
+									onRemove={removeAttribute}
+								/>
+							</CardContent>
+						</Card>
+					</div>
+
+					<div className="space-y-6">
+						<Card>
+							<CardHeader>
+								<CardTitle>Featured Image</CardTitle>
+								<CardDescription>Main thumbnail for this item</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<ItemThumbnailUpload
+									control={form.control}
+									preview={thumbnailUpload.preview}
+									isUploading={thumbnailUpload.isUploading}
+									onUpload={handleThumbnailUpload}
+									onDelete={handleDeleteThumbnail}
+								/>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Gallery</CardTitle>
+								<CardDescription>
+									Additional images for this item
+								</CardDescription>
+							</CardHeader>
+							<CardContent className="space-y-4">
+								<ItemGalleryUpload
+									control={form.control}
+									isUploading={galleryUpload.isUploading}
+									onUpload={handleGalleryUpload}
+								/>
+								<ItemGalleryGrid
+									galleryPreviews={galleryPreviews}
+									fields={galleryFields}
+									onRemove={handleRemoveGalleryImage}
+								/>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Visibility</CardTitle>
+								<CardDescription>
+									Control whether this item is visible to customers
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<ItemVisibilityField control={form.control} />
+							</CardContent>
+						</Card>
+					</div>
+				</div>
+
+				<Separator />
+
+				<div className="flex justify-end gap-3">
+					<Button
+						type="button"
+						variant="outline"
+						onClick={() => router.push("/items")}
+						disabled={isSubmitting}
 					>
-						<ItemBasicInfoFields control={form.control} />
-
-						<ItemPricingFields control={form.control} />
-
-						<ItemClassificationFields form={form} />
-
-						<div className="grid grid-cols-2 gap-4">
-							<ItemThumbnailUpload
-								control={form.control}
-								preview={thumbnailUpload.preview}
-								isUploading={thumbnailUpload.isUploading}
-								onUpload={handleThumbnailUpload}
-								onDelete={handleDeleteThumbnail}
-							/>
-							<ItemGalleryUpload
-								control={form.control}
-								isUploading={galleryUpload.isUploading}
-								onUpload={handleGalleryUpload}
-							/>
-						</div>
-
-						<ItemGalleryGrid
-							galleryPreviews={galleryPreviews}
-							fields={galleryFields}
-							onRemove={handleRemoveGalleryImage}
-						/>
-
-						<ItemAttributesField
-							control={form.control}
-							fields={attributeFields}
-							onAppend={appendAttribute}
-							onRemove={removeAttribute}
-						/>
-
-						<ItemVisibilityField control={form.control} />
-					</form>
-				</ScrollArea>
-
-				<div className="absolute bottom-0 flex justify-end left-0 right-0 border-t bg-background p-4">
+						Cancel
+					</Button>
 					<MainButton
 						type="submit"
-						onClick={form.handleSubmit(onSubmit)}
 						disabled={
 							isSubmitting ||
 							thumbnailUpload.isUploading ||
@@ -204,7 +293,7 @@ export const ItemForm = ({ open, onOpenChange, item }: TItemFormProps) => {
 						{isEditMode ? "Update Item" : "Create Item"}
 					</MainButton>
 				</div>
-			</SheetContent>
-		</Sheet>
+			</form>
+		</div>
 	);
 };

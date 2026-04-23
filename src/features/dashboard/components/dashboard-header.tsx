@@ -4,9 +4,37 @@ import { Separator } from "@/shared/components/ui/separator";
 import { useEffect, useState } from "react";
 // import { useUserStore } from "@/entities/user/model/user.store";
 import { usePathname } from "next/navigation";
-import { Calendar, Menu } from "lucide-react";
+import {
+	Calendar,
+	Plus,
+	LucideIcon,
+	// UserPlus,
+	Zap,
+	ShoppingCart,
+} from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/shared/components/ui/dropdown-menu";
 import { useGetMe } from "@/entities/user/api/user.query";
+import Link from "next/link";
+
+type TQuickAction = {
+	label: string;
+	href: string;
+	icon: LucideIcon;
+};
+
+const QUICK_ACTIONS: TQuickAction[] = [
+	{ label: "Add Item", href: "/items/create", icon: Plus },
+	// { label: "Add Customer", href: "/customers/create", icon: UserPlus },
+	{ label: "View Orders", href: "/orders", icon: ShoppingCart },
+];
 //
 export const DashboardHeader = () => {
 	// const { user } = useUserStore();
@@ -91,16 +119,32 @@ export const DashboardHeader = () => {
 					</div>
 				</div>
 
-				{/* Quick Actions */}
 				<div className="hidden lg:flex items-center gap-2 animate-in fade-in slide-in-from-right-4 duration-500">
-					<Button
-						variant="ghost"
-						size="sm"
-						className="gap-2 hover:bg-primary/10 transition-all hover:scale-105"
-					>
-						<Menu className="h-4 w-4" />
-						<span className="text-xs font-medium">Quick Actions</span>
-					</Button>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button size="sm" variant="outline">
+								<Zap className="h-4 w-4" />
+								<span className="text-xs font-medium">Quick Actions</span>
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-48">
+							<DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
+								What would you like to do?
+							</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+							{QUICK_ACTIONS.map(({ label, href, icon: Icon }) => (
+								<DropdownMenuItem key={href} asChild>
+									<Link
+										href={href}
+										className="flex items-center gap-2 cursor-pointer"
+									>
+										<Icon className="h-4 w-4" />
+										{label}
+									</Link>
+								</DropdownMenuItem>
+							))}
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</div>
 		</header>

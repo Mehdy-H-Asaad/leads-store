@@ -8,6 +8,7 @@ import { useDebounce } from "@/shared/hooks/use-debounce";
 import { XIcon } from "lucide-react";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { hasFiltersParams } from "@/shared/utils/has-filters-params";
+import { Label } from "@/shared/components/ui/label";
 
 type TCustomerFiltersProps = {
 	filters: TCustomerFilters;
@@ -48,20 +49,24 @@ export const CustomerFilters = ({
 
 	return (
 		<div className="flex items-center gap-4 flex-wrap">
-			<Input
-				placeholder="Search by email"
-				value={localFilters.email ?? ""}
-				onChange={e => handleChange("email", e.target.value)}
-				className="w-48"
-			/>
-
-			<Input
-				placeholder="Search by phone"
-				value={localFilters.phone ?? ""}
-				onChange={e => handleChange("phone", e.target.value)}
-				className="w-40"
-			/>
-
+			<div className="flex flex-col gap-2">
+				<Label>Email</Label>
+				<Input
+					placeholder="Search by email"
+					value={localFilters.email ?? ""}
+					onChange={e => handleChange("email", e.target.value)}
+					className="w-48"
+				/>
+			</div>
+			<div className="flex flex-col gap-2">
+				<Label>Phone</Label>
+				<Input
+					placeholder="Search by phone"
+					value={localFilters.phone ?? ""}
+					onChange={e => handleChange("phone", e.target.value)}
+					className="w-40"
+				/>
+			</div>
 			{hasFiltersParams(filters) && (
 				<Button variant="outline" onClick={onClearAllFilters}>
 					<XIcon className="size-4" />

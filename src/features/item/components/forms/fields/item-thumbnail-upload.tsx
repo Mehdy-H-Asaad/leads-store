@@ -46,7 +46,7 @@ export const ItemThumbnailUpload = ({
 							<Image
 								src={thumbnailUrl}
 								alt="Featured preview"
-								className="w-full h-full object-cover"
+								className="w-full h-full object-contain"
 								width={160}
 								height={160}
 							/>

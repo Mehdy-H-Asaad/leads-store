@@ -1,7 +1,5 @@
-import React from "react";
 import {
 	Combobox,
-	ComboboxInput,
 	ComboboxContent,
 	ComboboxEmpty,
 	ComboboxList,

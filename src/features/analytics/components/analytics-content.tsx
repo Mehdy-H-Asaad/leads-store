@@ -14,6 +14,7 @@ import { LeadStatusChart } from "./charts/lead-status-chart";
 import { ItemPerformanceChart } from "./charts/item-performance-chart";
 import { OsBreakdownChart } from "./charts/os-breakdown-chart";
 import { useGetAnalyticsOverview } from "@/entities/analytics/api/analytics.query";
+import { BarChart3Icon } from "lucide-react";
 
 export const AnalyticsContent = () => {
 	const { analytics, isGettingAnalytics } = useGetAnalyticsOverview();
@@ -22,6 +23,31 @@ export const AnalyticsContent = () => {
 	const countries = analytics?.countries ?? [];
 	const osBreakdown = analytics?.osBreakdown ?? [];
 	const topItems = analytics?.topItems ?? [];
+
+	const hasNoData =
+		!isGettingAnalytics &&
+		!analytics?.overview &&
+		dailyTrend.length === 0 &&
+		countries.length === 0 &&
+		osBreakdown.length === 0 &&
+		topItems.length === 0;
+
+	if (hasNoData) {
+		return (
+			<div className="flex flex-col items-center justify-center gap-4 rounded-xl border bg-card py-24 text-center shadow-sm">
+				<div className="flex size-16 items-center justify-center rounded-full bg-muted">
+					<BarChart3Icon className="size-8 text-muted-foreground" />
+				</div>
+				<div className="flex flex-col gap-1">
+					<h3 className="text-lg font-semibold">No analytics data yet</h3>
+					<p className="max-w-sm text-sm text-muted-foreground">
+						Once your store starts receiving visits and orders, your analytics
+						will appear here.
+					</p>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex flex-col gap-8">
