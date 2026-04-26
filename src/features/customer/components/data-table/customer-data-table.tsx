@@ -69,7 +69,7 @@ export const CustomerDataTable = () => {
 				manualPagination={true}
 				searchValue={filters.name ?? ""}
 				children={
-					<div className="flex gap-4 w-full justify-between">
+					<div className="flex gap-4 w-full justify-between items-end">
 						<CustomerFilters
 							filters={filters}
 							onFilterChange={updateFilters}

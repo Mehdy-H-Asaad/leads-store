@@ -5,7 +5,6 @@ export const invoiceFormMapper = {
 	toCreateDTO(values: TCreateInvoiceFormValues): TCreateInvoiceDTO {
 		return {
 			order_number: values.orderNumber,
-			order_reference_number: values.orderReferenceNumber,
 			customer_id: values.customerId,
 			item_id: values.itemId,
 			quantity: values.quantity,

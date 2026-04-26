@@ -75,7 +75,7 @@ export const OrderDataTable = () => {
 				searchValue={filters.reference_number ?? ""}
 				searchablePlaceholder="Search orders"
 			>
-				<div className="flex gap-4 w-full justify-between">
+				<div className="flex gap-4 w-full justify-between items-end">
 					<OrderFilters
 						filters={filters}
 						onFilterChange={updateFilters}

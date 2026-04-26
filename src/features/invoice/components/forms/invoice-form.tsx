@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import { Controller } from "react-hook-form";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/shared/components/ui/sheet";
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetDescription,
+} from "@/shared/components/ui/sheet";
 import { ScrollArea } from "@/shared/components/ui/scroll-area";
 import { MainButton } from "@/shared/components/common/main-button";
 import { Field, FieldLabel, FieldError } from "@/shared/components/ui/field";
@@ -12,6 +18,15 @@ import { useCreateInvoice } from "../../hooks/use-create-invoice";
 import { useGetCustomers } from "@/entities/customer/api/customer.query";
 import { useGetItems } from "@/entities/item/api/item.query";
 import { handleNumberInput } from "@/shared/utils/handle-number-input";
+import {
+	Combobox,
+	ComboboxContent,
+	ComboboxEmpty,
+	ComboboxInput,
+	ComboboxItem,
+	ComboboxList,
+} from "@/shared/components/ui/combobox";
+import { COUNTRY_CURRENCIES } from "@/shared/constants/constants";
 
 type TInvoiceFormProps = {
 	open: boolean;
@@ -48,7 +63,6 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 		value: i.id,
 		label: `${i.name} – $${i.price}`,
 	}));
-
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
 			<SheetContent className="w-full sm:max-w-2xl overflow-hidden p-0">
@@ -85,17 +99,13 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 								onSearch={setItemSearch}
 								isLoading={isGettingItems}
 							/>
-						</div>
 
-						<div className="grid grid-cols-2 gap-4">
 							<Controller
 								control={CreateInvoiceForm.control}
 								name="orderNumber"
 								render={({ field, fieldState }) => (
 									<Field>
-										<FieldLabel>
-											Order Number <span className="text-red-500">*</span>
-										</FieldLabel>
+										<FieldLabel>Order Number</FieldLabel>
 										<Input
 											placeholder="Order number"
 											{...field}
@@ -107,37 +117,13 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 									</Field>
 								)}
 							/>
-							<Controller
-								control={CreateInvoiceForm.control}
-								name="orderReferenceNumber"
-								render={({ field, fieldState }) => (
-									<Field>
-										<FieldLabel>
-											Order Reference Number{" "}
-											<span className="text-red-500">*</span>
-										</FieldLabel>
-										<Input
-											placeholder="Order reference number"
-											{...field}
-											aria-invalid={fieldState.invalid}
-										/>
-										{fieldState.error && (
-											<FieldError>{fieldState.error.message}</FieldError>
-										)}
-									</Field>
-								)}
-							/>
-						</div>
 
-						<div className="grid grid-cols-2 gap-4">
 							<Controller
 								control={CreateInvoiceForm.control}
 								name="quantity"
 								render={({ field, fieldState }) => (
 									<Field>
-										<FieldLabel>
-											Quantity <span className="text-red-500">*</span>
-										</FieldLabel>
+										<FieldLabel>Quantity</FieldLabel>
 										<Input
 											type="number"
 											min={1}
@@ -163,20 +149,30 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 										<FieldLabel>
 											Currency <span className="text-red-500">*</span>
 										</FieldLabel>
-										<Input
-											placeholder="e.g. USD"
-											{...field}
-											aria-invalid={fieldState.invalid}
-										/>
+										<Combobox
+											value={field.value}
+											onValueChange={field.onChange}
+											items={COUNTRY_CURRENCIES}
+											itemToStringValue={(currency: string) => currency}
+										>
+											<ComboboxInput placeholder="Select a currency" />
+											<ComboboxContent className="p-0 pointer-events-auto w-[200px]">
+												<ComboboxEmpty>No currencies found.</ComboboxEmpty>
+												<ComboboxList>
+													{currency => (
+														<ComboboxItem key={currency} value={currency}>
+															{currency}
+														</ComboboxItem>
+													)}
+												</ComboboxList>
+											</ComboboxContent>
+										</Combobox>
 										{fieldState.error && (
 											<FieldError>{fieldState.error.message}</FieldError>
 										)}
 									</Field>
 								)}
 							/>
-						</div>
-
-						<div className="grid grid-cols-2 gap-4">
 							<Controller
 								control={CreateInvoiceForm.control}
 								name="subtotal"
@@ -227,9 +223,6 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 									</Field>
 								)}
 							/>
-						</div>
-
-						<div className="grid grid-cols-2 gap-4">
 							<Controller
 								control={CreateInvoiceForm.control}
 								name="shippingCosts"

@@ -19,7 +19,7 @@ export const itemAttributeSchema = z.object({
 });
 
 export const itemContractRefSchema = z.object({
-	_id: z.string(),
+	id: z.string(),
 	name: z.string(),
 	description: z.string().nullable(),
 	price: z.number(),
@@ -32,6 +32,7 @@ export const itemContractRefSchema = z.object({
 	status: z.enum(ITEM_STATUS),
 	isVisible: z.boolean(),
 	slug: z.string(),
+	quantity: z.number(),
 	attributes: z.array(itemAttributeSchema).nullable(),
 	createdAt: z.date(),
 	updatedAt: z.date(),

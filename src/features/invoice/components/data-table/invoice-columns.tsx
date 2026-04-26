@@ -20,15 +20,6 @@ export const invoiceColumns: ColumnDef<TInvoice>[] = [
 		),
 	},
 	{
-		accessorKey: "orderReferenceNumber",
-		header: "Reference #",
-		cell: ({ row }) => (
-			<div className="text-muted-foreground">
-				{row.original.orderReferenceNumber}
-			</div>
-		),
-	},
-	{
 		accessorKey: "customer",
 		header: "Customer",
 		cell: ({ row }) => {
@@ -76,7 +67,7 @@ export const invoiceColumns: ColumnDef<TInvoice>[] = [
 		header: "Discount",
 		cell: ({ row }) => (
 			<div className="text-muted-foreground">
-				{row.original.discount > 0
+				{row.original.discount && row.original.discount > 0
 					? `${row.original.currency} ${row.original.discount.toLocaleString()}`
 					: "—"}
 			</div>
@@ -88,7 +79,9 @@ export const invoiceColumns: ColumnDef<TInvoice>[] = [
 		cell: ({ row }) => (
 			<div className="text-muted-foreground">
 				{row.original.shippingCosts > 0
-					? `${row.original.currency} ${row.original.shippingCosts.toLocaleString()}`
+					? `${
+							row.original.currency
+					  } ${row.original.shippingCosts.toLocaleString()}`
 					: "—"}
 			</div>
 		),

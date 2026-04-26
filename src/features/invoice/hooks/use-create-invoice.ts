@@ -34,7 +34,6 @@ export const useCreateInvoice = ({
 			customerId: "",
 			itemId: "",
 			orderNumber: "",
-			orderReferenceNumber: "",
 			quantity: undefined,
 			currency: "USD",
 			subtotal: undefined,

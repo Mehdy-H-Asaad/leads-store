@@ -1,7 +1,7 @@
-import { PageLoadingSkeleton } from "@/shared/components/common/page-loading-skeleton";
+import { CustomizationBuilderSkeleton } from "@/features/customization/components/builder/customization-skeletion";
 
 const loading = () => {
-	return <PageLoadingSkeleton />;
+	return <CustomizationBuilderSkeleton />;
 };
 
 export default loading;

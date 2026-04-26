@@ -19,20 +19,19 @@ export const InvoiceDataTable = () => {
 	const filters: TInvoiceFilters = {
 		invoice_number: searchParams.get("invoice_number") ?? undefined,
 		order_number: searchParams.get("order_number") ?? undefined,
-		order_reference_number:
-			searchParams.get("order_reference_number") ?? undefined,
 	};
 
 	const updateFilters = (newFilters: TInvoiceFilters) => {
 		updateFiltersParams({ filters: newFilters, options: { resetPage: true } });
 	};
 
-	const { invoices, isGettingInvoices, totalRows, totalPages } =
-		useGetInvoices({
+	const { invoices, isGettingInvoices, totalRows, totalPages } = useGetInvoices(
+		{
 			page: 1,
 			limit: 10,
 			filters,
-		});
+		}
+	);
 
 	return (
 		<>

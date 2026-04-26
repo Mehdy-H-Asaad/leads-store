@@ -1,23 +1,24 @@
+import { customerRefContractSchema } from "@/shared/contracts/customer/customer.contract";
+import { itemContractRefSchema } from "@/shared/contracts/item/item.contract";
 import { z } from "zod";
 
 export const invoiceSchemaDto = z.object({
 	id: z.string(),
 	invoice_number: z.string(),
-	order_number: z.string(),
-	order_reference_number: z.string(),
-	customer: z.object({
-		name: z.string(),
-		email: z.string(),
-		phone: z.string(),
-		address: z.string(),
+	order_number: z.string().nullable(),
+	customer: customerRefContractSchema.pick({
+		name: true,
+		email: true,
+		phone: true,
+		address: true,
 	}),
-	item: z.object({
-		name: z.string(),
-		quantity: z.number(),
+	item: itemContractRefSchema.pick({
+		name: true,
+		quantity: true,
 	}),
 	currency: z.string(),
 	subtotal: z.number(),
-	discount: z.number(),
+	discount: z.number().nullable(),
 	shipping_costs: z.number(),
 	total: z.number(),
 	created_at: z.coerce.date(),
@@ -25,16 +26,15 @@ export const invoiceSchemaDto = z.object({
 });
 
 export const createInvoiceSchemaDto = z.object({
-	order_number: z.string(),
-	order_reference_number: z.string(),
+	order_number: z.string().optional(),
 	customer_id: z.string(),
 	item_id: z.string(),
-	quantity: z.number().min(1),
+	quantity: z.number().optional(),
 	currency: z.string(),
-	subtotal: z.number().min(0),
-	discount: z.number().min(0),
-	shipping_costs: z.number().min(0),
-	total: z.number().min(0),
+	subtotal: z.number(),
+	discount: z.number().optional(),
+	shipping_costs: z.number().optional(),
+	total: z.number(),
 });
 
 export type TInvoiceDTO = z.infer<typeof invoiceSchemaDto>;

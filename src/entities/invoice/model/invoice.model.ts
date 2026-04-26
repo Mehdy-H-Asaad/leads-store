@@ -1,27 +1,24 @@
+import { customerRefContractSchema } from "@/shared/contracts/customer/customer.contract";
+import { itemContractRefSchema } from "@/shared/contracts/item/item.contract";
 import { z } from "zod";
-
-export const invoiceCustomerRefModel = z.object({
-	name: z.string(),
-	email: z.string(),
-	phone: z.string(),
-	address: z.string(),
-});
-
-export const invoiceItemRefModel = z.object({
-	name: z.string(),
-	quantity: z.number(),
-});
 
 export const invoiceModel = z.object({
 	id: z.string(),
 	invoiceNumber: z.string(),
-	orderNumber: z.string(),
-	orderReferenceNumber: z.string(),
-	customer: invoiceCustomerRefModel,
-	item: invoiceItemRefModel,
+	orderNumber: z.string().nullable(),
+	customer: customerRefContractSchema.pick({
+		name: true,
+		email: true,
+		phone: true,
+		address: true,
+	}),
+	item: itemContractRefSchema.pick({
+		name: true,
+		quantity: true,
+	}),
 	currency: z.string(),
 	subtotal: z.number(),
-	discount: z.number(),
+	discount: z.number().nullable(),
 	shippingCosts: z.number(),
 	total: z.number(),
 	createdAt: z.date(),
@@ -29,5 +26,3 @@ export const invoiceModel = z.object({
 });
 
 export type TInvoice = z.infer<typeof invoiceModel>;
-export type TInvoiceCustomerRef = z.infer<typeof invoiceCustomerRefModel>;
-export type TInvoiceItemRef = z.infer<typeof invoiceItemRefModel>;

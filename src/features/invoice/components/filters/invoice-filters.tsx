@@ -24,7 +24,7 @@ export const InvoiceFilters = ({
 				<Label>Invoice Number</Label>
 				<Input
 					className="w-44"
-					placeholder="Search invoice #"
+					placeholder="Invoice number"
 					value={filters.invoice_number ?? ""}
 					onChange={e =>
 						onFilterChange({ invoice_number: e.target.value || undefined })
@@ -35,23 +35,10 @@ export const InvoiceFilters = ({
 				<Label>Order Number</Label>
 				<Input
 					className="w-44"
-					placeholder="Search order #"
+					placeholder="Order number"
 					value={filters.order_number ?? ""}
 					onChange={e =>
 						onFilterChange({ order_number: e.target.value || undefined })
-					}
-				/>
-			</div>
-			<div className="flex flex-col gap-2">
-				<Label>Order Reference Number</Label>
-				<Input
-					className="w-52"
-					placeholder="Search reference #"
-					value={filters.order_reference_number ?? ""}
-					onChange={e =>
-						onFilterChange({
-							order_reference_number: e.target.value || undefined,
-						})
 					}
 				/>
 			</div>

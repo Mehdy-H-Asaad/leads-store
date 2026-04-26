@@ -7,7 +7,6 @@ export const invoiceMapper = {
 			id: dto.id,
 			invoiceNumber: dto.invoice_number,
 			orderNumber: dto.order_number,
-			orderReferenceNumber: dto.order_reference_number,
 			customer: {
 				name: dto.customer.name,
 				email: dto.customer.email,
