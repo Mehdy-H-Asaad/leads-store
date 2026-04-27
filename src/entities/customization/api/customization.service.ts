@@ -44,4 +44,22 @@ export const customizationService = {
 			data: customizationMapper.fromDtoToModel(dto.data),
 		};
 	},
+	getStoreURL: async (
+		storeUrl: string
+	): Promise<TApiResponse<TCustomization>> => {
+		const response = await apiFetcher.get<TApiResponse<unknown>>(
+			`/store/${storeUrl}`
+		);
+		const dto = customizationSchemaDto.safeParse(response.data);
+
+		if (!dto.success) {
+			console.error("Zod validation failed", dto.error);
+			throw new Error("Invalid data shape from API");
+		}
+
+		return {
+			...response,
+			data: customizationMapper.fromDtoToModel(dto.data),
+		};
+	},
 };

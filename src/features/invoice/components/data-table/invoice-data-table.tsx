@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { DataTable } from "@/shared/components/common/data-table";
 import { invoiceColumns } from "./invoice-columns";
-import { MainButton } from "@/shared/components/common/main-button";
-import { PlusIcon } from "lucide-react";
+// import { MainButton } from "@/shared/components/common/main-button";
+// import { PlusIcon } from "lucide-react";
 import { useFilterParams } from "@/shared/hooks/use-filter-params";
 import { TInvoiceFilters } from "../../types/invoice.types";
 import { InvoiceFilters } from "../filters/invoice-filters";
@@ -48,16 +48,16 @@ export const InvoiceDataTable = () => {
 				searchValue={filters.invoice_number ?? ""}
 				searchablePlaceholder="Search invoices"
 			>
-				<div className="flex gap-4 w-full justify-between">
-					<InvoiceFilters
-						filters={filters}
-						onFilterChange={updateFilters}
-						onClearAllFilters={clearFilers}
-					/>
-					<MainButton onClick={() => setIsFormOpen(true)}>
+				{/* <div className="flex gap-4 w-full justify-between"> */}
+				<InvoiceFilters
+					filters={filters}
+					onFilterChange={updateFilters}
+					onClearAllFilters={clearFilers}
+				/>
+				{/* <MainButton onClick={() => setIsFormOpen(true)}>
 						<PlusIcon /> Add Invoice
-					</MainButton>
-				</div>
+					</MainButton> */}
+				{/* </div> */}
 			</DataTable>
 
 			<InvoiceForm open={isFormOpen} onOpenChange={setIsFormOpen} />

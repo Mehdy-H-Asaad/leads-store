@@ -29,7 +29,7 @@ export const customizationConfigDtoSchema = z.object({
 });
 
 export const customizationSchemaDto = z.object({
-	id: z.string(),
+	id: z.string().optional(),
 	template_id: z.string(),
 	store_url: z.string(),
 	logo: FileSchema.nullable(),

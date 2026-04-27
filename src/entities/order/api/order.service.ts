@@ -10,6 +10,7 @@ import {
 	TCreateOrderDTO,
 	TUpdateOrderDTO,
 	TOrderDTO,
+	TCreateStorefrontOrderDTO,
 } from "./order.dto";
 import { TOrder } from "../model/order.model";
 import { orderMapper } from "./order.mapper";
@@ -80,5 +81,12 @@ export const orderService = {
 
 	deleteOrder: async (id: string, options?: TRequestOptions): Promise<void> => {
 		await apiFetcher.delete<void>(`${ORDERS_PATH}/${id}`, options);
+	},
+
+	submitStoreOrder: async (
+		storeUrl: string,
+		payload: TCreateStorefrontOrderDTO
+	): Promise<void> => {
+		await apiFetcher.post<void>(`/${storeUrl}/orders`, payload);
 	},
 };

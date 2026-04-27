@@ -18,3 +18,16 @@ export const useGetMyCustomization = () => {
 		error,
 	};
 };
+
+export const useGetStoreCustomization = (storeUrl: string) => {
+	const { data, isLoading, error } = useApiQuery<TApiResponse<TCustomization>>({
+		queryKey: CUSTOMIZATION_KEYS.STORE(storeUrl),
+		queryFn: () => customizationService.getStoreURL(storeUrl),
+	});
+
+	return {
+		customization: data?.data ?? null,
+		isGettingCustomization: isLoading,
+		error,
+	};
+};

@@ -32,13 +32,12 @@ export const useCreateInvoice = ({
 		resolver: zodResolver(invoiceFormSchema),
 		defaultValues: {
 			customerId: "",
-			itemId: "",
+			itemIds: [],
 			orderNumber: "",
 			quantity: undefined,
-			currency: "USD",
 			subtotal: undefined,
-			discount: 0,
-			shippingCosts: 0,
+			discount: undefined,
+			shippingCosts: undefined,
 			total: undefined,
 		},
 	});

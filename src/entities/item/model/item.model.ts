@@ -27,4 +27,13 @@ export const itemModel = z.object({
 	updatedAt: z.date(),
 });
 
+export const storeItemModel = itemModel.omit({
+	createdAt: true,
+	updatedAt: true,
+	isVisible: true,
+	cost: true,
+	impressions: true,
+});
+
 export type TItem = z.infer<typeof itemModel>;
+export type TStoreItem = z.infer<typeof storeItemModel>;

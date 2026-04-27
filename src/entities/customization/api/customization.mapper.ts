@@ -11,7 +11,7 @@ import {
 export const customizationMapper = {
 	fromDtoToModel(dto: TCustomizationDTO) {
 		return {
-			id: dto.id,
+			id: dto.id ?? "",
 			templateId: dto.template_id as TCustomization["templateId"],
 			storeURL: dto.store_url,
 			logo: dto.logo,

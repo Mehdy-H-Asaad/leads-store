@@ -18,7 +18,15 @@ export const orderPaymentFormSchema = z.object({
 
 export const orderFormSchema = z.object({
 	customerId: z.string().min(1, "Customer is required"),
-	itemId: z.string().min(1, "Item is required"),
+	items: z.array(
+		z.object({
+			id: z.string().min(1, "Item is required"),
+			price: z.number({ error: "Item price is required" }).min(0),
+			quantity: z
+				.number({ error: "Quantity is required" })
+				.min(1, "Quantity must be at least 1"),
+		})
+	),
 	status: z.enum(ORDER_STATUS),
 	itemPrice: z.number({ error: "Item price is required" }).min(0),
 	quantity: z

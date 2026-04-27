@@ -27,6 +27,14 @@ export const itemSchemaDto = z.object({
 	updated_at: z.coerce.date(),
 });
 
+export const storeItemSchemaDto = itemSchemaDto.omit({
+	created_at: true,
+	updated_at: true,
+	is_visible: true,
+	cost: true,
+	impressions: true,
+});
+
 export const createItemSchemaDto = itemSchemaDto
 	.omit({
 		id: true,
@@ -56,3 +64,5 @@ export const updateItemSchemaDto = itemSchemaDto
 export type TItemDTO = z.infer<typeof itemSchemaDto>;
 export type TCreateItemDTO = z.infer<typeof createItemSchemaDto>;
 export type TUpdateItemDTO = z.infer<typeof updateItemSchemaDto>;
+
+export type TStoreItemDTO = z.infer<typeof storeItemSchemaDto>;

@@ -12,10 +12,12 @@ export const invoiceModel = z.object({
 		phone: true,
 		address: true,
 	}),
-	item: itemContractRefSchema.pick({
-		name: true,
-		quantity: true,
-	}),
+	items: z.array(
+		itemContractRefSchema.pick({
+			name: true,
+			quantity: true,
+		})
+	),
 	currency: z.string(),
 	subtotal: z.number(),
 	discount: z.number().nullable(),

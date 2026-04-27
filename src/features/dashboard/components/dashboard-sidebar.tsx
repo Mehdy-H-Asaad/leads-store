@@ -119,7 +119,7 @@ export function DashboardSidebar({
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader className="px-4 pt-6 mb-4">
-				<h1 className="text-2xl font-bold w-fit "> ReelVee</h1>
+				<h1 className="text-2xl font-semibold w-fit tracking-wider">Reelvee</h1>
 				{/* <Logo /> */}
 			</SidebarHeader>
 			<SidebarContent>

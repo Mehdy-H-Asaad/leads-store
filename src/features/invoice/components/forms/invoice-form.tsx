@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Controller } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Controller, useWatch } from "react-hook-form";
 import {
 	Sheet,
 	SheetContent,
@@ -20,14 +20,18 @@ import { useGetItems } from "@/entities/item/api/item.query";
 import { handleNumberInput } from "@/shared/utils/handle-number-input";
 import {
 	Combobox,
+	ComboboxChips,
+	ComboboxValue,
+	ComboboxChipsInput,
 	ComboboxContent,
 	ComboboxEmpty,
-	ComboboxInput,
 	ComboboxItem,
 	ComboboxList,
+	ComboboxChip,
+	useComboboxAnchor,
 } from "@/shared/components/ui/combobox";
-import { COUNTRY_CURRENCIES } from "@/shared/constants/constants";
-
+import { Loader2 } from "lucide-react";
+import React from "react";
 type TInvoiceFormProps = {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
@@ -36,16 +40,16 @@ type TInvoiceFormProps = {
 export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 	const [customerSearch, setCustomerSearch] = useState("");
 	const [itemSearch, setItemSearch] = useState("");
-
+	const anchor = useComboboxAnchor();
 	const { customers, isGettingCustomers } = useGetCustomers({
 		filters: { name: customerSearch || undefined },
-		limit: 10,
+		limit: 30,
 		page: 1,
 	});
 
 	const { items, isGettingItems } = useGetItems({
 		filters: { name: itemSearch || undefined },
-		limit: 10,
+		limit: 30,
 		page: 1,
 	});
 
@@ -59,10 +63,32 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 		label: `${c.name} – ${c.phone}`,
 	}));
 
-	const itemOptions = (items ?? []).map(i => ({
+	const itemOptions: TItemOption[] = (items ?? []).map(i => ({
 		value: i.id,
 		label: `${i.name} – $${i.price}`,
 	}));
+
+	type TItemOption = {
+		value: string;
+		label: string;
+	};
+	const itemsIds = useWatch({
+		control: CreateInvoiceForm.control,
+		name: "itemIds",
+	});
+
+	useEffect(() => {
+		if (!items || items.length === 0 || !itemsIds || itemsIds.length === 0)
+			return;
+		CreateInvoiceForm.setValue(
+			"subtotal",
+			itemsIds.reduce((acc, itemId) => {
+				const item = items.find(i => i.id === itemId);
+				return acc + (item?.price ?? 0);
+			}, 0)
+		);
+	}, [itemsIds]);
+
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
 			<SheetContent className="w-full sm:max-w-2xl overflow-hidden p-0">
@@ -78,6 +104,72 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 						onSubmit={CreateInvoiceForm.handleSubmit(onCreateInvoice)}
 						className="space-y-6 py-6 px-6"
 					>
+						<Controller
+							control={CreateInvoiceForm.control}
+							name="itemIds"
+							render={({ field, fieldState }) => (
+								<Field>
+									<FieldLabel>
+										Items <span className="text-red-500">*</span>
+									</FieldLabel>
+									<Combobox
+										multiple
+										autoHighlight
+										onValueChange={values => {
+											field.onChange(values.map(value => value.value));
+											setItemSearch("");
+										}}
+										items={itemOptions}
+										itemToStringValue={(item: TItemOption) => item.label}
+										isItemEqualToValue={(
+											objectA: TItemOption,
+											objectB: TItemOption
+										) => objectA.value === objectB.value}
+									>
+										<ComboboxChips ref={anchor} className="w-full">
+											<ComboboxValue>
+												{(values: TItemOption[]) => (
+													<React.Fragment>
+														{values.map(value => (
+															<ComboboxChip key={value.value}>
+																{value.label}
+															</ComboboxChip>
+														))}
+														<ComboboxChipsInput
+															value={itemSearch}
+															onChange={e => setItemSearch(e.target.value)}
+															placeholder="Select item"
+														/>
+													</React.Fragment>
+												)}
+											</ComboboxValue>
+										</ComboboxChips>
+										<ComboboxContent
+											anchor={anchor}
+											className="p-0 pointer-events-auto w-[200px]"
+										>
+											<ComboboxEmpty>
+												{isGettingItems ? (
+													<Loader2 className="w-4 h-4 animate-spin mx-auto" />
+												) : (
+													"No items found"
+												)}
+											</ComboboxEmpty>
+											<ComboboxList>
+												{(item: TItemOption) => (
+													<ComboboxItem key={item.value} value={item}>
+														{item.label}
+													</ComboboxItem>
+												)}
+											</ComboboxList>
+										</ComboboxContent>
+									</Combobox>
+									{fieldState.error && (
+										<FieldError>{fieldState.error.message}</FieldError>
+									)}
+								</Field>
+							)}
+						/>
 						<div className="grid grid-cols-2 gap-4">
 							<AsyncSelectFormField
 								form={CreateInvoiceForm}
@@ -89,7 +181,7 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 								onSearch={setCustomerSearch}
 								isLoading={isGettingCustomers}
 							/>
-							<AsyncSelectFormField
+							{/* <AsyncSelectFormField
 								form={CreateInvoiceForm}
 								name="itemId"
 								label="Item"
@@ -98,7 +190,7 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 								options={itemOptions}
 								onSearch={setItemSearch}
 								isLoading={isGettingItems}
-							/>
+							/> */}
 
 							<Controller
 								control={CreateInvoiceForm.control}
@@ -141,38 +233,7 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 									</Field>
 								)}
 							/>
-							<Controller
-								control={CreateInvoiceForm.control}
-								name="currency"
-								render={({ field, fieldState }) => (
-									<Field>
-										<FieldLabel>
-											Currency <span className="text-red-500">*</span>
-										</FieldLabel>
-										<Combobox
-											value={field.value}
-											onValueChange={field.onChange}
-											items={COUNTRY_CURRENCIES}
-											itemToStringValue={(currency: string) => currency}
-										>
-											<ComboboxInput placeholder="Select a currency" />
-											<ComboboxContent className="p-0 pointer-events-auto w-[200px]">
-												<ComboboxEmpty>No currencies found.</ComboboxEmpty>
-												<ComboboxList>
-													{currency => (
-														<ComboboxItem key={currency} value={currency}>
-															{currency}
-														</ComboboxItem>
-													)}
-												</ComboboxList>
-											</ComboboxContent>
-										</Combobox>
-										{fieldState.error && (
-											<FieldError>{fieldState.error.message}</FieldError>
-										)}
-									</Field>
-								)}
-							/>
+
 							<Controller
 								control={CreateInvoiceForm.control}
 								name="subtotal"
@@ -183,15 +244,16 @@ export const InvoiceForm = ({ open, onOpenChange }: TInvoiceFormProps) => {
 										</FieldLabel>
 										<Input
 											type="number"
-											min={0}
 											step="0.01"
+											min={0}
 											placeholder="Subtotal"
 											{...field}
-											value={field.value ?? ""}
+											value={field.value}
 											onChange={e =>
 												field.onChange(handleNumberInput(e.target.value))
 											}
 											aria-invalid={fieldState.invalid}
+											disabled={isGettingItems}
 										/>
 										{fieldState.error && (
 											<FieldError>{fieldState.error.message}</FieldError>

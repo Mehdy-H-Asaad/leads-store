@@ -83,6 +83,23 @@ export const updateOrderSchemaDto = z.object({
 	notes: z.string().optional(),
 });
 
+export const createStorefrontOrderSchemaDto = z.object({
+	customer: z.object({
+		name: z.string(),
+		country_code: z.string(),
+		phone: z.string(),
+		email: z.string().optional(),
+		address: z.string().optional(),
+	}),
+	item_id: z.string(),
+	quantity: z.number().optional(),
+	customer_message: z.string().optional(),
+});
+
 export type TOrderDTO = z.infer<typeof orderSchemaDto>;
 export type TCreateOrderDTO = z.infer<typeof createOrderSchemaDto>;
 export type TUpdateOrderDTO = z.infer<typeof updateOrderSchemaDto>;
+
+export type TCreateStorefrontOrderDTO = z.infer<
+	typeof createStorefrontOrderSchemaDto
+>;

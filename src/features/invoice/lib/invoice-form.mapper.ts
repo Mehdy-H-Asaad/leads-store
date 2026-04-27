@@ -6,9 +6,8 @@ export const invoiceFormMapper = {
 		return {
 			order_number: values.orderNumber,
 			customer_id: values.customerId,
-			item_id: values.itemId,
+			item_ids: values.itemIds,
 			quantity: values.quantity,
-			currency: values.currency,
 			subtotal: values.subtotal,
 			discount: values.discount,
 			shipping_costs: values.shippingCosts,

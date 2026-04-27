@@ -13,10 +13,10 @@ export const invoiceMapper = {
 				phone: dto.customer.phone,
 				address: dto.customer.address,
 			},
-			item: {
-				name: dto.item.name,
-				quantity: dto.item.quantity,
-			},
+			items: dto.items.map(item => ({
+				name: item.name,
+				quantity: item.quantity,
+			})),
 			currency: dto.currency,
 			subtotal: dto.subtotal,
 			discount: dto.discount,
