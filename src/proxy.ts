@@ -17,7 +17,8 @@ export function proxy(req: NextRequest) {
 
 	const isAuthRoute = AUTH_ROUTES.some(r => pathname.startsWith(r));
 
-	if (!refresh && pathname.startsWith("/") && !isAuthRoute) {
+	if (!refresh && pathname.startsWith("/dashboard") && !isAuthRoute) {
+		console.log("YES");
 		const response = NextResponse.redirect(new URL("/login", req.url));
 		response.cookies.delete("access_token");
 		return response;

@@ -45,11 +45,11 @@ export const ItemDataTable = () => {
 	});
 
 	const handleEdit = (item: TItem) => {
-		router.push(`/items/${item.id}/edit`);
+		router.push(`/dashboard/items/${item.id}/edit`);
 	};
 
 	const handleCreate = () => {
-		router.push("/items/create");
+		router.push("/dashboard/items/create");
 	};
 
 	const columns = useMemo(() => getItemColumns(handleEdit), []);

@@ -31,7 +31,7 @@ export const useLogin = () => {
 				// Refresh server components to fetch new user data
 				// router.refresh();
 				// setUser(data.data);
-				router.push("/");
+				router.push("/dashboard");
 			}
 		},
 	});

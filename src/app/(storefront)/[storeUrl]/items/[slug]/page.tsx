@@ -1,10 +1,10 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/lib/query-client";
-import { customizationService } from "@/entities/customization/api/customization.service";
+import { storeService } from "@/entities/store/api/store.service";
 import { itemService } from "@/entities/item/api/item.service";
-import { CUSTOMIZATION_KEYS } from "@/entities/customization/api/customization.keys";
+import { STORE_KEYS } from "@/entities/store/api/store.keys";
 import { ITEM_KEYS } from "@/entities/item/api/item.keys";
-import { StoreItemDetail } from "@/features/storefront/components/store-item-detail";
+import { StoreItemDetail } from "@/features/store/components/store-front/store-item-detail";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -18,8 +18,8 @@ export default async function StoreItemSlugPage({ params }: Props) {
 	try {
 		await Promise.all([
 			queryClient.prefetchQuery({
-				queryKey: CUSTOMIZATION_KEYS.STORE(storeUrl),
-				queryFn: () => customizationService.getStoreURL(storeUrl),
+				queryKey: STORE_KEYS.STORE(storeUrl),
+				queryFn: () => storeService.getStoreURL(storeUrl),
 			}),
 			queryClient.prefetchQuery({
 				queryKey: ITEM_KEYS.STORE_DETAIL(storeUrl, slug),

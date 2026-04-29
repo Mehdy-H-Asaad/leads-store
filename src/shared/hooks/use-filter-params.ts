@@ -1,4 +1,5 @@
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 type TUpdateFilters<TFilters> = {
 	filters: TFilters;
@@ -9,6 +10,7 @@ export const useFilterParams = <TFilters extends Record<string, unknown>>() => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const pathname = usePathname();
+	const [isPending, startTransition] = useTransition();
 
 	const updateFiltersParams = ({
 		filters,
@@ -30,15 +32,19 @@ export const useFilterParams = <TFilters extends Record<string, unknown>>() => {
 		});
 
 		if (options.resetPage) {
-			params.set("page", "1");
+			params.delete("page");
 		}
 
-		router.push(`${pathname}?${params.toString()}`, { scroll: false });
+		startTransition(() => {
+			router.push(`${pathname}?${params.toString()}`, { scroll: false });
+		});
 	};
 
 	const clearFilers = () => {
-		router.push(pathname, { scroll: false });
+		startTransition(() => {
+			router.push(pathname, { scroll: false });
+		});
 	};
 
-	return { clearFilers, updateFiltersParams, searchParams };
+	return { clearFilers, updateFiltersParams, searchParams, isPending };
 };

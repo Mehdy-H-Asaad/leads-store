@@ -33,7 +33,7 @@ export const useOnboarding = () => {
 		invalidateExact: true,
 		successMsg: "Profile setup complete! Welcome aboard.",
 		onSuccess: () => {
-			router.push("/");
+			router.push("/dashboard");
 		},
 	});
 

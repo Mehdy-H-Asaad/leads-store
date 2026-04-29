@@ -9,14 +9,14 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import { ExternalLink, Copy, Check, Store } from "lucide-react";
 import { useState } from "react";
-import { useGetMyCustomization } from "@/entities/customization/api/customization.query";
+import { useGetMyStore } from "@/entities/store/api/store.query";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import Link from "next/link";
 export const StoreLinkCard = () => {
-	const { customization, isGettingCustomization } = useGetMyCustomization();
+	const { store, isGettingStore } = useGetMyStore();
 	const [copied, setCopied] = useState(false);
 
-	const storeUrl = customization?.storeURL ?? null;
+	const storeUrl = store?.storeURL ?? null;
 
 	const handleCopy = async () => {
 		if (!storeUrl) return;
@@ -25,7 +25,7 @@ export const StoreLinkCard = () => {
 		setTimeout(() => setCopied(false), 2000);
 	};
 
-	return isGettingCustomization ? (
+	return isGettingStore ? (
 		<Skeleton className="w-full h-24 rounded-lg" />
 	) : (
 		<Card className="rounded-xl border bg-card shadow-sm">

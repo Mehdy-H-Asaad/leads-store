@@ -9,7 +9,7 @@ export const ITEM_KEYS = {
 	DETAIL: (id: string) => [...ITEM_KEYS.DETAILS(), id] as const,
 
 	STORE_LISTS: () => [...ITEM_KEYS.ALL, "store", "list"] as const,
-	STORE_LIST: (storeUrl: string, filters?: { category_id?: string }) =>
+	STORE_LIST: (storeUrl: string, filters?: Record<string, unknown>) =>
 		[...ITEM_KEYS.STORE_LISTS(), storeUrl, filters ?? {}] as const,
 	STORE_DETAILS: () => [...ITEM_KEYS.ALL, "store", "detail"] as const,
 	STORE_DETAIL: (storeUrl: string, slug: string) =>

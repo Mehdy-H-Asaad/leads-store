@@ -9,9 +9,10 @@ import {
 	// Megaphone,
 	Tag,
 	Users,
-	Paintbrush,
+	// Paintbrush,
 	ShoppingCart,
 	FileText,
+	Store,
 } from "lucide-react";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -55,45 +56,45 @@ export function DashboardSidebar({
 		items: [
 			{
 				title: "Dashboard",
-				url: "/",
+				url: "/dashboard",
 				icon: <LayoutDashboardIcon className="size-5" />,
 				isActive: false,
 			},
 			{
 				title: "Items",
-				url: "/items",
+				url: "/dashboard/items",
 				icon: <Box className="size-5" />,
 				isActive: false,
 			},
 
 			{
 				title: "Orders",
-				url: "/orders",
+				url: "/dashboard/orders",
 				icon: <ShoppingCart className="size-5" />,
 				isActive: false,
 			},
 			{
 				title: "Invoices",
-				url: "/invoices",
+				url: "/dashboard/invoices",
 				icon: <FileText className="size-5" />,
 				isActive: false,
 			},
 			{
 				title: "Customers",
-				url: "/customers",
+				url: "/dashboard/customers",
 				icon: <Users className="size-5" />,
 				isActive: false,
 			},
 			{
 				title: "Categories",
-				url: "/categories",
+				url: "/dashboard/categories",
 				icon: <Tag className="size-5" />,
 				isActive: false,
 			},
 			{
-				title: "Customization",
-				url: "/customization",
-				icon: <Paintbrush className="size-5" />,
+				title: "Store",
+				url: "/dashboard/store",
+				icon: <Store className="size-5" />,
 				isActive: false,
 			},
 			// {
@@ -104,13 +105,13 @@ export function DashboardSidebar({
 			// },
 			{
 				title: "Analytics",
-				url: "/analytics",
+				url: "/dashboard/analytics",
 				icon: <ChartBar className="size-5" />,
 				isActive: false,
 			},
 			{
 				title: "Settings",
-				url: "/settings",
+				url: "/dashboard/settings",
 				icon: <Settings className="size-5" />,
 				isActive: false,
 			},

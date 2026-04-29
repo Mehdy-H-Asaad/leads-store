@@ -12,7 +12,7 @@ export default async function page() {
 	}
 
 	if (!signUpCompleteToken && refreshToken) {
-		redirect("/");
+		redirect("/dashboard/overview");
 	}
 
 	return (

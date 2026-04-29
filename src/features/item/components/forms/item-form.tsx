@@ -43,7 +43,7 @@ export const ItemForm = ({ id }: TItemFormProps) => {
 	const galleryUpload = useFileUpload({ maxSizeMB: 5 });
 
 	const handleSuccess = () => {
-		router.push("/items");
+		router.push("/dashboard/items");
 	};
 
 	const { CreateItemForm, onCreateItem, isCreatingItem } = useCreateItem({
@@ -140,7 +140,7 @@ export const ItemForm = ({ id }: TItemFormProps) => {
 			<Button
 				variant="outline"
 				className="gap-2 text-muted-foreground hover:text-foreground -ml-2"
-				onClick={() => router.push("/items")}
+				onClick={() => router.push("/dashboard/items")}
 			>
 				<ArrowLeft className="h-4 w-4" />
 				Back to Items
@@ -274,7 +274,7 @@ export const ItemForm = ({ id }: TItemFormProps) => {
 					<Button
 						type="button"
 						variant="outline"
-						onClick={() => router.push("/items")}
+						onClick={() => router.push("/dashboard/items")}
 						disabled={isSubmitting}
 					>
 						Cancel

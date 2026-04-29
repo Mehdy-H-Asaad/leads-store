@@ -67,7 +67,7 @@ export const useGetStoreItems = ({
 }: TUseGetStoreItemsProps) => {
 	const { data, totalRows, totalPages, isFetching, error } =
 		useApiPaginatedQuery<TStoreItem>({
-			queryKey: ITEM_KEYS.LIST({ page, limit, ...filters }),
+			queryKey: ITEM_KEYS.STORE_LIST(storeUrl, { page, limit, ...filters }),
 			queryFn: () =>
 				itemService.getStoreItems(storeUrl, { page, limit, ...filters }),
 		});

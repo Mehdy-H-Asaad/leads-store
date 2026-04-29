@@ -26,7 +26,7 @@ export const useVerifyEmailChange = () => {
 			invalidatedKeys: [USER_KEYS.ME()],
 			invalidateExact: false,
 			onSuccess: () => {
-				router.push("/");
+				router.push("/dashboard");
 			},
 		}
 	);

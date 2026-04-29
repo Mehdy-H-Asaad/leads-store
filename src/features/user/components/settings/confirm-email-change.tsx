@@ -28,7 +28,7 @@ export const ConfirmEmailChange = () => {
 		invalidatedKeys: [USER_KEYS.ME()],
 		invalidateExact: false,
 		onSuccess: () => {
-			setTimeout(() => router.push("/"), 2000);
+			setTimeout(() => router.push("/dashboard"), 2000);
 		},
 	});
 
@@ -52,7 +52,7 @@ export const ConfirmEmailChange = () => {
 							email change from your settings.
 						</p>
 					</div>
-					<Button onClick={() => router.push("/settings")}>
+					<Button onClick={() => router.push("/dashboard/settings")}>
 						Go to Settings
 					</Button>
 				</div>
@@ -88,7 +88,7 @@ export const ConfirmEmailChange = () => {
 								"The link may have expired or already been used. Please request a new email change."}
 						</p>
 					</div>
-					<Button onClick={() => router.push("/settings")}>
+					<Button onClick={() => router.push("/dashboard/settings")}>
 						Go to Settings
 					</Button>
 				</div>
